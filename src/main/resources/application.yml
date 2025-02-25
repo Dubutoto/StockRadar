@@ -1,0 +1,67 @@
+server:
+  port: 8080  # 모든 환경에서 공통 포트
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: stockradar
+
+  profiles:
+    active: local
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+
+  jpa:
+    # show_sql: true # System.out 방식 (이거 말고 logging.level.org.hibernate.SQL 설정을 권장)
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+management:
+  health:
+    elasticsearch:
+      enabled: false # 불필요한 health check fail 로그 차단
+
+# 추가 공통 설정 (로깅 레벨, 국제화, 배치, 캐시 등)
+##### log setting
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.springframework.web: DEBUG
+    org.thymeleaf: INFO
+    org.springframework.boot.web.servlet: ERROR
+    org.hibernate.SQL: DEBUG
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    dateformat: "yyyy-MM-dd HH:mm:ss,Asia/Seoul" # ms는 제외함
+
+  # file log
+  file:
+    name: logs/app.log
+    path: logs
+
+  logback:
+    rollingpolicy:
+      file-name-pattern: "common-service.%d{yyyy-MM-dd}.%i.log"
+      max-history: 60
