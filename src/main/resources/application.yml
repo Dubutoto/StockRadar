@@ -10,6 +10,12 @@ spring:
   application:
     name: stockradar
 
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    check-template-location: true
+    cache: false
+
   profiles:
     active: local
 
