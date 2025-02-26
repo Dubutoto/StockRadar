@@ -45,6 +45,9 @@ public class Member {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.lastModifiedAt = LocalDateTime.now();
+        if (this.role == null) {
+            this.role = Role.MEMBER; // 회원가입 시 기본 MEMBER
+        }
     }
 
     @PreUpdate

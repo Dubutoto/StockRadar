@@ -23,7 +23,7 @@ public class RefreshTokenRedisService {
         return redisTemplate.opsForValue().get("RT:" + memberId);
     }
 
-    // 삭제
+    // 삭제, 로그아웃 용
     public void deleteRefreshToken(String memberId) {
         redisTemplate.delete("RT:" + memberId);
     }

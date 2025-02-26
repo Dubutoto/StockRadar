@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JWT Auth Test</title>
+</head>
+<body>
+<h1>StockRadar - JWT Auth Test</h1>
+
+<!-- 회원가입 -->
+<h2>Sign Up</h2>
+<input type="text" id="signupEmail" placeholder="이메일/아이디(memberId)" />
+<input type="password" id="signupPw" placeholder="비밀번호" />
+<input type="text" id="signupName" placeholder="사용자명(userName)" />
+<input type="text" id="signupPhone" placeholder="연락처(memberPhone)" />
+<button onclick="signup()">회원가입</button>
+
+<!-- 로그인 -->
+<h2>Login</h2>
+<input type="text" id="loginEmail" placeholder="이메일/아이디(memberId)" />
+<input type="password" id="loginPw" placeholder="비밀번호" />
+<button onclick="login()">로그인</button>
+
+<!-- 발급받은 토큰 표시 -->
+<h2>토큰 정보</h2>
+<p>AccessToken: <span id="accessTokenSpan"></span></p>
+<p>RefreshToken: <span id="refreshTokenSpan"></span></p>
+
+<!-- 토큰 재발급 -->
+<h2>Refresh Token</h2>
+<button onclick="refreshToken()">토큰 재발급</button>
+
+<!-- 로그아웃 -->
+<h2>Logout</h2>
+<button onclick="logout()">로그아웃</button>
+
+<script>
+    let accessToken = '';
+    let refreshToken = '';
+
+    // 1) 회원가입
+    async function signup() {
+        const data = {
+            memberId: document.getElementById('signupEmail').value,
+            memberPw: document.getElementById('signupPw').value,
+            userName: document.getElementById('signupName').value,
+            memberPhone: document.getElementById('signupPhone').value
+        };
+
+        const res = await fetch('/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const text = await res.text();
+        alert('회원가입 응답: ' + text);
+    }
+
+    // 2) 로그인
+    async function login() {
+        const data = {
+            memberId: document.getElementById('loginEmail').value,
+            memberPw: document.getElementById('loginPw').value
+        };
+
+        const res = await fetch('/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            const result = await res.json();
+            accessToken = result.accessToken;
+            refreshToken = result.refreshToken;
+            document.getElementById('accessTokenSpan').textContent = accessToken;
+            document.getElementById('refreshTokenSpan').textContent = refreshToken;
+            alert('로그인 성공');
+        } else {
+            const text = await res.text();
+            alert('로그인 실패: ' + text);
+        }
+    }
+
+    // 3) 토큰 재발급
+    async function refreshToken() {
+        if (!refreshToken) {
+            alert('RefreshToken이 없습니다.');
+            return;
+        }
+        const data = {
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        };
+
+        const res = await fetch('/auth/refresh', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            const result = await res.json();
+            accessToken = result.accessToken;
+            refreshToken = result.refreshToken; // 여기서는 기존 refreshToken 그대로 반환할 수도 있음
+            document.getElementById('accessTokenSpan').textContent = accessToken;
+            document.getElementById('refreshTokenSpan').textContent = refreshToken;
+            alert('토큰 재발급 완료');
+        } else {
+            const text = await res.text();
+            alert('재발급 실패: ' + text);
+        }
+    }
+
+    // 4) 로그아웃
+    async function logout() {
+        if (!refreshToken) {
+            alert('RefreshToken이 없습니다.');
+            return;
+        }
+        const data = {
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        };
+
+        const res = await fetch('/auth/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const text = await res.text();
+        alert('로그아웃 응답: ' + text);
+
+        // 토큰 정보 초기화
+        accessToken = '';
+        refreshToken = '';
+        document.getElementById('accessTokenSpan').textContent = '';
+        document.getElementById('refreshTokenSpan').textContent = '';
+    }
+</script>
+</body>
+</html>
