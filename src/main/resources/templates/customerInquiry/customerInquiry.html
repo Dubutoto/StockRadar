@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>고객 문의</title>
+</head>
+<body>
+<h1>고객 문의</h1>
+
+<form th:action="@{/customerInquiry/submit}" method="post">
+    <!-- 제목 -->
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <!-- 카테고리 -->
+    <label for="category">카테고리:</label>
+    <select id="category" name="category" required>
+        <option value="general">일반 문의</option>
+        <option value="technical">기술 지원</option>
+        <option value="billing">결제 관련</option>
+    </select><br><br>
+
+    <!-- 이메일 -->
+    <label for="email">이메일:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <!-- 문의 내용 -->
+    <label for="content">문의 내용:</label><br>
+    <textarea id="content" name="content" rows="5" cols="40" required></textarea><br><br>
+
+    <!-- 제출 버튼 -->
+    <button type="submit">문의 제출</button>
+</form>
+
+</body>
+</html>

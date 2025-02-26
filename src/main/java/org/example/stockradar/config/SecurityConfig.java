@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .authorizeHttpRequests(auth -> auth
                         // 로그인/회원가입/리소스 접근 허용
-                        .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**","/customerInquiry/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // JWT 필터 등록
