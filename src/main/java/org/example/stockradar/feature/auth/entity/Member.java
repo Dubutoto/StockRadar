@@ -4,8 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.stockradar.feature.board.entity.Board;
+import org.example.stockradar.feature.board.entity.Comments;
+import org.example.stockradar.feature.board.entity.NestedComments;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -49,6 +54,22 @@ public class Member {
             this.role = Role.MEMBER; // 회원가입 시 기본 MEMBER
         }
     }
+    //고객문의 관계설정(진오)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CustomerInquiry> customerInquiries = new ArrayList<>();
+
+    //게시판 관계설정(진오)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
+
+    //댓글과 관계설정(진오)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comments> comments = new ArrayList<>();
+
+    //대댓글과 관계설정(진오)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<NestedComments> nestedComments = new ArrayList<>();
+
 
     @PreUpdate
     protected void onUpdate() {
