@@ -20,7 +20,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 jwt:
   secret: "nJqBg/I14BcNecIsAsdWXwQa4E6fC20rXpHxb0EcHlE="
