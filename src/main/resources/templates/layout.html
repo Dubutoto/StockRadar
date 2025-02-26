@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:sec2="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Stock Radar</title>
+
+  <meta name="keywords" content="HTML5 Template" />
+  <meta name="description" content="Porto - Bootstrap eCommerce Template">
+  <meta name="author" content="SW-THEMES">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.png}">
+
+
+  <script th:inline="javascript">
+    WebFontConfig = {
+      google: {
+        families: ['Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700,800', 'Oswald:300,400,500,600,700,800']
+      }
+    };
+    (function(d) {
+      var wf = d.createElement('script'),
+              s = d.scripts[0];
+      wf.src = /*[[@{/assets/js/webfont.js}]]*/ "";
+      wf.async = true;
+      s.parentNode.insertBefore(wf, s);
+    })(document);
+  </script>
+
+
+  <!-- Plugins CSS File -->
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+
+  <!-- Main CSS File -->
+  <link rel="stylesheet" th:href="@{/assets/css/demo4.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+</head>
+
+
+<body>
+<div class="page-wrapper">
+
+<!-- 사이트 들어오자 마자 설명 -->
+<!-- Start notice -->
+  <div class="top-notice bg-primary text-white">
+    <div class="container text-center">
+      <h5 class="d-inline-block">실시간 PC 부품 재고 &amp; 최저가 확인!</h5>
+      <small>원하는 부품, 한눈에 비교하고 최저가 득템!</small>
+      <!-- 닫기 -->
+      <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+    </div>
+  </div>
+<!-- End notice -->
+
+<!-- Start .header  -->
+  <header class="header">
+    <div class="header-top">
+      <div class="container">
+
+        <div class="header-right header-dropdowns ml-0 ml-sm-auto w-sm-100">
+          <div class="header-dropdown dropdown-expanded d-none d-lg-block">
+            <a href="#">Links</a>
+            <div class="header-menu">
+              <ul>
+                <li><a th:href="@{/auth/accountDetails}">마이페이지</a></li>
+                <li><a href="about.html">사이트 소개</a></li>
+                <li><a href="news.html">뉴스</a></li>
+                <li><a th:href="@{/auth/wishlist}">관심상품</a></li>
+                <li><a th:href="@{/ajax/login-popup.html}" class="login-link">로그인</a></li>
+              </ul>
+            </div>
+            <!-- End .header-menu -->
+          </div>
+          <!-- End .header-dropown -->
+
+        </div>
+        <!-- End .header-right -->
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .header-top -->
+
+    <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
+      <div class="container">
+        <div class="header-left col-lg-2 w-auto pl-0">
+          <button class="mobile-menu-toggler text-primary mr-2" type="button">
+            <i class="fas fa-bars"></i>
+          </button>
+          <a href="demo4.html" class="logo">
+            <img th:src="@{/assets/images/logo.png}" width="111" height="44" alt="Porto Logo">
+          </a>
+        </div>
+        <!-- End .header-left -->
+
+        <div class="header-right w-lg-max">
+          <div class="header-icon header-search header-search-inline header-search-category w-lg-max text-right mt-0">
+            <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
+            <form action="#" method="get">
+              <div class="header-search-wrapper">
+                <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required>
+                <div class="select-custom">
+                  <select id="cat" name="cat">
+                    <option value="">카테고리</option>
+                    <option value="4">Fashion</option>
+                    <option value="12">- Women</option>
+                    <option value="13">- Men</option>
+                    <option value="66">- Jewellery</option>
+                    <option value="67">- Kids Fashion</option>
+                    <option value="5">Electronics</option>
+                    <option value="21">- Smart TVs</option>
+                    <option value="22">- Cameras</option>
+                    <option value="63">- Games</option>
+                    <option value="7">Home &amp; Garden</option>
+                    <option value="11">Motors</option>
+                    <option value="31">- Cars and Trucks</option>
+                    <option value="32">- Motorcycles &amp; Powersports</option>
+                    <option value="33">- Parts &amp; Accessories</option>
+                    <option value="34">- Boats</option>
+                    <option value="57">- Auto Tools &amp; Supplies</option>
+                  </select>
+                </div>
+                <!-- End .select-custom -->
+                <button class="btn icon-magnifier p-0" title="search" type="submit"></button>
+              </div>
+              <!-- End .header-search-wrapper -->
+            </form>
+          </div>
+          <!-- End .header-search -->
+
+          <div class="header-contact d-none d-lg-flex pl-4 pr-4">
+            <img alt="phone" th:src="@{/assets/images/phone.png}" width="30" height="30" class="pb-1">
+            <h6><span>Call us now</span><a href="tel:#" class="text-dark font1">+123 5678 890</a></h6>
+          </div>
+
+          <a th:href="@{/auth/signIn}" class="header-icon" title="signIn"><i class="icon-user-2"></i></a>
+
+          <a th:href="@{/auth/wishlist}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
+
+          <!-- 카트 말고 wishlist 오른쪽에 뜨게 바꾸기-->
+          <div class="dropdown cart-dropdown">
+            <a href="#" title="wishlist" class="dropdown-toggle dropdown-arrow cart-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+              <i class="minicart-icon"></i>
+              <span class="cart-count badge-circle">3</span>
+            </a>
+
+            <div class="cart-overlay"></div>
+
+            <div class="dropdown-menu mobile-cart">
+              <a href="#" title="Close (Esc)" class="btn-close">×</a>
+
+              <div class="dropdownmenu-wrapper custom-scrollbar">
+                <div class="dropdown-cart-header">관심상품</div>
+                <!-- End .dropdown-cart-header -->
+
+                <!-- My Wishlist 사이드에서 볼 수 있게-->
+                <div class="dropdown-cart-products">
+
+                  <!-- 반복문으로 그리기 -->
+                  <div class="product">
+                    <div class="product-details">
+                      <h4 class="product-title">
+                        <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
+                      </h4>
+
+                      <span class="cart-product-info">
+													<span class="cart-product-qty">1</span> × $99.00
+                                                </span>
+                    </div>
+                    <!-- End .product-details -->
+
+                    <figure class="product-image-container">
+                      <a href="product.html" class="product-image">
+                        <img th:src="@{/assets/images/products/product-1.jpg}" alt="product" width="80" height="80">
+                      </a>
+
+                      <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
+                    </figure>
+                  </div>
+                  <!-- End .product -->
+
+                </div>
+                <!-- End .wish-product -->
+
+                <div class="dropdown-cart-action">
+                  <a th:href="@{/auth/wishlist}" class="btn btn-gray btn-block view-cart">
+                    관심상품</a>
+                </div>
+                <!-- End .dropdown-cart-total -->
+              </div>
+              <!-- End .dropdownmenu-wrapper -->
+            </div>
+            <!-- End .dropdown-menu -->
+          </div>
+          <!-- End .dropdown -->
+        </div>
+        <!-- End .header-right -->
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .header-middle -->
+
+    <div class="header-bottom sticky-header d-none d-lg-block" data-sticky-options="{'mobile': false}">
+      <div class="container">
+        <nav class="main-nav w-100">
+          <ul class="menu">
+            <li class="active">
+              <a href="demo4.html">Home</a>
+            </li>
+            <li>
+              <a href="category.html">카테고리</a>
+              <div class="megamenu megamenu-fixed-width megamenu-3cols">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <a href="#" class="nolink">VARIATION 1</a>
+                    <ul class="submenu">
+                      <li><a href="category.html">Fullwidth Banner</a></li>
+                      <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a>
+                      </li>
+                      <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a>
+                      </li>
+                      <li><a href="category.html">Left Sidebar</a></li>
+                      <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
+                      <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
+                      <li><a href="category-horizontal-filter1.html">Horizontal Filter1</a>
+                      </li>
+                      <li><a href="category-horizontal-filter2.html">Horizontal Filter2</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-4">
+                    <a href="#" class="nolink">VARIATION 2</a>
+                    <ul class="submenu">
+                      <li><a href="category-list.html">List Types</a></li>
+                      <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a>
+                      </li>
+                      <li><a href="category.html">3 Columns Products</a></li>
+                      <li><a href="category-4col.html">4 Columns Products</a></li>
+                      <li><a href="category-5col.html">5 Columns Products</a></li>
+                      <li><a href="category-6col.html">6 Columns Products</a></li>
+                      <li><a href="category-7col.html">7 Columns Products</a></li>
+                      <li><a href="category-8col.html">8 Columns Products</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- End .megamenu -->
+            </li>
+            <li>
+              <a href="product.html">상품</a>
+              <div class="megamenu megamenu-fixed-width">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <a href="#" class="nolink">PRODUCT PAGES</a>
+                    <ul class="submenu">
+                      <li><a href="product.html">SIMPLE PRODUCT</a></li>
+                      <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
+                      <li><a href="product-custom-tab.html">WITH CUSTOM TAB</a></li>
+                      <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
+                    </ul>
+                  </div>
+                  <!-- End .col-lg-4 -->
+                </div>
+                <!-- End .row -->
+              </div>
+              <!-- End .megamenu -->
+            </li>
+            <li>
+              <a href="#">Pages</a>
+              <ul>
+                <li><a th:href="@{/auth/wishlist}">관심상품</a></li>
+                <li><a th:href="@{/auth/accountDetails}">마이페이지</a></li>
+                <li><a href="about.html">사이트 소개</a></li>
+                <li><a href="#">뉴스</a>
+                  <ul>
+                    <li><a href="news.html">뉴스</a></li>
+                    <li><a href="newsPost.html">뉴스 상세</a></li>
+                  </ul>
+                </li>
+                <li><a href="contact.html">문의하기</a></li>
+                <li><a th:href="@{/auth/signIn}">로그인</a></li>
+                <li><a href="forgot-password.html">Forgot Password</a></li>
+              </ul>
+            </li>
+            <li><a href="news.html">뉴스</a></li>
+            <li><a href="contact.html">문의하기</a></li>
+            <li class="float-right"><a href="#" class="pl-5">Special Offer!</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .header-bottom -->
+  </header>
+  <!-- End .header -->
+
+  <!-- Start .container  -->
+  <div class="container" layout:fragment="content" >
+
+  </div>
+  <!-- End .container -->
+
+  <!-- Start .footer -->
+  <footer class="footer bg-dark">
+    <div class="footer-middle">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+            <div class="widget">
+              <h4 class="widget-title">문의 정보</h4>
+              <ul class="contact-info">
+                <li>
+                  <span class="contact-info-label">Address:</span>123 Street Name, City, Korea
+                </li>
+                <li>
+                  <span class="contact-info-label">Phone:</span><a href="tel:">(123)
+                  456-7890</a>
+                </li>
+                <li>
+                  <span class="contact-info-label">Email:</span> <a href="mailto:mail@example.com">mail@example.com</a>
+                </li>
+                <li>
+                  <span class="contact-info-label">Working Days/Hours:</span> Mon - Fri / 9:00 AM - 5:00 PM
+                </li>
+              </ul>
+            </div>
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-lg-3 -->
+
+          <div class="col-lg-3 col-sm-6">
+            <div class="widget">
+              <h4 class="widget-title">고객 서비스</h4>
+
+              <ul class="links">
+                <li><a href="#">Help & FAQs</a></li>
+                <li><a href="#">Advanced Search</a></li>
+                <li><a th:href="@{/auth/accountDetails}">마이페이지</a></li>
+                <li><a href="about.html">사이트 소개</a></li>
+                <li><a href="#">개인정보처리방침</a></li>
+              </ul>
+            </div>
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-lg-3 -->
+
+          <!-- 많이 검색하는 부품 -->
+          <div class="col-lg-3 col-sm-6">
+            <div class="widget">
+              <h4 class="widget-title">Popular Tags</h4>
+
+              <div class="tagcloud">
+                <a href="#">Bag</a>
+                <a href="#">Black</a>
+                <a href="#">Blue</a>
+                <a href="#">Clothes</a>
+                <a href="#">Fashion</a>
+                <a href="#">Hub</a>
+                <a href="#">Shirt</a>
+                <a href="#">Shoes</a>
+                <a href="#">Skirt</a>
+                <a href="#">Sports</a>
+                <a href="#">Sweater</a>
+              </div>
+            </div>
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-lg-3 -->
+
+          <div class="col-lg-3 col-sm-6">
+            <div class="widget widget-newsletter">
+              <h4 class="widget-title">Subscribe newsletter</h4>
+              <p>Get all the latest information on events, sales and offers. Sign up for newsletter:
+              </p>
+              <form action="#" class="mb-0">
+                <input type="email" class="form-control m-b-3" placeholder="Email address" required>
+
+                <input type="submit" class="btn btn-primary shadow-none" value="Subscribe">
+              </form>
+            </div>
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-lg-3 -->
+        </div>
+        <!-- End .row -->
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .footer-middle -->
+
+    <div class="container">
+      <div class="footer-bottom">
+        <div class="container d-sm-flex align-items-center">
+          <div class="footer-left">
+            <span class="footer-copyright">© Stock Radar. 2025. All Rights Reserved</span>
+          </div>
+
+          <div class="footer-right ml-auto mt-1 mt-sm-0">
+            <div class="payment-icons">
+              <a th:href="@{https://github.com/Hyun7en}">
+              <span class="payment-icon stripe" th:style="|background-image: url('@{/assets/images/tootpg/github-logo.svg}')|"></span>
+              </a>
+              <a th:href="@{https://github.com/Dubutoto}">
+              <span class="payment-icon stripe" th:style="|background-image: url('@{/assets/images/tootpg/github-logo.svg}')|"></span>
+              </a>
+              <a th:href="@{https://github.com/jinfive}">
+              <span class="payment-icon stripe" th:style="|background-image: url('@{/assets/images/tootpg/github-logo.svg}')|"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End .footer-bottom -->
+    </div>
+    <!-- End .container -->
+  </footer>
+  <!-- End .footer -->
+</div>
+<!-- End .page-wrapper -->
+
+<div class="loading-overlay">
+  <div class="bounce-loader">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+</div>
+
+<div class="mobile-menu-overlay"></div>
+<!-- End .mobil-menu-overlay -->
+
+<div class="mobile-menu-container">
+  <div class="mobile-menu-wrapper">
+    <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
+    <nav class="mobile-nav">
+      <ul class="mobile-menu">
+        <li><a href="demo4.html">Home</a></li>
+        <li>
+          <a href="category.html">카테고리</a>
+          <ul>
+            <li><a href="category.html">Full Width Banner</a></li>
+            <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
+            <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
+            <li><a href="category-sidebar-left.html">Left Sidebar</a></li>
+            <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
+            <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
+            <li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
+            <li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
+            <li><a href="#">List Types</a></li>
+            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll<span
+                    class="tip tip-new">New</span></a></li>
+            <li><a href="category.html">3 Columns Products</a></li>
+            <li><a href="category-4col.html">4 Columns Products</a></li>
+            <li><a href="category-5col.html">5 Columns Products</a></li>
+            <li><a href="category-6col.html">6 Columns Products</a></li>
+            <li><a href="category-7col.html">7 Columns Products</a></li>
+            <li><a href="category-8col.html">8 Columns Products</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="product.html">상품</a>
+          <ul>
+            <li>
+              <a href="#" class="nolink">PRODUCT PAGES</a>
+              <ul>
+                <li><a href="product.html">SIMPLE PRODUCT</a></li>
+                <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
+                <li><a href="product.html">SALE PRODUCT</a></li>
+                <li><a href="product.html">FEATURED & ON SALE</a></li>
+                <li><a href="product-sticky-info.html">WIDTH CUSTOM TAB</a></li>
+                <li><a href="product-sidebar-left.html">WITH LEFT SIDEBAR</a></li>
+                <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
+                <li><a href="product-addcart-sticky.html">ADD CART STICKY</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Pages</a>
+          <ul>
+            <li>
+              <a th:href="@{/auth/wishlist}">관심상품</a>
+            </li>
+            <li>
+              <a th:href="@{/auth/accountDetails}">마이페이지</a>
+            </li>
+            <li>
+              <a th:href="@{/auth/signIn}">로그인</a>
+            </li>
+            <li>
+              <a href="forgot-password.html">비밀번호 찾기</a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="news.html">뉴스</a></li>
+      </ul>
+
+      <ul class="mobile-menu mt-2 mb-2">
+        <li class="border-0">
+          <a href="#">
+            Special Offer!
+          </a>
+        </li>
+      </ul>
+
+      <ul class="mobile-menu">
+        <li><a th:href="@{/auth/signIn}" class="login-link">로그인</a></li>
+        <li><a href="contact.html">문의하기</a></li>
+        <li><a th:href="@{/auth/wishlist}">관심상품</a></li>
+      </ul>
+    </nav>
+    <!-- End .mobile-nav -->
+
+    <form class="search-wrapper mb-2" action="#">
+      <input type="text" class="form-control mb-0" placeholder="Search..." required />
+      <button class="btn icon-search text-white bg-transparent p-0" type="submit"></button>
+    </form>
+
+
+  </div>
+  <!-- End .mobile-menu-wrapper -->
+</div>
+<!-- End .mobile-menu-container -->
+
+<div class="sticky-navbar">
+  <div class="sticky-info">
+    <a href="demo4.html">
+      <i class="icon-home"></i>Home
+    </a>
+  </div>
+  <div class="sticky-info">
+    <a href="category.html" class="">
+      <i class="icon-bars"></i>카테고리
+    </a>
+  </div>
+  <div class="sticky-info">
+    <a th:href="@{/auth/wishlist}" class="">
+      <i class="icon-wishlist-2"></i>관심상품
+    </a>
+  </div>
+  <div class="sticky-info">
+    <a th:href="@{/auth/signIn}" class="">
+      <i class="icon-user-2"></i>Account
+    </a>
+  </div>
+</div>
+
+<a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
+
+<!-- Plugins JS File -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/optional/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/js/plugins.min.js}"></script>
+<script th:src="@{/assets/js/jquery.appear.min.js}"></script>
+
+<!-- Main JS File -->
+<script th:src="@{/assets/js/main.min.js}"></script>
+</body>
+
+
+</html>
