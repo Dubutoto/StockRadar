@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.stockradar.feature.CustomerInquiry.entity.CustomerInquiry;
 import org.example.stockradar.feature.board.entity.Board;
 import org.example.stockradar.feature.board.entity.Comments;
 import org.example.stockradar.feature.board.entity.NestedComments;
