@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+<h1>로그인</h1>
+
+<!-- 로그인 폼 -->
+<form th:action="@{/auth/login}" method="post">
+    <div>
+        <label for="memberId">아이디(이메일):</label>
+        <input type="text" id="memberId" name="memberId"/>
+    </div>
+    <div>
+        <label for="memberPw">비밀번호:</label>
+        <input type="password" id="memberPw" name="memberPw"/>
+    </div>
+    <button type="submit">로그인</button>
+</form>
+
+<!-- 로그인 실패 시, AuthController에서 model에 "error"를 담아 리턴할 수 있음 -->
+<div th:if="${error}">
+    <p style="color:red" th:text="${error}"></p>
+</div>
+
+<p><a th:href="@{/signup}">회원가입</a></p>
+
+</body>
+</html>
