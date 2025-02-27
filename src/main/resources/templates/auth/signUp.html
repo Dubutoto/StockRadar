@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="content">
+    <main class="main">
+        <div class="col-md-6">
+            <div class="heading mb-1">
+                <h2 class="title">회원가입</h2>
+            </div>
+
+            <form action="#">
+                <!-- 이메일 -->
+                <label for="register-email">
+                    이메일
+                    <span class="required">*</span>
+                </label>
+                <input type="email" class="form-input form-wide" id="register-email" required />
+
+                <!-- 패스워드 -->
+                <label for="register-password">
+                    비밀번호
+                    <span class="required">*</span>
+                </label>
+                <input type="password" class="form-input form-wide" id="register-password"
+                       required />
+
+                <!-- 이름 -->
+                <label for="register-name">
+                    이름
+                    <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input form-wide" id="register-name"
+                       required />
+
+                <!-- 전화번호 -->
+                <label for="register-phoneNumber">
+                    전화번호
+                    <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input form-wide" id="register-phoneNumber"
+                       required />
+
+                <div class="form-footer mb-2">
+                    <button type="submit" class="btn btn-dark btn-md w-100 mr-0">
+                        회원가입
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+    <!-- End .main -->
+</div>
+</html>

@@ -43,9 +43,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationManager(authenticationManager)
-                .authorizeHttpRequests(auth -> auth
                         // 로그인/회원가입/리소스 파일은 모두 허용
-                        .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**", "/images/**", "/customerInquiry/**")).permitAll()
                         // 나머지는 인증 필요
                         .anyRequest().authenticated()
                 )
