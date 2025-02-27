@@ -31,7 +31,7 @@ public class CustomerInquiry {
     private String inquiryContent;
 
     @Column(nullable = false)
-    private String inquiryStatus;
+    private Integer inquiryStatus;
 
     @CreationTimestamp
     private LocalDate createdAt;

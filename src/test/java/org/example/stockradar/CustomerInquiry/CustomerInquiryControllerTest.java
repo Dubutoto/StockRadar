@@ -1,8 +1,7 @@
-package org.example.stockradar;
+package org.example.stockradar.CustomerInquiry;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.stockradar.feature.CustomerInquiry.dto.CustomerInquiryUserRequestDto;
-import org.example.stockradar.feature.CustomerInquiry.service.CustomerInquiryService;
 import org.example.stockradar.feature.auth.dto.LoginRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
