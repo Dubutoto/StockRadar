@@ -3,8 +3,10 @@ package org.example.stockradar.global.exception.specific;
 import org.example.stockradar.global.exception.CustomException;
 import org.example.stockradar.global.exception.ErrorCode;
 
-public class AuthException {
-    public static void throwAuthException(ErrorCode errorCode) {
+public class CustomerInquiryProcessiongException {
+
+    // 특정 에러 코드를 기반으로 CustomException을 던지는 메서드
+    public static void throwCustomException(ErrorCode errorCode) {
         throw new CustomException(
                 errorCode.getErrorCode(),
                 errorCode.getErrorMessage(),
@@ -14,7 +16,7 @@ public class AuthException {
     }
 
     // 에러 메시지를 추가로 제공하여 CustomException을 던지는 메서드
-    public static void throwAuthException(ErrorCode errorCode, String customMessage) {
+    public static void throwCustomException(ErrorCode errorCode, String customMessage) {
         throw new CustomException(
                 errorCode.getErrorCode(),
                 customMessage,
