@@ -15,7 +15,7 @@ public class CustomerInquiryService {
     private final MemberRepository memberRepository;
 
     public Long saveCustomerInquiry(CustomerInquiryUserRequestDto requestDto, String memberId) {
-        // 현재 로그인한 회원 정보 조회 - Optional 사용하지 않음
+        // 현재 로그인한 회원 정보 조회
         Member member = memberRepository.findByMemberId(memberId);
 
         // 회원이 없는 경우 예외 처리
