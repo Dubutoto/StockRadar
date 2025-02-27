@@ -1,0 +1,92 @@
+//Product-Both-Info
+.product-both-info {
+	padding-top: 1.2rem;
+
+	.single-info-list li strong {
+		font-size: 1.4rem;
+	}
+
+	.product-desc {
+		margin-bottom: 3.1rem;
+	}
+
+	.short-divider {
+		margin-bottom: 2rem;
+	}
+
+	.product-filters-container {
+		padding-bottom: 1px;
+		margin-bottom: 0.4rem;
+	}
+
+	.add-wishlist {
+	    padding: 13px 5px;
+    	margin-left: -5px;
+	}
+
+	.product-single-qty label {
+		font-family: $font-family;
+	}
+
+	.product-single-filter {
+		label {
+			margin-right: 3.3rem;
+			margin-bottom: 1px;
+		}
+
+		&:first-child {
+			padding-bottom: 1.5rem;
+			margin-bottom: 1.5rem;	
+			border-bottom: 1px solid #e7e7e7;
+		}
+	}
+
+	.product-category {
+		color: #4c4c4c;
+		font-size: 14px;
+		font-weight: 700;
+		position: relative;
+		line-height: 1.8;
+	}
+
+	.single-info-list {
+		margin-bottom: 1.4rem;
+
+		li {
+			margin-bottom: .6rem;
+		}
+	}
+}
+
+//Product Sticky Both Info Bottom
+.product-both-info-bottom {
+	margin: 1.9rem 0 4rem;
+	padding: 5.4rem 0 4.6rem;
+	
+	h3 {
+		position: relative;
+		display: flex;
+		background-color: inherit;
+		align-items: center;
+
+		&::after {
+			content: '';
+			border-top: 1px solid;
+			flex: 1;
+		}
+	}
+
+	p {
+		margin-bottom: 2.4rem;
+		line-height: 1.75;
+	}
+
+	.heading {
+		margin-bottom: 2.3rem;
+		font-size: 2rem;
+	}
+
+	strong {
+		margin-right: 20px;
+	}
+}

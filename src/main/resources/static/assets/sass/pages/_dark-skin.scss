@@ -1,0 +1,493 @@
+/*
+	1. Home page
+	2. About page
+*/
+
+
+/* 1. Home page*/
+body {
+	background-color: $primary-color-dark;
+}
+// wishlist--heart icon
+.category-wrap,
+.product-single-share {
+	.load-more-overlay::before {
+		background: $primary-color-dark;
+	}
+	.load-more-overlay.loading::after,
+	.loading:not(.load-more-overlay) {
+		border-color: #da5555;
+	}
+}
+
+// loading the page
+.loading-overlay {
+	background-color: $primary-color-dark;
+}
+.bounce-loader {
+	.bounce1,
+	.bounce2,
+	.bounce3 {
+		background-color: #151719;
+	}
+}
+
+//header
+.header-dropdown {
+	padding: 4px 0;
+	ul {
+		background-color: #1b1e21;
+		a {
+			color: rgba(255, 255, 255, .7);
+		}
+	}
+	.dropdown-toggle:after {
+		font-size: 17px;
+	}
+}
+.menu {
+	.megamenu, ul {
+		background-color: #1b1e21;
+		border: none;
+	}
+	> li:not(:first-child) {
+		border-color: #1b1e21;
+	}
+}
+.header-menu::before {
+	border-bottom-color: #1b1e21;
+}
+.header-icon:hover {
+	color: #fff;
+}
+.minicart-icon {
+	border-color: #fff;
+}
+.header-search-wrapper .select-custom::after {
+	z-index: 1;
+}
+.header-search .form-control::placeholder {
+	color: #8d8d8d;
+}
+.sticky-header.fixed {
+	box-shadow: 0 0 3px 0 rgba(255, 255, 255, .06);
+}
+//home
+.info-boxes-container .info-box {
+	color: #fff;
+	&:not(:last-child) {
+		border-right: 1px solid #313438;
+	}
+}
+.product-default .btn-icon-wish:hover {
+	color: #fff;
+}
+.ratings-container .product-ratings::before {
+	color: rgba(255,255,255,0.13);
+}
+//category-menu
+.side-menu-wrapper {
+	border-color: #1b1e21;
+}
+.side-menu-title {
+	background-color: #151719;
+}
+
+//mobile-cart, product-single popup
+.mobile-cart .custom-scrollbar,
+.product-quick-view .product-single-details {
+	&::-webkit-scrollbar-track {
+		background-color: $primary-color-dark;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: #39404c;
+	}
+}
+.cart-dropdown {
+	.product {
+		border-bottom-color: #313438;
+	}
+	.product-title a {
+		color: #fff;
+	}
+	.btn-remove {
+		color: $primary-color-dark;
+	}
+}
+.cart-dropdown .mobile-cart {
+	background-color: $primary-color-dark;
+	border: 0;
+}
+.dropdown-cart-action .btn-dark:not(:hover) {
+	background-color: #151719;
+}
+.custom-scrollbar {
+	background-color: $primary-color-dark;
+}
+.dropdown-menu {
+	color: #fff;
+}
+.cart-product-info {
+	color: #a8a8a8;
+}
+//footer
+.social-icon {
+	&:not(:hover):not(:active):not(:focus) {
+		border-color: #313438;
+	}
+}
+.sticky-navbar {
+	border-top-color: #313438;
+	background-color: $primary-color-dark;
+	.sticky-info {
+		&:not(:last-child) {
+			border-right-color: #313438;
+		}
+		a {
+			color: #fff;
+			&:hover {
+				color: $primary-color;
+			}
+		}
+	}
+}
+//wishlist-popup
+.wishlist-popup {
+	background-color: $primary-color-dark;
+	color: #fff;
+}
+// Below two codes are not needed as soon as Newsletter Popup for darks is developed.
+.newsletter-subscribe .custom-control-input:checked~.custom-control-label::before {
+	background-color: #007bff;
+}
+.newsletter-popup .mfp-close {
+	color: #838383;
+}
+@include mq(lg, max) {
+	.mobile-sidebar {
+		&::-webkit-scrollbar-track {
+			background: $primary-color-dark;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: #39404c;
+		}
+	}
+	.info-boxes-container .info-box:not(:last-child) {
+		border-bottom: 1px solid #313438;
+	}
+}
+@include mq(lg) {
+	.dropdown-expanded ul {
+		background-color: transparent;
+	}
+}
+// Login Popup
+.login-popup {
+	.container {
+		background-color: #1d2024;
+	}
+	.form-input {
+		background-color: #353a40;
+		border-color: transparent;
+	}
+	.forget-password {
+		color: #fff;
+		&:hover {
+			color: $primary-color;
+		}
+	}
+	.btn-regist {
+		color: #fff;
+		&:hover {
+			color: $primary-color;
+		}
+	}
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label:after {
+	color: #fff;
+}
+
+/* 2. About page */
+.subtitle,
+.about-section .lead,
+.testimonial-title {
+	color: #fff;
+}
+.about-section p {
+	color: #777;
+}
+.features-section,
+.counters-section {
+	background-color: #1d2024;
+}
+.feature-box {
+	.feature-box-content {
+		color: #777;
+	}
+}
+.about .feature-box h3 {
+	color: #fff;
+}
+.testimonial-owner span,
+.testimonial blockquote p,
+.count-container .count-title {
+	color: #a8a8a8;
+}
+
+/* 3. Contact Page */
+.contact-us-container {
+	.contact-info {
+		border-bottom-color: #272b2f;
+	}
+	.form-control {
+		background-color: #2e3237;
+		border-color: transparent;
+	}
+} 
+.card {
+	background-color: $primary-color-dark;
+}
+.card-header {
+	color: #fff;
+	border-color: #555;
+}
+.form-footer .btn {
+	padding: .5em 1em;
+	text-transform: capitalize;
+}
+
+/* 4. Shop Page */
+.toolbox {
+	.form-control {
+		background-color: #2e3237;
+		border-color: #2e3237;
+	}
+}
+.product-single-filter.select-custom,
+.toolbox .select-custom {
+	background-color: transparent;
+	select,
+	select:focus {
+		background-color: #2e3237;
+		border-color: transparent;
+	}
+	&::after {
+		color: #ccc;
+		z-index: 1;
+	}
+}
+.layout-btn {
+	color: #fff;
+}
+.page-link {
+	background-color: #272b2f;
+	border-color: transparent;
+}
+.page-link-btn {
+	border: 1px solid transparent;
+	&:hover,
+	&:focus {
+		border-color: #08C;
+	}
+}
+.toolbox-pagination {
+	border-top-color: #272b2f;
+}
+span.toggle {
+	color: #fff;
+}
+.noUi-target {
+	background: #1b1e21;
+}
+.config-size-list a {
+	border-color: #272b2f;
+}
+.widget-block {
+	h5 {
+		color: #7a7d82;
+	}
+	p {
+		color: #999;
+	}
+}
+.main .sticky-header.toolbox.fixed {
+	background-color: #272b2f;
+}
+.sidebar-toggle {
+	background-color: #2e3237;
+	border-color: transparent;
+	svg {
+		stroke: #fff;
+	}
+}
+.sidebar-shop .widget-title {
+	color: #fff;
+}
+.minipopup-box {
+	background: #151719;
+	.product-detail {
+		.product-name {
+			color: #fff;
+		}
+	}
+}
+.prod-thumbnail {
+	.owl-dot.active img, 
+	img:hover {
+		border-color: #08C;
+	}
+}
+
+button.mfp-close {
+	color: #fff;
+}
+
+@include mq(lg, max) {
+	.mobile-sidebar {
+		background-color: $primary-color-dark;
+	}
+	.toolbox:not(.toolbox-pagination) {
+		background-color: #272b2f;
+	}
+	.sidebar-toggle span,
+	.toolbox label,
+	.toolbox .select-custom .form-control {
+		color: #fff;
+	}
+	.sidebar-shop .widget:not(:last-child) {
+		border-bottom-color: #272b2f;
+	}
+}
+
+/* 5. Product Page */
+hr {
+	border-top-color: #313438; 
+}
+.product-single-details {
+	.product-title,
+	.new-price,
+	.product-price {
+		color: #fff;
+	}
+	.clear-btn {
+		margin-left: -4px;
+		background-color: #2e3237;
+	}
+	.product-nav {
+		a {
+			color: #777;
+			&:hover {
+				color: #fff;
+			}
+		}
+		.product-popup {
+			background-color: #353a40;
+		}
+		.box-content>span {
+			color: #797876;
+		}
+	}
+	.product-action {
+		border-top-color: #313438;
+		.btn-dark {
+			background-color: #2e3237;
+			&:not(.disabled):hover {
+				background-color: $primary-color;
+			}
+		}
+	}
+}
+.product-single-qty {
+	.bootstrap-touchspin .form-control,
+	.bootstrap-touchspin .form-control:not(:focus),
+	.btn-outline:not(:disabled):not(.disabled):active {
+		border-color: #313438;
+		color: #fff;
+	}
+	.horizontal-quantity {
+		background-color: $primary-color-dark;
+	}
+	.btn.btn-outline {
+		border-color: #313438;
+	}
+	.btn.btn-down-icon:after,
+	.btn.btn-up-icon:before,
+	.btn.btn-up-icon:after {		
+		background-color: #fff;
+	}
+}
+.product-filters-container .select-custom::after {
+	color: #fff;
+	z-index: 1;
+}
+.table td,
+.table th {
+	border-color: transparent;
+}
+.table.table-size {
+	thead tr th,
+	tbody tr td {
+		color: #777;
+	}
+	thead tr th,
+	tbody tr:nth-child(2n) td {
+		background-color: #313438;
+	}
+	tbody tr td {
+		background-color: $primary-color-dark;
+	}
+}
+.table.table-striped tr:nth-child(odd) {
+	background-color: #313438;
+}
+.product-reviews-content .comments .comment-block {
+	background-color: #313438;
+}
+.comments .comment-arrow {
+	border-right-color: #313438;
+}
+.product-reviews-content .divider {
+	border-top-color: #313438;
+}
+.add-product-review form {
+	background-color: #272b2f;
+	.form-control {
+		background-color: #2e3237;
+		border-color: transparent;
+	}
+}
+.product-single-tabs .nav.nav-tabs .nav-item .nav-link {
+	&.active,
+	&:hover {
+		color: #fff;
+		background-color: transparent;
+		border-bottom-color: #fff;
+	}
+}
+.nav-tabs {
+	border-bottom-color: #313438;
+}
+.product-desc-content li::before {
+	color: #fff;
+}
+.product-single-share:not(.icon-with-color) .social-icon:not(:hover):not(:active):not(:focus),
+.add-wishlist,
+.single-info-list li strong,
+.product-reviews-content .required,
+label {
+	color: #fff;
+}
+.product-size-content img {
+	filter: invert(1);
+}
+.single-cart-notice,
+.cart-message span {
+	color: #fff;
+}
+.product-category {
+	color: #fff;
+}
+.comments .comment-by strong {
+	color: #999;
+}
+/* 6. Global */

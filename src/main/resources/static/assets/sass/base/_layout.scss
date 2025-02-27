@@ -1,0 +1,217 @@
+// Layout
+
+@include set-default(
+	(
+		layout: (
+			container: (
+				max-width-desktop: 1200px
+			)
+		)
+	)
+);
+
+.page-wrapper {
+	position: relative;
+	left: 0;
+	transition: all .25s;
+}
+
+.main {
+	flex: 1 1 auto;
+}
+
+.row {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+[class*="col-"] {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.row-sparse {
+	margin-left: -15px;
+	margin-right: -15px;
+
+	& > [class*="col-"] {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+
+.row-sm {
+	margin-left: -6px;
+	margin-right: -6px;
+
+	& > [class*="col-"] {
+		padding-left: 6px;
+		padding-right: 6px;
+	}
+}
+
+.row-joined {
+	margin-left: 0;
+	margin-right: 0;
+
+	& > [class*="col-"] {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+.gutter-sm {
+	margin-left: -10px;
+	margin-right: -10px;
+	& > * {
+		padding-left: 10px;
+		padding-right: 10px
+	}
+}
+.container :not(.sticky-header) > .container,
+.container :not(.sticky-header) > .container-fluid {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.ajax-overlay {
+	display: flex;
+	display: -ms-flexbox;
+	align-items: center;
+	-ms-flex-align: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: .8;
+    background-color: #0b0b0b;
+	z-index: 1055;
+}
+
+@include mq(1280px, max) {
+	.container-fluid {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+@include mq( get( layout, container, max-width-desktop) + 20px ) {
+	.container {
+		@include css( max-width, layout, container, max-width-desktop );
+	}
+}
+
+@include mq(xl) {
+	.col-xl-5col {
+		-ms-flex: 0 0 20%;
+		flex: 0 0 20%;
+		max-width: 20%;
+	}
+
+	.col-xl-5col-2 {
+		-ms-flex: 0 0 40%;
+		flex: 0 0 40%;
+		max-width: 40%;
+	}
+
+	.col-xl-7col {
+		-ms-flex: 0 0 14.2857%;
+		flex: 0 0 14.2857%;
+		max-width: 14.2857%;
+	}
+
+	.col-xl-8col {
+		-ms-flex: 0 0 12.5%;
+		flex: 0 0 12.5%;
+		max-width: 12.5%;
+	}
+
+	.row-xl-tight {
+		margin-left: -5px;
+		margin-right: -5px;
+
+		& > [class*="col-"] {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+}
+
+@include mq(lg) {
+	.container {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	.row-lg {
+		margin-left: -15px;
+		margin-right: -15px;
+	
+		[class*="col-"] {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+}
+
+@include mq(lg, max) {
+	.container {
+		max-width: none;
+	}
+
+	.mmenu-active .page-wrapper, .sidebar-opened .page-wrapper {
+		left: 260px;
+	}
+}
+
+@include mq(md) {
+	.row-md-tight {
+		margin-left: -5px;
+		margin-right: -5px;
+
+		& > [class*="col-"] {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+}
+
+@for $i from 1 through 8 {
+    .cols-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+}
+
+@include mq(xs) {
+    @for $i from 1 through 8 {
+        .cols-xs-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+    }
+}
+
+@include mq(sm) {
+    @for $i from 1 through 8 {
+        .cols-sm-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+    }
+}
+
+@include mq(md) {
+    @for $i from 1 through 8 {
+        .cols-md-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+    }
+}
+
+@include mq(lg) {
+    @for $i from 1 through 8 {
+        .cols-lg-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+    }
+}
+
+@include mq(xl) {
+    @for $i from 1 through 8 {
+        .cols-xl-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+    }
+}
+
+@include mq(xxl) {
+    @for $i from 1 through 8 {
+        .cols-xxl-#{$i} > * { max-width: #{ round( 100% / $i * 10000 ) / 10000 }; flex: 0 0 #{ round( 100% / $i * 10000 ) / 10000 }; }
+    }
+}

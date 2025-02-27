@@ -1,0 +1,210 @@
+.banners-page {
+    section {
+        > h3 {
+            font-size: 3.2rem;
+            letter-spacing: -1px;
+        }
+        > p {
+            font-family: 'Lora';
+            font-size: 15.4px;
+            max-width: 70rem;
+        }
+    }
+    .banner {
+        .banner-subtitle {
+            font-size: 1.3125em;
+            color: rgba(34,37,41,0.7);
+            line-height: 1;
+            font-weight: 500;
+            letter-spacing: .125em;
+            margin-bottom: .5rem;
+        }
+        .banner-title {
+            font-size: 4.5em;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+        h5 {
+            font-size: 0.75em;
+            vertical-align: top;
+            span {
+                position: relative;
+                font-size: 1.3rem;
+                top: -10px;
+                letter-spacing: -0.02em;
+            }
+        }
+        b {
+            position: relative;
+            display: inline-block;
+            padding: 4px 11px;
+            transform: rotate(-2deg);
+            font-size: 1.2em;
+            margin: 1px 4px 0 7px;
+            letter-spacing: -0.01em;
+            background-color: #e36159;
+            color: #fff;
+        }
+        .box-border {
+            max-width: 55%;
+            margin-left: auto;
+        }
+        .btn {
+            font-size: 1em;
+            font-weight: 700;
+            letter-spacing: -.025em;
+            padding: 1em 3em;
+        }
+    }
+    .banner1 .banner-layer {
+        right: unset;
+        left: 3.5%;
+    }
+    .banner2 .banner-layer {
+        left: unset;
+        right: 3.5%;
+    }
+    .banner3, .banner4 {
+        .banner-subtitle {
+            font-size: 1.375em;
+            line-height: 1;
+            font-weight: 600;
+            letter-spacing: .2em;
+            color: $primary-color-dark;
+        }
+        .banner-title {
+            font-family: Playfair Display, sans-serif;
+            font-size: 5.375em;
+            text-transform: none;
+            line-height: 1;
+            letter-spacing: -.05em;
+            margin-bottom: 2.4rem;
+        }
+        p {
+            font-size: 1.375em;
+            color: #777;
+            line-height: 1.5;
+            font-weight: 300;
+            letter-spacing: -.015em;
+            max-width: fit-content;
+        }
+        h5 {
+            font-size: 1.125em;
+            vertical-align: top;
+            span {
+                position: relative;
+                font-size: 1.8rem;
+                top: -10px;
+                letter-spacing: -0.02em;
+            }
+        }
+        b {
+            position: relative;
+            display: inline-block;
+            padding: 4px 11px;
+            transform: none;
+            font-size: 1.2em;
+            margin: 1px 4px 0 7px;
+            letter-spacing: -0.01em;
+            background: none;
+            color: #b93027;
+        }
+    }
+    .banner3 .banner-layer {
+        right: unset;
+        left: 11.5%;
+    }
+    .banner4 .banner-layer {
+        left: unset;
+        right: 11.5%;
+    }
+    .ken-banner {
+        overflow: hidden;
+        > figure img {
+            width: 1200px;
+            height: auto;
+            margin: 0 auto;
+            object-fit: cover;
+            object-position: center top;
+        }
+        h2 {
+            font-family: "Nanum Brush Script", sans-serif;
+            font-size: 6.8rem;
+            font-weight: 300;
+            line-height: 40px;
+            color: #c59b9c;
+            letter-spacing: .01em;
+        }
+        .btn-link {
+            padding: 0;
+            border: 0;
+            color: #666;
+            font-family: Poppins, sans-serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            white-space: nowrap;
+            i {
+                margin: 0 1px 0 5px;
+                font-size: 0.7em;
+                vertical-align: middle;
+            }
+            &:hover {
+                color: #c59b9c;
+            }
+        }
+    }
+    @include mq(xl, max) {
+        .ken-banner .banner-media > img {
+            margin-left: 0;
+        }
+    }
+    @include mq(md, max) {
+        .ken-banner .wrapper:before {
+            right: 71.5%;
+        }
+    }
+    @include mq(sm, max) {
+        .ken-banner .wrapper:before {
+            right: 95%;
+        }
+    }
+    @include mq(xs, max) {
+        .ken-banner .wrapper:before {
+            width: unset;
+        }
+    }
+}
+.banner-label {
+    position: absolute;
+    display: block;
+    left: -30px;
+    top: 20px;
+    width: 120px;
+    transform: rotate(-45deg);
+    background: #08c;
+    font-size: 1.4rem;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+    padding: .2rem;
+}
+.customLineAnim {
+    animation-name: customLineAnim;
+    animation-fill-mode: both;
+}
+@keyframes customLineAnim {
+    0% {
+        stroke-dasharray: 1600;
+        stroke-dashoffset: 1600;
+    }
+    100% {
+        stroke-dasharray: 2500;
+        stroke-dashoffset: 1600;
+    }
+}

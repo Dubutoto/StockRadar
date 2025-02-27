@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="content">
+    <main class="main about">
+        <div class="page-header page-header-bg text-left"
+             th:style="|background: url('@{/assets/images/page-header-bg.jpg}') center/cover no-repeat;|">
+            <div class="container">
+                <h1><span>회사 소개</span>
+                    컴퓨터 부품 최저가 검색 서비스</h1>
+                <a th:href="@{/common/contact}" class="btn btn-dark">문의하기</a>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/main}"><i class="icon-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">회사 소개</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav>
+
+        <div class="about-section">
+            <div class="container">
+                <h2 class="subtitle">회사 이야기</h2>
+                <p>저희 [회사명]은 최신 CPU, GPU 등 다양한 컴퓨터 부품의 최저가 정보를 제공하여, 소비자들이 합리적인 구매 결정을 내릴 수 있도록 지원합니다. 수년간의 데이터 분석과 시장
+                    조사를 통해 신뢰할 수 있는 가격 정보를 구축하였습니다.</p>
+                <p>고객 만족을 최우선으로 생각하며, 실시간으로 업데이트되는 가격 비교 서비스를 통해 언제나 최적의 구매 환경을 제공하고자 노력하고 있습니다.</p>
+
+                <p class="lead">“최저가 검색 서비스를 통해 현명한 소비를 경험해보세요.”</p>
+            </div><!-- End .container -->
+        </div><!-- End .about-section -->
+
+        <div class="features-section bg-gray">
+            <div class="container">
+                <h2 class="subtitle">왜 저희를 선택해야 할까요?</h2>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="feature-box bg-white">
+                            <i class="icon-price-tag"></i>
+                            <div class="feature-box-content p-0">
+                                <h3>최저가 보장</h3>
+                                <p>최신 데이터 분석을 통해 항상 최저가 정보를 제공합니다.</p>
+                            </div><!-- End .feature-box-content -->
+                        </div><!-- End .feature-box -->
+                    </div><!-- End .col-lg-4 -->
+
+                    <div class="col-lg-4">
+                        <div class="feature-box bg-white">
+                            <i class="icon-chart"></i>
+                            <div class="feature-box-content p-0">
+                                <h3>정확한 가격 비교</h3>
+                                <p>다양한 쇼핑몰의 가격 정보를 한눈에 비교할 수 있습니다.</p>
+                            </div><!-- End .feature-box-content -->
+                        </div><!-- End .feature-box -->
+                    </div><!-- End .col-lg-4 -->
+
+                    <div class="col-lg-4">
+                        <div class="feature-box bg-white">
+                            <i class="icon-support"></i>
+                            <div class="feature-box-content p-0">
+                                <h3>24시간 고객 지원</h3>
+                                <p>언제든지 문의하시면 신속하게 도움을 드립니다.</p>
+                            </div><!-- End .feature-box-content -->
+                        </div><!-- End .feature-box -->
+                    </div><!-- End .col-lg-4 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .features-section -->
+
+        <div class="testimonials-section">
+            <div class="container">
+                <h2 class="subtitle text-center">고객 후기</h2>
+
+                <div class="testimonials-carousel owl-carousel owl-theme images-left" data-owl-options="{
+                        'margin': 20,
+                        'lazyLoad': true,
+                        'autoHeight': true,
+                        'dots': false,
+                        'responsive': {
+                            '0': {
+                                'items': 1
+                            },
+                            '992': {
+                                'items': 2
+                            }
+                        }
+                    }">
+                    <div class="testimonial">
+                        <div class="testimonial-owner">
+                            <figure>
+                                <img src="assets/images/clients/client1.png" alt="고객">
+                            </figure>
+                            <div>
+                                <strong class="testimonial-title">홍길동</strong>
+                                <span>일반 사용자</span>
+                            </div>
+                        </div><!-- End .testimonial-owner -->
+
+                        <blockquote>
+                            <p>최저가 정보를 한눈에 비교할 수 있어 매우 편리합니다. 덕분에 합리적인 소비를 할 수 있었습니다.</p>
+                        </blockquote>
+                    </div><!-- End .testimonial -->
+
+                    <div class="testimonial">
+                        <div class="testimonial-owner">
+                            <figure>
+                                <img src="assets/images/clients/client2.png" alt="고객">
+                            </figure>
+                            <div>
+                                <strong class="testimonial-title">김철수</strong>
+                                <span>회원</span>
+                            </div>
+                        </div><!-- End .testimonial-owner -->
+
+                        <blockquote>
+                            <p>데이터 업데이트가 빠르고, 다양한 쇼핑몰의 가격 정보를 제공해줘 믿고 사용할 수 있습니다.</p>
+                        </blockquote>
+                    </div><!-- End .testimonial -->
+
+                    <div class="testimonial">
+                        <div class="testimonial-owner">
+                            <figure>
+                                <img src="assets/images/clients/client1.png" alt="고객">
+                            </figure>
+                            <div>
+                                <strong class="testimonial-title">이영희</strong>
+                                <span>고객</span>
+                            </div>
+                        </div><!-- End .testimonial-owner -->
+
+                        <blockquote>
+                            <p>사이트가 직관적이고 사용하기 편리합니다. 덕분에 원하는 부품을 빠르게 찾을 수 있었습니다.</p>
+                        </blockquote>
+                    </div><!-- End .testimonial -->
+                </div><!-- End .testimonials-carousel -->
+            </div><!-- End .container -->
+        </div><!-- End .testimonials-section -->
+
+        <div class="counters-section bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-md-4 count-container">
+                        <div class="count-wrapper">
+                            <span class="count-to" data-from="0" data-to="200" data-speed="2000"
+                                  data-refresh-interval="50">200</span>+
+                        </div><!-- End .count-wrapper -->
+                        <h4 class="count-title">비교 완료 건수</h4>
+                    </div><!-- End .col-md-4 -->
+
+                    <div class="col-6 col-md-4 count-container">
+                        <div class="count-wrapper">
+                            <span class="count-to" data-from="0" data-to="1800" data-speed="2000"
+                                  data-refresh-interval="50">1800</span>+
+                        </div><!-- End .count-wrapper -->
+                        <h4 class="count-title">등록된 부품 수</h4>
+                    </div><!-- End .col-md-4 -->
+
+                    <div class="col-6 col-md-4 count-container">
+                        <div class="count-wrapper line-height-1">
+                            <span class="count-to" data-from="0" data-to="24" data-speed="2000"
+                                  data-refresh-interval="50">24</span><span>시간</span>
+                        </div><!-- End .count-wrapper -->
+                        <h4 class="count-title">실시간 검색</h4>
+                    </div><!-- End .col-md-4 -->
+
+                    <div class="col-6 col-md-4 count-container">
+                        <div class="count-wrapper">
+                            <span class="count-to" data-from="0" data-to="265" data-speed="2000"
+                                  data-refresh-interval="50">265</span>+
+                        </div><!-- End .count-wrapper -->
+                        <h4 class="count-title">데이터 업데이트</h4>
+                    </div><!-- End .col-md-4 -->
+
+                    <div class="col-6 col-md-4 count-container">
+                        <div class="count-wrapper line-height-1">
+                            <span class="count-to" data-from="0" data-to="99" data-speed="2000"
+                                  data-refresh-interval="50">99</span><span>%</span>
+                        </div><!-- End .count-wrapper -->
+                        <h4 class="count-title">고객 만족도</h4>
+                    </div><!-- End .col-md-4 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .counters-section -->
+    </main><!-- End .main -->
+
+</div>
+<div layout:fragment="scripts">
+    <script src="assets/js/plugins/jquery.countTo.js"></script>
+</div>
+</html>

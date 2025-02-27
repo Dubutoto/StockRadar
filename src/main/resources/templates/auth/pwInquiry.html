@@ -8,19 +8,7 @@
   <main class="main">
     <div class="page-header">
       <div class="container d-flex flex-column align-items-center">
-        <nav aria-label="breadcrumb" class="breadcrumb-nav">
-          <div class="container">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a th:href="@{demo4.html}">Home</a></li>
-              <li class="breadcrumb-item"><a th:href="@{category.html}">Shop</a></li>
-              <li class="breadcrumb-item active" aria-current="page">
-                My Account
-              </li>
-            </ol>
-          </div>
-        </nav>
-
-        <h1>My Account</h1>
+        <h1>비밀번호 찾기</h1>
       </div>
     </div>
 
@@ -31,22 +19,21 @@
             <div class="feature-box-content">
               <form class="mb-0" action="#">
                 <p>
-                  Lost your password? Please enter your
-                  username or email address. You will receive
-                  a link to create a new password via email.
+                  비밀번호를 잊으셨나요? 사용자 이메일 주소를 입력해 주세요.
+                  입력하신 이메일로 새 비밀번호를 생성할 수 있는 링크를 보내드립니다.
                 </p>
                 <div class="form-group mb-0">
-                  <label for="reset-email" class="font-weight-normal">Username or email</label>
+                  <label for="reset-email" class="font-weight-normal">이메일</label>
                   <input type="email" class="form-control" id="reset-email" name="reset-email"
                          required />
                 </div>
 
                 <div class="form-footer mb-0">
-                  <a th:href="@{/auth/signIn}">Click here to login</a>
+                  <a th:href="@{/auth/signIn}">로그인</a>
 
                   <button type="submit"
                           class="btn btn-md btn-primary form-footer-right font-weight-normal text-transform-none mr-0">
-                    Reset Password
+                    비밀번호 찾기
                   </button>
                 </div>
               </form>

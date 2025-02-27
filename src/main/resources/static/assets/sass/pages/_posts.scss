@@ -1,0 +1,253 @@
+/**************************************
+        P   O   S   T   S
+**************************************/
+// blog-type2
+.blog-type2 {
+	.post {
+		display: -ms-flexbox;
+		display: flex;
+		align-items: center;
+		-ms-flex-align: center;
+		margin-bottom: 0;
+	}
+
+	.post-media {
+		margin: 0;
+	}
+
+	.post-body {
+		flex: 1;
+		-ms-flex: 1;
+		z-index: 1;
+		position: relative; // for only ie 10
+		margin: 0px 0 0 -32px;
+		padding: 3.6rem 3.6rem 3.3rem;
+		border: 0;
+		background-color: #fff;
+
+		.post-date {
+			display: inline-block;
+			float: none;
+			width: auto;
+			margin: 0 0 1rem;
+			padding: .2rem .8rem;
+			color: #fff;
+			background-color: $primary-color-dark;
+			font-size: 1.1rem;
+			font-weight: 700;
+			letter-spacing: .1em;
+			text-transform: uppercase;
+			box-shadow: none;
+		}
+	}
+
+	.post-title {
+		margin-bottom: .8rem;
+		font-size: 1.8rem;
+		font-weight: 600;
+		text-transform: uppercase;
+	}
+
+	.post-content {
+		font-size: 1.3rem;
+		letter-spacing: .03em;
+		line-height: 1.9;
+
+		p {
+			max-width: 250px;
+			margin-bottom: 1.3rem;
+			line-height: 1.7;
+		}
+	}
+
+	.read-more {
+		float: left;
+		color: $primary-color-dark;
+		font-size: 1.4rem;
+		font-weight: 700;
+		letter-spacing: -.025em;
+		text-transform: uppercase;
+
+		i {
+			display: inline-block;
+			margin-top: -0.2rem;
+			line-height: 1;
+			vertical-align: middle;
+		}
+	}
+}
+//blog-type
+.blog-type3 {
+    .post-slider>.owl-stage-outer {
+        margin: -45px -40px;
+        padding: 45px 40px;
+    }
+    .post {
+        a:hover,
+        a:focus {
+        text-decoration: none;
+        }
+    
+        .read-more {
+        font-weight: 700;
+        float: none;
+        color: $primary-color;
+        text-transform: uppercase;
+        }
+    }
+    
+    .post-media {
+        margin-bottom: 0.6rem;
+    
+        .prod-full-screen {
+        right: 5px;
+        bottom: 5px;
+        }
+    }
+    
+    .post-meta {
+        margin-bottom: 1.8rem;
+        font-size: .8em;
+        text-transform: uppercase;
+    
+        > span {
+        margin-right: .5rem;
+    
+        &:not(.meta-date) {
+            line-height: 1;
+            color: $primary-color;
+            &:hover > a {
+                border-bottom: 1px solid $primary-color;
+            }
+        }
+        }
+    
+        i {
+        margin-right: .7rem;
+        }
+    }
+    
+    .post-title {
+        margin-bottom: 1.9rem;
+        font-size: 2rem;
+        font-family: $second-font-family;
+        letter-spacing: -.025em;
+        &:hover {
+            color: $primary-color;
+        }
+    }
+    
+    .post-content {
+        p {
+        margin-bottom: 1.5rem;
+        line-height: 25px;
+        letter-spacing: -.028em;
+        font-size: 1.4rem;
+        }
+    }
+    
+    .post-box {
+        padding: 2.4rem 1.9rem .3rem;
+        box-shadow: 0 0 50px rgba(0,0,0,.07);
+    }   
+}
+//blog-type
+.blog-type4 {
+    // blog section
+
+    .post {
+        font-size: 1.6rem;
+    }
+
+    .post-body {
+        padding-bottom: 1.2rem;
+    }
+
+    .post-media {
+        flex: 1 0 26.7rem;
+        max-width: 50%;
+    }
+
+    .post-title { 
+        margin-bottom: 1.1rem;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .post-content {
+        font-size: 13px;
+        font-weight: 400;
+        font-family: "Open Sans",sans-serif;
+
+        p {
+            margin-bottom: 1.3rem;
+        }
+    }
+
+    .post-comment {
+        font-size: 10px;
+        font-family: "Open Sans", sans-serif;
+
+        i {
+            margin-right: 5px;
+            font-size: 13px;
+        }
+    }    
+
+    margin-top: 4.1rem;
+    padding: 3.8rem 0  2.5rem;
+
+    .section-title {
+        margin-bottom: 2.2rem;
+    }
+    @include mq(sm) {
+        .post-body {
+            margin-left: 1.7rem;
+        }
+    }
+    .testimonial {
+        padding: 2.4rem 0 3.3rem 2rem;
+
+        figure {
+            flex: 1 0 96px;
+            max-width: 96px;
+        }
+
+        .testi-content {
+            padding-top: 8px;
+        }
+
+        blockquote {
+            padding: 16px 3rem 11px 2.2rem;
+            font-size: 1.3rem;
+            font-family: "Open Sans", sans-serif;
+
+            &::before {
+                top: 1.2rem;
+                left: -.3em;
+                font-size: 4rem;
+            }
+        }
+
+        .testimonial-owner {
+            figure {
+                margin-right: 4px;
+            }
+
+            h4 {
+                font-family: "Open Sans",sans-serif;
+                font-weight: 400;
+                text-transform: none;
+                font-size: 15px;
+                line-height: 1;
+            }
+        }
+        
+        .testi-author {
+            margin-left: 32px;
+            margin-top: 5px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 13px;
+        }
+    }
+}

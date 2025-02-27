@@ -1,0 +1,151 @@
+.contact-two {
+    > .container {
+        margin-bottom: .6rem;
+    }
+
+    #map {
+        margin-bottom: 3.2rem;
+        height: 400px;
+        background-color: #e5e3df;
+    
+        address {
+            margin: 0;
+            padding: .625rem .875rem;
+            font-size: 1.3rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    
+        a {
+            display: inline-block;
+            margin-top: .8rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+    }
+
+    .required-field>label:after {
+        margin-bottom: .4rem;
+        color: #777;
+        font-size: 1.3rem;
+    }
+    
+    .contact-info {
+        margin-bottom: 3rem;
+        padding-top: .4rem;
+    }
+    
+    .contact-info > div {
+        @include clearfix;
+        margin-bottom: 2rem;
+    }
+    
+    .contact-info i {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        float: left;
+        border-radius: 50%;
+        background-color: #3b3b3b;
+        color: #fff;
+        font-size: 1.4rem;
+        text-align: center;
+    }
+    
+    .contact-info p {
+        margin-bottom: 0;
+        margin-left: 5.5rem;
+    
+        &:first-of-type {
+            padding-top: .1rem;
+        }
+    }
+
+    label {
+        margin-bottom: 1.1rem;
+        color: #777;
+        font-family: "Open Sans",sans-serif;
+        font-size: 1.4rem;
+        font-weight: 400;
+    }
+
+    .form-control { 
+        border-color: rgba(0,0,0,0.09);
+        height: 37px;
+    }
+
+    .form-group {
+        margin-bottom: 1.8rem;
+    }
+
+    textarea.form-control {
+        min-height: 208px;
+    }
+
+    .form-footer {
+        margin-top: 1.6rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.3rem .7rem 1.4rem;
+        font-size: 1.4rem;
+        font-weight: 400;
+        text-transform: none;
+    }
+
+    .contact-title {
+        margin-top: 1.6rem;
+        margin-bottom: 1.3rem;
+        font-size: 2rem;
+    }
+
+    p {
+        padding-bottom: 5px;
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .porto-sicon-title {
+        margin: 0;
+        margin-left: 1.5rem;
+        color: #777;
+        font-weight: 400;
+        font-size: 1.4rem;
+    }
+
+    .contact-time {
+        padding-top: 4px;
+
+        .contact-title {
+            margin-bottom: 1.4rem;
+        }
+
+        .porto-sicon-title {
+            margin-top: 1px;
+        }
+
+        .porto-sicon-box {
+            margin-bottom: 2.3rem;
+        }
+    }
+}
+
+@include mq(md) {
+	#map {
+		height: 380px;
+		margin-bottom: 5rem;
+	}
+}
+
+@include mq(lg) {
+	#map {
+		height: 460px;
+		margin-bottom: 6rem;
+	}
+}

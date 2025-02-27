@@ -1,0 +1,124 @@
+.cta {
+    h3 {
+        letter-spacing: -.05em;
+        margin-bottom: 1rem;
+    }
+    p {
+        font-size: 1.6rem;
+        margin-bottom: 0;
+    }
+}
+.cta-simple {
+    align-items: center;
+    text-align: center;
+    padding: 3.2rem 5.5rem;
+}
+.cta-border {
+    border: 1px solid #dfdfdf;
+    border-radius: 1rem;
+}
+.cta-outline {
+    border-width: 3px;
+    .btn {
+        position: relative;
+        border-radius: 6px;
+        color: #f7f7f7;
+        padding: 8px 1.6rem 7px;
+        text-transform: capitalize;
+        font-weight: 400;
+    }
+    &.blue {
+        border-color: #5472d2;
+        h3 {
+            color: #5472d2;
+        }
+        .btn {
+            box-shadow: 0 5px #3253bc;
+            background-color: #5472d2;
+            &:hover {
+                box-shadow: 0 2px #3253bc;
+            }
+        }
+    }
+    &.red {
+        border-color: #f4524d;
+        h3 {
+            color: #f4524d;
+        }
+        .btn {
+            box-shadow: 0 5px #f11f18;
+            background-color: #f4524d;
+            &:hover {
+                box-shadow: 0 2px #f11f18;
+            }
+        }
+    }
+    &.cyan {
+        border-color: #4cadc9;
+        h3 {
+            color: #4cadc9;
+        }
+        .btn {
+            box-shadow: 0 5px #338faa;
+            background-color: #4cadc9;
+            &:hover {
+                box-shadow: 0 2px #338faa;
+            }
+        }
+    }
+    &.dark {
+        border-color: #50485b;
+        h3 {
+            color: #50485b;
+        }
+        .btn {
+            box-shadow: 0 5px #342f3c;
+            background-color: #50485b;
+            &:hover {
+                box-shadow: 0 2px #342f3c;
+            }
+        }
+    }
+}
+.cta-3Ds {
+    &.blue {
+        box-shadow: 0 5px #3253bc;
+    }
+    &.red {
+        box-shadow: 0 5px #f11f18;
+    }
+    &.cyan {
+        box-shadow: 0 5px #338faa;
+    }
+    &.dark {
+        box-shadow: 0 5px #342f3c;
+    }
+}
+.cta-bg {
+    border-color: transparent;
+    h3 {
+        color: #fff;
+    }
+    p {
+        color: rgba(255, 255, 255, .7);
+    }
+    &.blue {
+        background-color: #5472d2;
+    }
+    &.red {
+        background-color: #f4524d;
+    }
+    &.cyan {
+        background-color: #4cadc9;
+    }
+    &.dark {
+        background-color: #50485b;
+    }
+    &.light {
+        background-color: #f2f2f2;
+        border-color: #dfdfdf;
+        p, h3 {
+            color: #1d2127;
+        }
+    }  
+}

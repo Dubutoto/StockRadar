@@ -1,0 +1,45 @@
+// Icons
+
+.circle-icons {
+    .circle {
+        display: inline-block;
+        font-size: 32px;
+        height: 6.4rem;
+        width: 6.4rem;
+        text-align: center;
+        line-height: 6.4rem;
+        border-radius: 50%;
+        color: #fff;
+        background: $primary-color;
+        margin-bottom: 2rem;
+    }
+}
+.fontawesome-icon-list > div {
+    white-space: nowrap;
+    overflow: hidden;
+}
+.fontawesome-icon-list, 
+.sample-icon-list {
+    > div {
+        height: 32px;
+        line-height: 32px;
+        font-size: 11px;
+        color: #222;
+        &:hover {
+            color: $primary-color;
+            i {
+                font-size: 28px;
+                vertical-align: -6px;
+                color: $primary-color;
+            }
+        }
+    }
+    i {
+        display: inline-block;
+        background-image: none;
+        font-size: 14px;
+        margin-right: 4px;
+        text-align: center;
+        width: 32px;
+    }
+}
