@@ -1,0 +1,118 @@
+// Alerts
+.alert {
+	display: flex;
+	align-items: center;
+	font-family: Poppins, sans-serif;
+	margin-bottom: 2rem;
+	padding: 1.6rem 1.5rem;
+	border-radius: 0;
+	i {
+		font-size: 1.7em;
+		width: 3.9rem;
+	}
+	&.icon-sm i {
+		font-size: 1.1em;
+		width: 2.9rem;
+	}
+	.pixel-icon {
+		height: 16px;
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		margin-bottom: 1px;
+	}
+	.alert-wrapper {
+		h4 {
+			letter-spacing: -.05em;
+			margin-bottom: 1.4rem;
+		}
+		p {
+			line-height: 2.4rem;
+			margin-bottom: 2rem;
+		}
+		ul {
+			margin: 2rem 0 0 2.5rem;
+			list-style: disc;
+		}
+		li {
+			line-height: 2.5rem;
+		}
+		.btn {
+			text-transform: none;
+			font-weight: 400;
+			font-size: 1.3rem;
+			padding: 0.533rem 0.933rem;
+		}
+	}
+	.alert-close {
+		z-index: 2;
+		padding: .95rem 0 .95rem 2.5rem;
+		cursor: pointer;
+		width: 1em;
+		height: 1em;
+		color: #000;
+		background: transparent url(../images/elements/alert/close.svg) center / 1em auto no-repeat;
+		border: 0;
+		border-radius: 0;
+		opacity: 0.5;
+		transition: opacity .2s;
+		margin-left: auto;
+		&:hover {
+			opacity: 1;
+		}
+	}
+	&.alert-intro {
+		font-size: 1.5rem;
+	}
+}
+.alert-rounded {
+	border-radius: 5px;
+}
+// alert default
+.alert.alert-default {
+	background-color: #f2f2f2;
+    border-color: #eaeaea;
+	color: #737373;
+	.alert-link {
+		color: #4c4c4c;
+	}
+}
+// alert dark
+.alert.alert-dark {
+	background-color: #3a3f45;
+    border-color: #0b0c0e;
+	color: #d5d8dc;
+	.alert-link {
+		color: #fff;
+	}
+}
+// alert primary
+.alert.alert-primary {
+	background-color: #0088cc;
+	border-color: #007ebd;
+	color: #fff;
+}
+// alert secondary
+.alert.alert-secondary {
+	background-color: #e36159;
+	border-color: #e1554c;
+	color: #fff;
+}
+// alert tertiary
+.alert.alert-tertiary {
+	background-color: #2baab1;
+	border-color: #299fa5;
+	color: #fff;
+}
+// alert quaternary
+.alert.alert-quaternary {
+	background-color: #383f48;
+	border-color: #323840;
+	color: #fff;
+}
+// alert small
+.alert.alert-sm {
+	padding: .5rem 1rem;
+}
+.alert.alert-lg {
+	padding: 2rem;
+}

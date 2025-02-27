@@ -1,0 +1,167 @@
+// Helpers
+// 1) Letter Spacing
+// 2) Color
+// 3) Font Family
+// 4) Width & Display Helpers
+// 5) Others
+
+// 1) Letter Spacing
+.ls-10 {
+	letter-spacing: .01em !important;
+}
+
+.ls-0 {
+	letter-spacing: 0 !important;
+}
+
+.ls-n-10 {
+	letter-spacing: -.01em !important;
+}
+
+.ls-n-15 {
+	letter-spacing: -.015em !important;
+}
+
+.ls-n-20 {
+	letter-spacing: -.02em !important;
+}
+
+.ls-n-25 {
+	letter-spacing: -.025em !important;
+}
+
+// 2) Color
+.bg-gray {
+	background-color: #f4f4f4 !important;
+}
+
+.bg-dark {
+	background-color: $primary-color-dark !important;
+}
+
+.bg-dark2 {
+	background-color: $secondary-color-dark !important;
+}
+
+.bg-primary {
+	background-color: $primary-color !important;
+}
+
+.bg-secondary {
+	background-color: $secondary-color !important;
+}
+
+.text-dark {
+	color: $primary-color-dark !important;
+}
+
+.text-primary {
+	color: $primary-color !important;
+}
+
+.text-secondary {
+	color: $secondary-color !important;
+}
+
+.text-body {
+	color: $body-text !important;
+}
+
+// 3) Font Family
+.font1 {
+	font-family: $font-family !important;
+}
+.font2 {
+	font-family: $second-font-family !important;
+}
+
+.font3 {
+    font-family: 'Segoe Script','Savoye LET' !important;
+}
+
+.font4 {
+    font-family: $third-font-family !important;
+}
+
+// 4) Width & Display Helpers
+@include mq(lg) {
+	.d-lg-none {
+		display: none !important;
+	}
+
+	.d-lg-block {
+		display: block !important;
+    }
+    
+    .w-lg-max {
+		flex: 1;
+		-ms-flex: 1;
+		max-width: 100%;
+	}
+}
+
+@include mq(md, max) {
+	.w-md-100 {
+		width: 100% !important;
+	}
+
+	.w-md-50 {
+		width: 50% !important;
+	}
+}
+
+@include mq(sm, max) {
+	.w-sm-100 {
+		width: 100% !important;
+	}
+
+	.w-sm-50 {
+		width: 50% !important;
+	}
+}
+
+@include mq(xs, max) {
+	.w-xs-100 {
+		width: 100% !important;
+    }
+}
+
+@include mq(400px, max) {
+	.w-xxs-100 {
+		width: 100% !important;
+	}
+}
+
+// 5) Others
+.round-images img {
+	border-radius: 50% !important;
+}
+
+.box-shadow-none {
+	box-shadow: none !important;
+}
+
+.text-transform-none {
+	text-transform: none;
+}
+
+.line-height-1 {
+	line-height: 1 !important;
+}
+
+.title-decorate::before, 
+.title-decorate::after {
+    content: '';
+    top: 50%;
+    height: 1px;
+    background-color: rgba(0,0,0,0.08);
+    flex: 1;
+}
+
+.title-decorate::before {
+    margin-right: 2rem;
+}
+
+.title-decorate::after {
+    margin-left: 2rem;
+}

@@ -1,0 +1,37 @@
+// Info Box
+
+.info-box-wrapper {
+    h4 {
+        font-weight: 700;
+        font-size: 18.2px;
+        line-height: 3.2rem;
+        margin-bottom: 3px;
+    }
+    p {
+        font-family: Poppins, sans-serif;
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+        color: #777;
+    }
+    .info-desc {
+        font-size: 16px;
+        line-height: 1;
+        margin-bottom: 1rem;
+        color: #999;
+    }
+    i {
+        font-size: 5rem;
+        color: $primary-color;
+    }
+    .info-box-img {
+        h4 {
+            line-height: 2.7rem;
+            margin-top: 1rem;
+        }
+    }
+}
+@include mq(xl, max) {
+    .info-box {
+        margin-bottom: 2rem;
+    }
+}

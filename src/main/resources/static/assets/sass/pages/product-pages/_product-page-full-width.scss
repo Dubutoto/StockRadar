@@ -1,0 +1,123 @@
+// Product Full Width Page
+
+// # content
+// 1. Product Full Width Base
+// 2. Product Full Width Details
+// 3. Product Full Width Single Tab
+// 4. Responsive
+
+// 1. Product Full Width Base
+.product-full-width {
+	margin-bottom: 2.9rem;
+
+	.product-single-details {
+		margin-bottom: 4.1rem;
+	}
+
+	.pin-wrapper {
+		position: relative;
+	}
+
+	.product-nav {
+		right: 2rem;
+	}
+
+	.product-title {
+		line-height: 1.1;
+	}
+
+	.price-box {
+		margin-bottom: 2.4rem;
+	}
+
+	.single-info-list {
+		margin-bottom: -4px;
+	}
+
+	.product-filters-container {
+		padding-bottom: .7rem;
+	}
+
+	.product-single-filter {
+		.config-size-list a {
+			height: 100%;
+		}
+
+		img {
+			width: 30px;
+			height: 30px;
+		}
+
+		label {
+			margin-bottom: 0;
+			margin-right: -1px;
+		}
+	} 
+
+	.transparent-dots {
+		left: 1.6rem;
+	}
+
+//  2.6) Product Single Share
+	.custom-product-single-share {
+		right: -2.2rem;
+
+		&:not(.icon-with-color) .social-icon {
+            border-radius: 0;
+        }
+	}
+
+	.add-wishlist {
+		padding: 15px 5px;
+		margin: 0 0 3.8rem -5px;
+
+		&::before {
+			margin-right: .3rem;
+		}
+	}
+
+// 3. Product Full Width Single Tab
+	.product-single-tabs .tab-pane {
+		padding-bottom: .7rem;
+	}
+
+	.product-desc-content {
+		margin-bottom: 1.5rem;
+
+		ul {
+			margin-top: 3.7rem;
+			margin-bottom: 4.4rem;
+			padding-left: 5rem;
+		}
+
+		li::before {
+			left: 1.6rem;
+		}
+	}
+}
+
+// 4. Responsive
+@media (max-width: 1400px) and (min-width: 576px) {
+	.product-full-width {
+		.product-desc-content {
+			.col-xl-4 {
+				-ms-flex: 0 0 50%;
+				flex: 0 0 50%;
+				max-width: 50%;
+			}
+		}
+	}
+}
+
+@include mq(lg, max) {
+	.product-full-width .custom-product-single-share {
+		right: 1rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.transparent-dots {
+		top: 5px;
+		left: 18px;
+	}
+}

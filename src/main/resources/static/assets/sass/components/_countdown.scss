@@ -1,0 +1,140 @@
+.product-countdown-container {
+    display: flex;
+    position: absolute;
+    padding: 1rem .7rem .9rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    opacity: 0.7;
+	letter-spacing: -.01em;
+	visibility: visible;
+    text-transform: uppercase;
+    font-family: $third-font-family;
+	transition: opacity .3s ease;
+    background: $primary-color;
+	z-index: 6;
+
+	.product-countdown-title {
+        display: inline-block;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 400;
+        margin-bottom: 0;
+        margin-right: 3px;
+	}
+
+	.product-countdown {
+		position: relative;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		z-index: 6;
+		line-height: 1;
+        opacity: 1;
+        color: #fff;
+
+		.countdown-amount {
+            display: block;
+            padding-bottom: 2px;
+			font-weight: 400;
+			font-size: 1.3rem;
+			line-height: 1;
+			margin-bottom: 0;
+			text-transform: uppercase;
+		}
+	}
+}
+
+.product-default:not(.count-down):hover {
+	.product-countdown,
+	.product-countdown-container {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+.countdown-type1 {
+	padding: 5rem 0;
+	.countdown-amount {
+		font-size: 1.7rem;
+		color: #da7940;
+		font-weight: 700;
+	}
+	.countdown-period {		
+		font-size: 1.7rem;
+		color: #2e353e;
+		font-weight: 700;
+		padding: 0 4px;
+	}
+	.countdown-section {
+		display: flex;
+		padding: 0 7px;
+	}
+	.countdown-row {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		.countdown-section {
+			width: auto;
+		}
+	}
+}
+
+.countdown-type2 {
+	padding: 5rem 0;
+	.countdown-amount {
+		font-size: 3.8rem;
+		color: #b3642a;
+		font-weight: 600;
+	}
+	.countdown-period {		
+		font-size: 1.4rem;
+		color: #b3642a;
+		font-weight: 600;
+		padding: 0 4px;
+	}
+	.countdown-section {
+		display: flex;
+		align-items: baseline;
+	}
+	.countdown-row {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		.countdown-section {
+			width: auto;
+		}
+	}
+}
+
+.countdown-parallax {
+	padding: 9.5rem 0 8.4rem;
+	.countdown-type3 {
+		.countdown-amount {
+			font-size: 5.6rem;
+			color: #fff;
+		}
+		.countdown-period {
+			font-size: 1.7rem;
+			color: #fff;
+		}
+		.countdown-row {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			.countdown-section {
+				width: auto;
+				padding: 0 1.5rem;
+			}
+		}
+	}
+}
+
+@include mq('xs', max) {
+	.countdown-type1 .countdown-section {
+		padding: 0;
+		margin: 0 4px;
+	}
+}

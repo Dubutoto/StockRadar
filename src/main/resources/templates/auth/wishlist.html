@@ -3,39 +3,35 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
+<link rel="stylesheet" th:href="@{/assets/css/style.min.css}">
+
+<head>
+    <th:block layout:fragment="head">
+        <link rel="stylesheet" th:href="@{/assets/css/style.min.css}">
+    </th:block>
+</head>
+
 <div class="container" layout:fragment="content">
 
     <main class="main">
         <div class="page-header">
             <div class="container d-flex flex-column align-items-center">
-                <nav aria-label="breadcrumb" class="breadcrumb-nav">
-                    <div class="container">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a th:href="@{demo4.html}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Wishlist
-                            </li>
-                        </ol>
-                    </div>
-                </nav>
-
-                <h1>Wishlist</h1>
+                <h1>관심상품</h1>
             </div>
         </div>
 
         <div class="container">
             <div class="wishlist-title">
-                <h2 class="p-2">My wishlist on Porto Shop 4</h2>
+                <h2 class="p-2">내 관심상품 리스트</h2>
             </div>
             <div class="wishlist-table-container">
                 <table class="table table-wishlist mb-0">
                     <thead>
                     <tr>
                         <th class="thumbnail-col"></th>
-                        <th class="product-col">Product</th>
-                        <th class="price-col">Price</th>
-                        <th class="status-col">Stock Status</th>
-                        <th class="action-col">Actions</th>
+                        <th class="product-col">상품명</th>
+                        <th class="price-col">가격</th>
+                        <th class="status-col">재고 상태</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,15 +54,7 @@
                         </td>
                         <td class="price-box">$17.90</td>
                         <td>
-                            <span class="stock-status">In stock</span>
-                        </td>
-                        <td class="action">
-                            <a th:href="@{/ajax/product-quick-view.html}" class="btn btn-quickview mt-1 mt-md-0"
-                               title="Quick View">Quick
-                                View</a>
-                            <button class="btn btn-dark btn-add-cart product-type-simple btn-shop">
-                                ADD TO CART
-                            </button>
+                            <span class="stock-status">재고 있음</span>
                         </td>
                     </tr>
 
