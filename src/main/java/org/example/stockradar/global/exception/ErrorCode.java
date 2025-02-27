@@ -27,8 +27,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(404, "ERR-007", "회원 없음", "해당 회원을 찾을 수 없습니다."),
 
     // 500 Internal Server Error
-    INTERNAL_SERVER_ERROR(500, "ERR-005", "서버 오류", "서버 내부에 오류가 발생했습니다.");
-
+    INTERNAL_SERVER_ERROR(500, "ERR-005", "서버 오류", "서버 내부에 오류가 발생했습니다."),
+    RESOURCE_SAVE_FAILED(500, "ERR-009", "데이터 저장 실패", "데이터베이스에 데이터를 저장하는 중 오류가 발생했습니다.");
     private final int httpStatus;          // HTTP 상태 코드
     private final String errorCode;        // 고유 에러 코드
     private final String errorMessage;     // 에러 메시지

@@ -3,6 +3,8 @@ package org.example.stockradar.feature.CustomerInquiry.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.CustomerInquiry.dto.CustomerInquiryUserRequestDto;
 import org.example.stockradar.feature.CustomerInquiry.service.CustomerInquiryService;
+import org.example.stockradar.global.exception.CustomException;
+import org.example.stockradar.global.exception.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -31,19 +33,21 @@ public class CustomerInquiryController {
             Authentication authentication) {
 
         if (authentication == null) {
-            return ResponseEntity.badRequest().build();
+            //예외처리 작성
+            throw new CustomException(
+                    ErrorCode.UNAUTHORIZED.getErrorCode(),
+                    ErrorCode.UNAUTHORIZED.getErrorMessage(),
+                    ErrorCode.UNAUTHORIZED.getDescription(),
+                    ErrorCode.UNAUTHORIZED.getHttpStatus()
+            );
         }
 
         // 인증된 사용자의 ID 가져오기
         String memberId = authentication.getName();
         logger.info("Authenticated user ID: {}", memberId);
 
-        try {
-            Long inquiryId = service.saveCustomerInquiry(requestDto, memberId);
-            return ResponseEntity.ok(inquiryId);
-        } catch (RuntimeException e) {
-            logger.error("Error saving customer inquiry: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
+        // 서비스 계층 호출
+        Long inquiryId = service.saveCustomerInquiry(requestDto, memberId);
+        return ResponseEntity.ok(inquiryId);
     }
 }
