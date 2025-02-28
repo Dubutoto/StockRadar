@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<div class="container" layout:fragment="content">
+    <main class="main">
+        <!-- 게시판 목록 헤더 -->
+        <div class="board-header">
+            <h1>게시판</h1>
+            <a th:href="@{/board/form}" class="btn btn-primary">새 글 작성</a>
+        </div>
+
+        <!-- 검색 폼 -->
+        <div class="board-search">
+            <form th:action="@{/board/search}" method="get">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
+                <button type="submit">검색</button>
+            </form>
+        </div>
+
+        <!-- 게시글 목록 -->
+        <div class="board-list">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post, iterStat : ${posts}">
+                    <td th:text="${iterStat.index + 1}">1</td>
+                    <td>
+                        <a th:href="@{'/board/' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
+                    </td>
+                    <td th:text="${post.author}">작성자</td>
+                    <td th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd')}">작성일</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+<!--        <div class="pagination">-->
+<!--            <ul class="pagination">-->
+<!--                <li th:if="${page.hasPrevious()}" class="page-item">-->
+<!--                    <a th:href="@{'/board?page=' + ${page.number - 1}}" class="page-link">이전</a>-->
+<!--                </li>-->
+<!--                <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"-->
+<!--                    th:classappend="${page.number == i} ? 'active'">-->
+<!--                    <a th:href="@{'/board?page=' + ${i}}" th:text="${i + 1}" class="page-link">1</a>-->
+<!--                </li>-->
+<!--                <li th:if="${page.hasNext()}" class="page-item">-->
+<!--                    <a th:href="@{'/board?page=' + ${page.number + 1}}" class="page-link">다음</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+    </main>
+</div>
+</html>
