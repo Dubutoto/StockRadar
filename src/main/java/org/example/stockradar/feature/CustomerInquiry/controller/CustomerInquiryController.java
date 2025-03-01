@@ -24,6 +24,7 @@ public class CustomerInquiryController {
 
     @GetMapping("customerInquiry")
     public String customerInquiry() {
+        logger.info("GET request received for /customerInquiry");
         return "customerInquiry/customerInquiry";
     }
 
