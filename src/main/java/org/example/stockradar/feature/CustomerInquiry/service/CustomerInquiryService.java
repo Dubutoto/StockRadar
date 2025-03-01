@@ -8,6 +8,7 @@ import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.auth.repository.MemberRepository;
 import org.example.stockradar.global.exception.CustomException;
 import org.example.stockradar.global.exception.ErrorCode;
+import org.example.stockradar.global.exception.specific.CustomerInquiryProcessiongException;
 import org.springframework.stereotype.Service;
 import org.example.stockradar.global.exception.specific.CustomerInquiryException;
 import org.example.stockradar.global.exception.ErrorCode;
@@ -43,7 +44,7 @@ public class CustomerInquiryService {
         }
         //데이터 저장 실패
         catch (Exception e) {
-            CustomerInquiryException.throwCustomException(ErrorCode.RESOURCE_SAVE_FAILED);
+            CustomerInquiryProcessiongException.throwCustomException(ErrorCode.RESOURCE_SAVE_FAILED);
 
             return null; // 이 코드는 실행되지 않지만 컴파일 에러 방지용
         }

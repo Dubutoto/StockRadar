@@ -6,13 +6,17 @@ import org.example.stockradar.feature.CustomerInquiry.entity.CustomerInquiry;
 import org.example.stockradar.feature.CustomerInquiry.repository.CustomerInquiryRepository;
 import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.auth.repository.MemberRepository;
+import org.example.stockradar.feature.customerInquiryprocessing.dto.CustomerInquiryProcessingRequestDto;
 import org.example.stockradar.feature.customerInquiryprocessing.dto.CustomerInquiryProcessingResponseDto;
+import org.example.stockradar.feature.customerInquiryprocessing.entity.CustomerInquiryProcessiong;
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.CustomerInquiryException;
 import org.example.stockradar.global.exception.specific.CustomerInquiryProcessiongException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -60,11 +64,43 @@ public class CustomerInquiryProcessingService {
                     .createdAt(inquiry.getCreatedAt())
                     .memberEmail(inquiry.getMember() != null ? inquiry.getMember().getMemberId() : "Unknown")
                     .build();
-        }catch (Exception e) {
+        } catch (Exception e) {
             CustomerInquiryProcessiongException.throwCustomException(ErrorCode.DATA_CONVERSION_ERROR);
             return null;
         }
     }
 
+
+    public void processionCompleted(CustomerInquiryProcessingRequestDto requestDto, Long inquiryId) {
+        // 1. 문의 조회 - Optional에서 값을 가져온 후 없으면 예외 처리
+        Optional<CustomerInquiry> optionalInquiry = repository.findById(inquiryId);
+        if (optionalInquiry.isEmpty()) {
+            CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
+        }
+
+        CustomerInquiry inquiry = optionalInquiry.get();
+        inquiry.setInquiryStatus(1);
+        repository.save(inquiry);
+
+
+        // 3. 문의 처리 엔티티 생성 및 저장
+        try {
+            CustomerInquiryProcessiong processing = CustomerInquiryProcessiong.builder()
+                    .processingTitle(requestDto.getProcessingTitle())
+                    .processingContent(requestDto.getProcessingContent())
+                    .customerInquiry(inquiry)
+                    .build();
+
+            // 4. 문의 처리 엔티티 저장 (JPA 관계 매핑으로 인해 별도 저장 필요)
+            inquiry.setCustomerInquiryProcessiong(processing);
+            repository.save(inquiry);
+
+            log.info("문의 ID: {}, 제목: {} 처리 완료", inquiry.getInquiryId(), inquiry.getInquiryTitle());
+        } catch (Exception e) {
+            CustomerInquiryException.throwCustomException(ErrorCode.RESOURCE_SAVE_FAILED);
+
+        }
+
+    }
 
 }

@@ -74,5 +74,5 @@ logging:
 
   logback:
     rollingpolicy:
-      file-name-pattern: "common-service.%d{yyyy-MM-dd}.%i.log"
+      file-name-pattern: "StockRadar.%d{yyyy-MM-dd}.%i.log"
       max-history: 60
