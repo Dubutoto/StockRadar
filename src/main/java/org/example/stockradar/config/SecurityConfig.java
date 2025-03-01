@@ -43,16 +43,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationManager(authenticationManager)
-                        // 로그인/회원가입/리소스 파일은 모두 허용
-                        .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**", "/images/**", "/customerInquiry/**")).permitAll()
-                        // 나머지는 인증 필요
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth
+                    // 로그인/회원가입/리소스 파일은 모두 허용
+                    .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**", "/images/**", "/customerInquiry/**").permitAll()
+                    // 나머지는 인증 필요
+                    .anyRequest().authenticated()
                 )
                 // OAuth2 로그인 설정
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login") // 커스텀 로그인 페이지
-                        .userInfoEndpoint(userInfo -> userInfo.userService(routingOAuth2UserService))
-                        .successHandler(oAuth2LoginSuccessHandler)
+                    .loginPage("/login") // 커스텀 로그인 페이지
+                    .userInfoEndpoint(userInfo -> userInfo.userService(routingOAuth2UserService))
+                    .successHandler(oAuth2LoginSuccessHandler)
                 )
                 // JWT 필터
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
