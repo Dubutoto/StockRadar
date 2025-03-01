@@ -1,0 +1,42 @@
+/* Word Rotator */
+.wort-rotator {
+	visibility: hidden;
+	width: 100px;
+	height: 0px;
+	margin-bottom: -7px;
+	display: inline-block;
+	overflow: hidden;
+	text-align: center;
+	position: relative;
+	top: -1px;
+}
+
+.wort-rotator.active {
+	visibility: visible;
+	width: auto;
+}
+
+.wort-rotator .wort-rotator-items {
+	position: relative;
+	top: 0;
+	width: 100%;
+}
+
+.wort-rotator .wort-rotator-items span {
+	display: block;
+	white-space: nowrap;
+	font-weight: 600;
+	text-align: left;
+	letter-spacing: -.02em;
+}
+
+.wort-rotator.highlight {
+	top: 1px;
+}
+
+@media(max-width: 767px) {
+	.wort-rotator {
+		margin-bottom: -5px;
+	}
+}
+  

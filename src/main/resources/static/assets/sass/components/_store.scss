@@ -1,0 +1,323 @@
+.store-default {
+    position: relative;
+    margin-bottom: 2rem;
+    box-shadow: 0px 0px 25px 0px #ddd;
+
+    figure {
+        margin: 0;
+    }
+
+    img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    &.no-banner, &.store-list {
+        .store-content {
+            color: #526b6f;
+            background: none;
+        }
+
+        .store-title {
+            text-shadow: none;
+        }
+
+        .store-ratings:before {
+            color: rgba(0, 0, 0, .16);
+        }
+    }
+
+    .ratings-container {
+        margin-bottom: 1rem;
+    
+        .product-ratings {
+            font-size: 13px;
+    
+            &:before {
+                color: #fff;
+            }
+    
+            .ratings {
+                font-size: 13px;
+        
+                &:before {
+                    color: #fa9a00;
+                }
+            }
+        }
+    }
+}
+
+.store-header img {
+    height: 220px;
+}
+
+.store-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1.3rem 2rem;
+    color: #fff;
+    background: rgba(0, 0, 0, .45);
+}
+
+.store-title {
+    margin-bottom: 4rem;
+    color: inherit;
+    font: 300 2.5rem $font-family;
+    letter-spacing: .3px;
+    text-shadow: rgba(0, 0, 0, .8) 0 1px 0;
+}
+
+.store-address {
+    font-size: 1.4rem;
+    letter-spacing: .015em;
+}
+
+.store-footer {
+    position: relative;
+    border-top: 1px solid #eee;
+    padding: 15px 20px;
+    background: #f7fbfc;
+
+    .seller-avatar {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: -40px;
+        right: 20px;
+        border-radius: 40px;
+        box-shadow: 0px 0px 30px -6px #afafaf;
+        padding: .5rem;
+        background: #fff;
+        overflow: hidden;
+
+        img {
+            background: transparent;
+        }
+    }
+
+    .btn-round {
+        padding: 0;
+        width: 35px;
+        height: 34px;
+        min-width: unset;
+        border-radius: 50%;
+
+        &:before {
+            content: '\e81a';
+            font-family: 'porto';
+            font-size: 3rem;
+            line-height: 1;
+        }
+    }
+}
+
+.seller-avatar {
+    width: 150px;
+    height: 150px;
+    padding: 2px;
+    background: #fff;
+    border: 1px solid #ddd;
+
+    img {
+        width: 100%;
+    }
+}
+
+.filter-form-container {
+    > div {
+        padding-top: 3.2rem;
+    }
+
+    form {
+        padding: 4rem 2rem 4rem;
+        background: #fff;
+        box-shadow: 1px 1px 20px 0px #e9e9e9;
+    }
+
+    .form-control {
+        max-width: 100%;
+        height: 48px;
+        padding: 10px 20px;
+        border-color: #ccc;
+        border-radius: 3px;
+        font-size: 1.4rem;
+    }
+
+    .btn-submit {
+        min-width: unset;
+        padding: .8rem 2.4rem;
+        border-radius: 3px;
+        font-family: $font-family;
+        font-size: 1.4rem;
+        font-weight: 400;
+        letter-spacing: .2px;
+        line-height: 1.75;
+        text-transform: none;
+    }
+}
+
+// Store Toolbox
+.toolbox-store {
+	background-color: #fff;
+	padding: 2rem;
+    margin-top: 4px;
+    margin-bottom: 0;
+    box-shadow: 1px 1px 20px 0px #e9e9e9;
+
+    .toolbox-left {
+        flex: 1;
+    }
+    
+    .toolbox-item {
+        margin-bottom: 0;
+    }
+  
+	label {
+        margin-top: -1px;
+        font-size: 1.4rem;
+        letter-spacing: .2px;
+	}
+  
+	.btn {
+        position: relative;
+        min-width: unset;
+        padding: .3rem 1.5rem .3rem 1.5rem;
+        border: 1px solid #d7d7d7;
+        border-radius: 3px;
+        background: #fff;
+        color: #777;
+        font-family: $font-family;
+        font-weight: 400;
+        letter-spacing: .2px;
+        line-height: 26px;
+        text-transform: none;
+
+        svg {
+            stroke: $primary-color-dark;
+            fill: #fff;
+            width: 23px;
+        }
+	}
+  
+	.toolbox-sort {
+        margin-left: 2rem;
+        label {
+            margin-top: -3px;
+            margin-right: 3px;
+        }
+	}
+  
+	.select-custom {
+        select.form-control {
+            width: auto;
+            padding: .8rem 1rem;
+            font-size: 1.4rem;
+            letter-spacing: .015em;
+            line-height: 1;
+        }
+
+        &:after {
+            display: none; 
+        }
+	}
+  
+	.layout-modes {
+        margin-left: .5rem;
+	}
+  
+	.layout-btn {
+		color: #777;
+		font-size: 16px;
+
+		&:hover,
+		&:focus,
+		&.active {
+			color: $primary-color;
+		}
+    }
+}
+
+// Responsive
+@include mq(md) {
+    .store-default.store-list {
+        display: flex;
+        align-items: center;
+
+        .store-header {
+            flex: 0 0 20%;
+
+            img {
+                height: 140px;
+            }
+        }
+
+        .store-content {
+            position: static;
+            flex-basis: 43%;
+            padding: 0;
+            padding-left: 4%;
+        }
+
+        .store-footer {
+            flex-basis: 33%;
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            background: transparent;
+            border-top: 0;
+        }
+
+        .store-title {
+            margin-bottom: 1.5rem;
+            color: #000;
+            font-size: 3rem;
+        }
+
+        .ratings-container {
+            overflow: visible;
+            z-index: 1;
+            min-width: 85px;
+            color: gray;
+            float: right;
+            position: relative;
+            top: -15px;
+            left: 25%;
+
+            p {
+                margin-bottom: 2rem;
+            }
+        }
+
+        .product-ratings {
+            margin-bottom: 2rem;
+
+            &:before {
+                color: rgba(0,0,0,.16);
+            }
+        }
+
+        .store-address {
+            margin-bottom: 0;
+            font-size: 1.5rem;
+            letter-spacing: inherit;
+        }
+
+        .seller-avatar {
+            display: none;
+        }
+    }
+
+    .toolbox-store .toolbox-filter {
+        margin-left: auto;
+    }
+}
+
+@include mq(lg, max) {
+    .toolbox.toolbox-store {
+        background-color: #fff;
+    }
+}

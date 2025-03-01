@@ -1,0 +1,272 @@
+// Product Extended Page
+
+// # content
+// 1. Product Extended Base
+// 2. Product Extended Single Overlay Effect
+// 3. Product Extended Details
+//    3.2) Product Title
+//    3.3) Product Desc
+//    3.4) Product Single Info List
+//    3.5) Product Filters
+//    3.6) 3.6) Product Single Widget
+//    3.7) Product Single Header
+//    3.8) Product Single Qty Wrapper
+
+// 4. Responsive
+
+// 1. Product Extended Base
+.product-extended-page {
+	.product-desc-content {
+		p {
+			margin-bottom: 1.3rem;
+		}
+
+		ul {
+			margin-bottom: 2rem;
+			padding-left: 5.8rem;
+		}
+
+		li::before {
+			left: 2.4rem;
+		}
+	}
+}
+
+.product-single-extended {
+	.short-divider {
+		margin-bottom: 2rem;
+	}
+
+	.product-single-gallery {
+		position: relative;
+		margin-bottom: 2.9rem;
+
+// 2. Product Extended Single Overlay Effect
+		.owl-item:before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			background-color: transparent;
+			transition: background-color 1s;
+		}
+
+		.owl-item.center:before {
+			background-color: rgba(0,0,0,0.07);
+		}
+	}
+
+	.owl-item.center .product-item:before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		background: rgba(0, 0, 0, .07);
+	}
+
+// 2. Product Extended Details
+//  3.2) Product Title
+	.product-title {
+		margin-bottom: .5rem;
+		font-size: 3.8rem;
+		line-height: 1.16;
+	}
+//  3.3) Product Proce
+	.price-box {
+		margin-top: 3px;
+		margin-bottom: 2rem;
+	}
+
+	.product-price {
+		font-size: 3rem;
+	}
+
+	.old-price {
+		font-size: 2.4rem;
+
+		& + .product-price {
+			margin-left: 1.5rem;
+		}
+	}
+	
+//   3.4) Product Single Info List
+	.single-info-list {
+		margin-bottom: 2.3rem;
+	}
+
+//  3.5) Product Single Filters
+	.product-filters-container {
+		padding-top: 2rem;
+		padding-bottom: .7rem;
+		border-top: 1px solid #e7e7e7;
+
+		&+.price-box {
+			margin: 0;
+			padding-top: 3px;
+			padding-bottom: 1rem;
+			border: 0;
+		}
+	}
+
+	.product-single-filter label {
+		min-width:  unset;
+	}
+
+//  3.6) Product Single Widget
+	.widget-info {
+		li {
+			display: flex;
+			align-items: center;
+			margin-bottom: .6rem;
+	
+			&:not(:last-child) {
+				margin-right: .8rem;
+			}
+		}
+
+		i {
+			margin-right: 1.9rem;
+			margin-top: 1px;
+		}
+	}
+
+	.widget-area  {
+		.widget.widget-info {
+			margin-bottom: 0;
+		}
+	}
+}
+
+//  3.7) Product Single Header
+.product-single-header {
+    margin-bottom: 2.5rem;
+	padding-bottom: 1.4rem;
+	border-bottom: 1px solid #dae2e6;
+}
+
+//  3.8) Product Single Qty Wrapper
+.single-qty-wrapper {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+
+	label {
+		margin-right: 1.3rem;
+		margin-bottom: 0;
+		color: #21293c;
+		font-weight: 600;
+		font-size: 1.5rem;
+		line-height: 1.1;
+		font-family: var(--shop-font-family);
+		letter-spacing: .005em;
+		text-transform: uppercase;
+	}
+
+	.product-single-qty {
+		.horizontal-quantity {
+			padding: .2rem;
+			height: 24px;
+			width: 36px;
+			background-color: #f4f4f4;
+			font-size: 1.3rem;
+		}
+
+		.btn {
+			border-style: none;
+		}
+	}
+}
+
+.product-desc {
+	.view-more {
+		color: $primary-color;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+}
+
+// 4. Responsive
+@include mq(sm) {
+	.product-single-extended .product-title {
+		width: 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.custom-products-section {
+		padding-top: 4rem;
+	}
+}
+
+@include mq(lg) {
+	.product-single-extended {
+		.product-single-share {
+		    margin-right: 10.1rem;
+    		margin-top: -1px;
+		}
+	}
+}
+
+@include mq(lg, max) {
+	.product-single-row h2 {
+		font-size: 3.5rem;
+	}
+}
+
+@include mq(md, max) {
+	.product-single-row {
+		display: block;
+
+		.single-row-bg {
+			position: relative;
+			left: 0;
+			width: 100%;
+			height: 50%;
+		}
+
+		.single-row-entire {
+			position: relative;
+			height: 50%;
+		}
+
+		.container {
+			display: -ms-flexbox;
+			display: flex;
+			-ms-flex-align: center;
+			align-items: center;
+			height: 50%;
+		}
+	}
+
+	.product-single-extended {
+		.product-price {
+			font-size: 2.4rem;
+		}
+
+		.product-title {
+			font-size: 3rem;
+		}
+	}
+}
+
+@include mq(sm, max) {
+	.product-single-row h2 {
+		font-size: 3rem;
+	}
+
+	.product-single-extended .single-qty-wrapper {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
+	.product-single-extended .widget-info li {
+		margin-bottom: 1.8rem;
+	}
+}

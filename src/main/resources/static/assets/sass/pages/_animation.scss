@@ -1,0 +1,30 @@
+.anim-pane {
+    .anim-wrapper {
+        float: left;
+        display: flex;
+        flex-direction: column;
+    }
+    p {
+        line-height: 2;
+    }
+    .anim-play-btn {
+        display: flex;
+        align-items: center;
+        margin: 1rem auto .5rem;
+        font-size: 1.2rem;
+        border-radius: 3px;
+    }
+    i {
+        font-size: 1.1rem;
+    }
+    
+    @include mq(xs, max){
+        .anim-play-btn {
+            margin-bottom: 2.5rem;
+        }
+        .anim-wrapper {
+            float: none;
+            align-items: center;
+        }
+    }
+}

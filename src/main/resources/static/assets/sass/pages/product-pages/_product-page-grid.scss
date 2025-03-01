@@ -1,0 +1,62 @@
+// Product Grid Layout
+.product-single-grid {
+	margin-bottom: 1.2rem;
+	
+	.product-single-gallery .product-item {
+		margin-bottom: 2rem;
+	}
+
+	.inner {
+		position: relative;
+	}
+
+	.product-item:hover {
+		.prod-full-screen {
+			opacity: 1;
+		}
+	}
+
+	.product-single-gallery .label-group {
+		left: 1.8rem;
+	}
+
+	.product-single-details .short-divider {
+		margin-bottom: 2.3rem;
+	}
+
+	.product-single-filter {
+		margin-bottom: 0;
+
+		&:not(:last-child) {
+			padding-top: 1.5rem;
+			padding-bottom: 1.5rem;
+		}
+
+		&:last-child {
+			margin-bottom: 1.5rem;
+			margin-top: -.5rem;
+		}
+		
+		label {
+			margin-right: 3.3rem;
+			margin-bottom: 1px;
+		}
+
+		&:first-child {
+			border-bottom: 1px solid #e7e7e7;
+		}
+		
+		.config-size-list a {
+			height: 28px;
+			font-size: 13px;
+			border: 1px solid #e9e9e9;
+			color: #222529;
+			background-color: #f4f4f4;
+		}
+	}
+
+	.single-info-list {
+		margin-top: 1.8rem;
+		margin-bottom: 1.2rem;
+	}
+}

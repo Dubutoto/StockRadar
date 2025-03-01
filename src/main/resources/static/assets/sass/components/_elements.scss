@@ -1,0 +1,65 @@
+// Elements List
+
+.section-elements {
+    text-align: center;
+    padding: 8rem 0 10rem;
+    h2 {
+        font-size: 3.6rem;
+        letter-spacing: -.05em;
+        margin-bottom: .2rem;
+    }
+    p {
+        font-size: 1.6rem;
+        letter-spacing: -.05em;
+        line-height: 26px;
+    }
+    .icon-box {
+        display: block;
+        box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
+        padding: 2.8rem 0;
+        background: linear-gradient(135deg,#0169fe 0,#383f48 100%);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        margin-bottom: 3rem;
+        i {
+            font-size: 3.2rem;
+            color: #0169fe;
+            position: relative;
+        }
+        i:last-child {
+            font-size: 6.4rem;
+            position: absolute;
+            top: -1.8rem;
+            opacity: .08;
+            right: -1.8rem;
+            color: #777;
+        }
+        h5 {
+            position: relative;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 1.2rem 0 0;
+        }
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: auto;
+            background: #fff;
+        }
+        &:hover {
+            &:before {
+                top: .8rem;
+                left: .8rem;
+                right: .8rem;
+                bottom: .8rem;
+                transition: cubic-bezier(.39,.66,.42,.99) all .2s;
+            }
+        }
+    }
+}

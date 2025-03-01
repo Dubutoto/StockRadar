@@ -1,0 +1,74 @@
+//Address Book
+
+.address {
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    .title {
+        margin-bottom: 2.9rem;
+    }
+
+    label {
+        margin-bottom: 1.1rem;
+    }
+
+    .form-control {
+        height: 37px;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+        letter-spacing: -.016em;
+    }
+
+    .heading {
+        margin-bottom: 6px;
+    }
+
+    .address-action {
+        padding: .8rem 2.3rem .7rem;
+        background: #f4f4f4;
+        color: #222524;
+        font-family: $font-family;
+
+        &:hover {
+            background-color: $primary-color;
+            color: #fff;
+        }
+    }
+
+    select.form-control:not([size]):not([multiple]) {
+        height: 37px;
+    }
+
+    .select-custom {
+        margin-bottom: 1.7rem;
+
+        &::after {
+            top: 72%;
+            right: 1.5rem;
+        }
+    }
+
+    .form-control {
+        line-height: 1.5;
+    }
+
+    &.account-content h4 {
+        font-size: 1.4rem;
+        letter-spacing: 0;
+    }
+}
+
+.address-box {
+	display: inline-block;
+    position: relative;
+    margin-bottom: 2.9rem;
+	width: 100%;
+	transition: .3s border-color;
+	font-size: 1.4rem;
+	line-height: 3rem;
+	vertical-align: top;
+	word-wrap: break-word;
+}

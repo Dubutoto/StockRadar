@@ -1,0 +1,21 @@
+// Button
+
+.button-type {
+    border-right: 1px solid rgba(0,0,0,.06);
+    h4 {
+        margin-bottom: 1rem;
+    }
+    p {
+        line-height: 2.4rem;
+        margin-bottom: 0;
+        padding-right: 1rem;
+    }
+}
+.btn-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    li {
+        margin: 1rem 1rem 1rem 0;
+    }
+}

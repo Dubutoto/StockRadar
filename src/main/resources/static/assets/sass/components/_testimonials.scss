@@ -1,0 +1,137 @@
+// Testimonials
+
+.testimonial-owner {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-content: center;
+
+	figure{
+		max-width: 40px;
+		margin-right: 25px;
+		margin-bottom: 2rem;
+		&.max-width-none {
+			max-width: none;
+			margin: 0;
+		}
+	}
+
+	h4 {
+		display: block;
+		margin-bottom: .5rem;
+		padding-top: .7rem;
+		color: #111;
+		font-size: 1.4rem;
+		text-transform: uppercase;
+	}
+
+	span {
+		display: block;
+		color: #666;
+		font-size: 1.2rem;
+		text-transform: uppercase;
+		letter-spacing: .045em;
+		line-height: 1.2;
+		font-weight: 600;
+	}
+}
+
+.testimonial {
+	blockquote {
+		position: relative;
+		margin: 0 0 0 15px;
+		padding: 1rem 2rem;
+		color: $primary-color;
+
+		&:before,
+		&:after {
+			position: absolute;
+			font-family: 'Playfair Display';
+			font-size: 5rem;
+			font-weight: 900;
+			line-height: 1;
+		}
+
+		&:before {
+			top: 0;
+			left: -0.4em;
+			content: '\201C';
+		}
+		p {
+		    margin-bottom: 0;
+			font-family: inherit;
+			font-style: normal;
+			font-size: 14px;
+			line-height: 24px;
+			color: #62615e;
+		}
+	}
+	&.blockquote-both blockquote{
+
+        &:after {
+            display: block;
+            content: '\201D';
+            right: 0;
+            bottom: -5px;
+            line-height: 24px;
+        }
+	}
+	&.owner-center {
+		blockquote,
+		> p {
+			text-align: center;
+		}
+		.testimonial-title {
+			text-align: center;
+		}
+		.testimonial-owner {
+			justify-content: center;
+			span {
+				text-align: center;
+			}
+			figure,img {
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+	}
+	&.testimonial-border {
+		border: 1px solid;
+		border-top-color: #dfdfdf;
+		border-bottom-color: #dfdfdf;
+		border-left-color: #ececec;
+		border-right-color: #ececec;
+		box-shadow: 0 1px 1px 0 rgb(0 0 0 / 4%);
+	}
+	&.testimonial-border-bottom {
+		.testimonial-owner {
+			border-top: 1px solid #f2f2f2;
+		}
+	}
+	&.inner-blockquote {
+		figure {
+			margin-top: 15px;
+			margin-bottom: 10px;
+		}
+		blockquote {
+			padding: 6px 20px;
+		}
+		.testimonial-title {
+			margin-top: 28px;
+		}
+	}
+	.testimonial-arrow-down {
+		border-left: 11px solid transparent;
+		border-right: 11px solid transparent;
+		border-top: 8px solid #CCC;
+		height: 0;
+		margin: 0 0 0 40px;
+		width: 0;
+	}
+}
+
+@media(max-width: 480px) {
+	.testimonial blockquote:before {
+		left: -15px;
+	}
+}

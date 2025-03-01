@@ -1,0 +1,48 @@
+.heading-bottom-border {
+    border-bottom: solid #dbdbdb;
+    padding-bottom: 1rem;
+}
+h1.heading-bottom-border {
+    border-bottom: 5px solid $primary-color-dark;
+}
+h2, h3 {
+    &.heading-bottom-border {
+        border-bottom-width: 2px;
+    }
+}
+h4, h5, h6 {
+    &.heading-bottom-border {
+        border-bottom-width: 1px;
+    }
+}
+.heading-bottom-border.double {
+    border-bottom: double #dbdbdb;
+}
+.heading-middle-border {
+    display: flex;
+    align-items: center;
+    &.left::after,
+    &.right::before {
+        content: '';
+        border-top: 1px solid #dbdbdb;
+        flex: 1;
+    }
+    &.left::after {
+        margin-left: 1rem;
+    }
+    &.right::before {
+        margin-right: 1rem;
+    }
+    &.sm::before,
+    &.sm::after {
+        border-width: 2px;
+    }
+    &.md::before,
+    &.md::after {
+        border-width: 3px;
+    }
+    &.lg::before,
+    &.lg::after {
+        border-width: 5px;
+    }
+}

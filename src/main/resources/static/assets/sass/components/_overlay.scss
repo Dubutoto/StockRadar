@@ -1,0 +1,301 @@
+// Overlay
+
+.overlay,
+.overlay-visible {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: #fff;
+    transition: padding .3s ease-out, background-color .3s, opacity .3s;
+}
+
+.overlay {
+    padding-top: 10rem;
+    background: rgba(0,0,0,.3);
+    opacity: 0;
+    a > & {
+        cursor: pointer;
+    }
+    figure:hover & {
+        padding-top: 0;
+        opacity: 1;
+    }
+    a:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+    a.social-link {
+        border-color: #fff;
+    }
+    .social-link:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+.overlay-visible {
+    figure:hover & {
+        background: rgba( $primary-color, .9);
+        padding-bottom: 9rem;
+    }
+}
+.overlay-transparent {
+    background: transparent;
+}
+
+// Global
+.overlay-effect1,
+.overlay-effect2,
+.overlay-effect3,
+.overlay-effect4 {
+    overflow: hidden;
+    figure, .banner {
+        position: relative;
+    }
+
+    figure::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: $primary-color-dark;
+        opacity: 0;
+        transition: opacity .3s, background .3s, transform .3s;
+    }
+
+    &:hover figure::after {
+        opacity: .2;
+    }
+}
+.overlay-effect2,
+.overlay-effect4 {
+    figure::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #fff;
+        opacity: .2;
+        transition: opacity .5s ease, transform .5s ease;
+    }
+}
+
+
+// Zoom
+.overlay-zoom {
+    overflow: hidden;
+    img {
+        transition: transform .3s;
+    }
+    &:hover {
+        img {
+            transform: scale(1.08);
+        }
+    }
+}
+
+// Effect1
+.overlay-effect1:hover figure::after {
+    transform: scale(1, 1);
+    visibility: visible;
+    opacity: 0;
+    transition: transform .5s linear, opacity .5s linear;
+}
+.overlay-effect1 figure::after {
+    transform: scale(0, 1);
+    opacity: .4;
+    background-color: #fff;
+    visibility: hidden;
+}
+
+// Effect2
+.overlay-effect2:hover figure::after,
+.overlay-effect2:hover figure::before {
+    opacity: 0;
+    transform: none;
+}
+.overlay-effect2 figure::after {
+    transform: translateX(-100%);
+    background-color: #fff;
+    opacity: .2;
+    transition: transform .9s ease, opacity .9s ease;
+}
+.overlay-effect2 figure::before {
+    transform: translateX(100%);
+    transition: transform .9s ease, opacity .9s ease;
+}
+
+// Effect3
+.overlay-effect3:hover figure::after {
+    top: 100%;
+    left: -100%;
+    transform: scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,200%,0);
+}
+.overlay-effect3 figure::after {
+    left: 50%;
+    width: 120%;
+    height: 60px;
+    background-color: #fff;
+    transform: scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,-150%,0);
+    transition: .5s linear, top .5s linear, left .5s linear;
+}
+
+// Effect4
+.overlay-effect4:hover figure::after,
+.overlay-effect4:hover figure::before {
+    transform: scale(1, 1);
+}
+.overlay-effect4 figure::after {
+    transform: scale(0, 1);
+    background-color: #fff;
+}
+.overlay-effect4 figure::before {
+    transform: scale(1, 0);
+    transition: transform .3s;
+}
+
+// Opacity
+.overlay-opacity {
+    img {
+        transition: .3s;
+    }
+    &:hover img {
+        filter: opacity(0.9);
+    }
+}
+
+// overlay-contentIn
+.overlay-contentIn {
+    overflow: hidden;
+    .banner-layer,
+    .banner-content {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .3s;
+    }
+    &:hover {
+        .banner-layer,
+        .banner-content {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+// overlay-contentOut
+.overlay-contentOut {
+    overflow: hidden;
+    .banner-layer,
+    .banner-content {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity .3s;
+    }
+    &:hover {
+        .banner-layer,
+        .banner-content {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+}
+
+
+// Particle Overlay Effect
+.particle-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+// Snowfall
+.snowfall {
+    background-image: url(../images/effects/s1.png),url(../images/effects/s2.png),url(../images/effects/s3.png);
+    animation: snow 10s linear infinite;
+}
+@keyframes snow {
+    0% {
+        background-position: 0px 0px,0px 0px,0px 0px;
+    }
+    50% {
+        background-position: 500px 500px,100px 300px,-200px 250px;
+    }
+    100% {
+        background-position: 400px 800px,300px 600px,-200px 400px;
+    }
+}
+
+// Sparkle
+.sparkle {
+    background-image: url(../images/effects/sparkle1.png),url(../images/effects/sparkle2.png);
+    animation: sparkle 60s linear infinite;
+}
+@keyframes sparkle {
+    0% {
+        background-position: 0px 0px,0px 0px,0px 0px;
+    }
+    100% {
+        background-position: -500px -1000px,-400px -400px,300px 300px;
+    }
+}
+
+//KenBurns
+@keyframes kenBurnsToRight {
+    0% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes kenBurnsToLeft {
+    0% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.kenBurnsToRight {
+    animation-name: kenBurnsToRight;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    transform-origin: right;
+}
+
+.kenBurnsToLeft {
+    animation-name: kenBurnsToLeft;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    transform-origin: left;
+}
+
+.kenBurnsToLeftTop {
+    animation-name: kenBurnsToLeft;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    transform-origin: left top;
+}
+
+.kenBurnsToRightTop {
+    animation-name: kenBurnsToRight;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    transform-origin: right top;
+}

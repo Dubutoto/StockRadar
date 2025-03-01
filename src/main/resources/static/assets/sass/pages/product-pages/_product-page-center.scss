@@ -1,0 +1,190 @@
+// Product Center Vertical Page
+
+// # content
+// 1. Product Vertical Base
+// 2. Product Vertical Thumbnail
+
+// 3. Product Vertical Details
+//    3.1) Product nav
+//    3.2) Product Title
+//    3.3) Product Desc
+//    3.4) Product Single Info List
+//    3.5) Product Filters
+//    3.6) Product Filtered Price
+//    3.7) Product Single Share
+//    3.8) Product Single Qty
+
+// 4. Responsive
+
+// 1. Product Vertical Base
+.product-center-vertical {
+    padding-top: 2rem;
+    padding-bottom: 2px;
+
+    .product-single-gallery {
+        margin-bottom: 2.3rem;
+    }
+
+    .short-divider {
+        margin-bottom: 2rem;
+    }
+
+// 2. Product Vertical Thumbnail
+    .prod-thumbnail {    
+        margin: 8px -3px 0;
+
+        img {
+            border: 1px solid #e7e7e7;
+        }
+
+        .active img, img:hover {
+            border: 1px solid $primary-color;
+        }
+    }
+
+// 3. Product Vertical Details
+// 3.1) Product Vertical nav
+    .product-nav {
+        right: 0;
+        top: 0;
+    }
+
+// 3.2) Product Vertical Title
+    .product-title {
+        font-size: 2.4rem;
+        line-height: 1.2;
+    }
+
+// 3.3) Product Vertical Desc
+    .product-desc {
+        margin-bottom: 1.5rem;
+    }
+
+    .product-category {
+        line-height: 1.8;
+    }
+
+// 3.4) Product Vertical Single Info List
+    .single-info-list {
+        margin-bottom: 2.4rem;
+
+        li {
+            margin-bottom: .6rem;
+        }
+
+        strong {
+            font-size: 1.4rem;
+        }
+    }
+    
+// 3.5) Product Vertical Filters
+    .product-filters-container {
+        padding-bottom: .5rem;
+        margin-bottom: .5rem;
+    }
+
+    .product-single-filter {
+        label {
+            margin-right: 3.3rem;
+            margin-bottom: 1px;
+        }
+
+        &:first-child {
+            border-bottom: 1px solid #e7e7e7;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+// 3.6) Product Vertical Filtered Price
+    .product-filtered-price {
+        margin-bottom: 1.3rem;
+        margin-top: 1.25rem;
+    }
+
+// 3.7) Product Vertical Single Share
+    .product-single-share {
+        .social-icon {
+            margin-top: 2px;
+            margin-bottom: 2px;
+
+            &:not(:hover):not(:active):not(:focus) {
+                background: #fff;
+            }
+        }
+
+        &:not(.icon-with-color) .social-icon {
+            border-radius: 0;
+        }
+    }
+
+    .social-icons {
+        position: fixed;
+        right: 1.6rem;
+        top: 48.4%;
+        z-index: 10;
+        transform: translateY(-50%);
+    }
+
+// 3.8) Product Vertical Single Qty
+    .product-qty-container label {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .product-single-qty label {
+        font-family: $font-family;
+    }
+}
+
+// 4. Responsive
+@include mq(lg) {
+    .product-center-vertical {
+        .product-single-gallery {
+            display: flex;
+        }
+
+        .product-slider-container {
+            width: calc(100% - 90px);
+        }
+
+        .prod-thumbnail {
+            margin: 0;
+
+            > .owl-dot {
+                flex: 1;
+                max-width: 100%;
+                margin: 10px 10px 0 0;
+                padding: 0;
+                
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1680px) {
+    .product-center-vertical {
+        .prod-thumbnail {
+            width: 110px;
+        }
+
+        .product-slider-container {
+            width: calc(100% - 110px);
+        }
+    }
+}
+
+@include mq(lg, max) {
+    .product-center-vertical .product-single-details .product-nav {
+        right: 10px;
+    }
+}
+
+@include mq(lg, max) {
+    .product-center-vertical .product-single-details .social-icons {
+        right: 1.8rem;
+    }
+}
