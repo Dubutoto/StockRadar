@@ -16,7 +16,7 @@
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/StockRadarLogo.jpg}">
 
 
     <script th:inline="javascript">
@@ -76,7 +76,7 @@
                                 <li><a th:href="@{/common/aboutUs}">사이트 소개</a></li>
                                 <li><a th:href="@{/news/news}">뉴스</a></li>
                                 <!--  로그인 안 돼있을 시 -->
-                                <li><a th:href="@{/ajax/login-popup.html}" class="login-link">로그인</a></li>
+                                <li><a th:href="@{/auth/signIn}" class="login-link">로그인</a></li>
                                 <!--  로그인 안 돼있을 시 -->
                                 <!--  로그인 돼있을 시 -->
                                 <li><a th:href="@{#}">로그아웃</a></li>
@@ -101,7 +101,7 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <a th:href="@{/main}" class="logo">
-                        <img th:src="@{/assets/images/logo.png}" width="111" height="44" alt="Porto Logo">
+                        <img th:src="@{/assets/images/StockRadarLogo.jpg}" width="130" height="44" alt="Porto Logo">
                     </a>
                 </div>
                 <!-- End .header-left -->
@@ -171,7 +171,7 @@
                                     <div class="product">
                                         <div class="product-details">
                                             <h4 class="product-title">
-                                                <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
+                                                <a th:href="@{/product/productDetail}">Ultimate 3D Bluetooth Speaker</a>
                                             </h4>
 
                                             <span class="cart-product-info">
@@ -181,7 +181,7 @@
                                         <!-- End .product-details -->
 
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
+                                            <a th:href="@{/product/productDetail}" class="product-image">
                                                 <img th:src="@{/assets/images/products/product-1.jpg}" alt="product"
                                                      width="80" height="80">
                                             </a>
@@ -253,7 +253,7 @@
                                     <div class="col-lg-4">
                                         <a href="#" class="nolink">상품</a>
                                         <ul class="submenu">
-                                            <li><a href="product.html">CPU</a></li>
+                                            <li><a th:href="@{/product/productDetail}">CPU</a></li>
                                         </ul>
                                     </div>
                                     <!-- End .col-lg-4 -->
@@ -433,7 +433,7 @@
                     </ul>
                 </li>
                 <li><a th:href="@{/news/news}">뉴스</a></li>
-                <li><a th:href="@{/board/boardMain}">커뮤니티</a></li>
+                <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
             </ul>
 
             <ul class="mobile-menu">

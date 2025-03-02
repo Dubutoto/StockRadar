@@ -1632,47 +1632,6 @@
 				}
 			} );
 		},
-		loginPopup: function () {
-			$( '.login-link' ).click( function ( e ) {
-				e.preventDefault();
-				Porto.ajaxLoading();
-				var ajaxUrl = "ajax/login-popup.html";
-
-				$.magnificPopup.open( {
-					type: 'ajax',
-					mainClass: "login-popup",
-					tLoading: '',
-					preloader: false,
-					removalDelay: 350,
-					items: {
-						src: ajaxUrl
-					},
-					callbacks: {
-						open: function () {
-							if ( $( '.sticky-header.fixed' ).css( 'padding-right' ) ) {
-								$( '.sticky-header.fixed' ).css( 'padding-right', window.innerWidth - document.body.clientWidth );
-								$( '.sticky-header.fixed-nav' ).css( 'padding-right', window.innerWidth - document.body.clientWidth );
-								$( '#scroll-top' ).css( 'margin-right', window.innerWidth - document.body.clientWidth );
-							}
-						},
-						beforeClose: function () {
-							$( '.ajax-overlay' ).remove();
-						},
-						afterClose: function () {
-							if ( $( '.sticky-header.fixed' ).css( 'padding-right' ) ) {
-								$( '.sticky-header.fixed' ).css( 'padding-right', '' );
-								$( '.sticky-header.fixed-nav' ).css( 'padding-right', '' );
-								$( '#scroll-top' ).css( 'margin-right', '' );
-							}
-						}
-					},
-					ajax: {
-						tError: '',
-					}
-				} );
-
-			} );
-		},
 		productManage: function () {
 			$( '.product-select' ).click( function ( e ) {
 				$( this ).parents( '.product-default' ).find( 'figure img' ).attr( 'src', $( this ).data( 'src' ) );
