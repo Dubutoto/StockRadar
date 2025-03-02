@@ -14,4 +14,5 @@ import java.time.LocalDateTime;
 public class CustomerInquiryProcessingRequestDto {
     private String processingTitle;
     private String processingContent;
+    private String inquiryCategory;
 }

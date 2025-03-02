@@ -1,6 +1,7 @@
 package org.example.stockradar.feature.CustomerInquiry.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.stockradar.feature.CustomerInquiry.dto.CustomerInquiryResponseDto;
 import org.example.stockradar.feature.CustomerInquiry.dto.CustomerInquiryUserRequestDto;
 import org.example.stockradar.feature.CustomerInquiry.entity.CustomerInquiry;
 import org.example.stockradar.feature.CustomerInquiry.repository.CustomerInquiryRepository;
@@ -19,7 +20,7 @@ public class CustomerInquiryService {
     private final CustomerInquiryRepository repository;
     private final MemberRepository memberRepository;
 
-    public Long saveCustomerInquiry(CustomerInquiryUserRequestDto requestDto, String memberId) {
+    public CustomerInquiryResponseDto saveCustomerInquiry(CustomerInquiryUserRequestDto requestDto, String memberId) {
         // 현재 로그인한 회원 정보 조회
         Member member = memberRepository.findByMemberId(memberId);
 
@@ -40,7 +41,12 @@ public class CustomerInquiryService {
                     .inquiryStatus(0)
                     .member(member) // 회원 정보 설정
                     .build();
-            return repository.save(inquiry).getInquiryId();
+            Long inquiryId = repository.save(inquiry).getInquiryId();
+
+            return CustomerInquiryResponseDto.builder()
+                    .inquiryId(inquiryId)
+                    .message("문의가 성공적으로 접수되었습니다.")
+                    .build();
         }
         //데이터 저장 실패
         catch (Exception e) {
