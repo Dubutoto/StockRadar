@@ -61,6 +61,10 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // CoolSMS
+    implementation 'net.nurigo:sdk:4.3.0'
+
 }
 
 tasks.named('test') {

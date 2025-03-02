@@ -1,14 +1,15 @@
 package org.example.stockradar.feature.CustomerInquiry.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
+import org.example.stockradar.feature.customerInquiryprocessing.entity.CustomerInquiryProcessiong;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,19 +34,28 @@ public class CustomerInquiry {
     @Column(nullable = false)
     private Integer inquiryStatus;
 
-    @CreationTimestamp
-    private LocalDate createdAt;
+    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
 
     private String inquiryUrl;
-
-
-
 
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
+
+    // 1:1 관계 설정 (수정됨)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customerInquiry")
+    @ToString.Exclude // 순환 참조 방지
+    private CustomerInquiryProcessiong customerInquiryProcessiong;
+
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
 
 }

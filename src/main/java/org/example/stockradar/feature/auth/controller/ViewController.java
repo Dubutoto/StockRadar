@@ -8,13 +8,13 @@ public class ViewController {
     // 로그인 폼
     @GetMapping("/login")
     public String loginForm() {
-        return "login"; // login.html (Thymeleaf)
+        return "auth/signIn"; // login.html (Thymeleaf)
     }
 
     // 회원가입 폼
     @GetMapping("/signup")
     public String signupForm() {
-        return "signup"; // signup.html
+        return "auth/signUp"; // signup.html
     }
 
     // 메인 페이지
