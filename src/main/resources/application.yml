@@ -63,7 +63,7 @@ logging:
     org.hibernate.SQL: DEBUG
 
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     dateformat: "yyyy-MM-dd HH:mm:ss,Asia/Seoul" # ms는 제외함
 
@@ -76,3 +76,8 @@ logging:
     rollingpolicy:
       file-name-pattern: "StockRadar.%d{yyyy-MM-dd}.%i.log"
       max-history: 60
+
+  spring:
+    output:
+      ansi:
+        enabled: ALWAYS
