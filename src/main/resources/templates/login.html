@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>로그인</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+        .social-buttons a {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background-color: #eee;
+            text-decoration: none;
+            color: #333;
+        }
+        .social-buttons a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>로그인</h2>
+
+    <!-- 일반 ID/PW 로그인 폼 -->
+    <form method="post" action="/auth/login">
+        <div>
+            <label for="memberId">아이디(이메일)</label><br/>
+            <input type="text" id="memberId" name="memberId" />
+        </div>
+        <div>
+            <label for="memberPw">비밀번호</label><br/>
+            <input type="password" id="memberPw" name="memberPw" />
+        </div>
+        <button type="submit">로그인</button>
+    </form>
+
+    <hr/>
+
+    <!-- 소셜 로그인 영역 -->
+    <div class="social-buttons">
+        <p>소셜 계정으로 로그인:</p>
+
+        <!-- Google -->
+        <a href="/oauth2/authorization/google">구글로 로그인</a>
+        <!-- Naver -->
+        <a href="/oauth2/authorization/naver">네이버로 로그인</a>
+        <!-- Discord -->
+        <a href="/oauth2/authorization/discord">디스코드로 로그인</a>
+    </div>
+
+    <hr/>
+
+    <p>
+        아직 회원이 아니신가요?
+        <a href="/signup">회원가입</a>
+    </p>
+</div>
+</body>
+</html>

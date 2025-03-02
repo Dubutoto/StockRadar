@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+</head>
+<body>
+<h1>회원가입</h1>
+
+<!-- 회원가입 폼 -->
+<form th:action="@{/auth/signup}" method="post">
+  <div>
+    <label for="memberId">아이디(이메일):</label>
+    <input type="text" id="memberId" name="memberId"/>
+  </div>
+  <div>
+    <label for="memberPw">비밀번호:</label>
+    <input type="password" id="memberPw" name="memberPw"/>
+  </div>
+  <div>
+    <label for="userName">이름:</label>
+    <input type="text" id="userName" name="userName"/>
+  </div>
+  <div>
+    <label for="memberPhone">연락처:</label>
+    <input type="text" id="memberPhone" name="memberPhone"/>
+  </div>
+  <button type="submit">회원가입</button>
+</form>
+
+<!-- 회원가입 실패 시, AuthController에서 model에 "error"를 담아 리턴할 수 있음 -->
+<div th:if="${error}">
+  <p style="color:red" th:text="${error}"></p>
+</div>
+
+<p><a th:href="@{/login}">로그인</a></p>
+
+</body>
+</html>

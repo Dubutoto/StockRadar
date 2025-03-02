@@ -19,7 +19,7 @@ public class MemberService {
     public void signUp(MemberSignupDto signupDto) {
         // 중복 체크
         if (memberRepository.findByMemberId(signupDto.getMemberId()) != null) {
-            throw new RuntimeException("이미 존재하는 아이디(이메일)입니다.");
+            throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
 
         // 비밀번호 해싱

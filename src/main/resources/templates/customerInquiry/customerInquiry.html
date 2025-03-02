@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>문의하기</title>
+    <th:block layout:fragment="head">
+        <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/simple-line-icons/css/simple-line-icons.min.css}">
+    </th:block>
+    <script type="text/javascript" th:src="@{/js/customerInquiry/customerInquiry.js}" defer></script>
+</head>
+
+<div class="container" layout:fragment="content">
+    <main class="main">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a th:href="@{/main}"><i class="icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        문의하기
+                    </li>
+                </ol>
+            </div>
+        </nav>
+
+        <div class="container contact-us-container">
+            <div class="contact-info">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="ls-n-25 m-b-1">
+                            연락처 정보
+                        </h2>
+                        <p>
+                            컴퓨터 부품 최저가 검색 서비스에 관한 문의사항이 있으시면, 아래의 연락처를 통해 문의해 주시기 바랍니다.
+                        </p>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="feature-box text-center">
+                            <i class="sicon-location-pin"></i>
+                            <div class="feature-box-content">
+                                <h3>주소</h3>
+                                <h5>서울특별시 강남구 테헤란로 123</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="feature-box text-center">
+                            <i class="fa fa-mobile-alt"></i>
+                            <div class="feature-box-content">
+                                <h3>전화번호</h3>
+                                <h5>010-1234-5678</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="feature-box text-center">
+                            <i class="far fa-envelope"></i>
+                            <div class="feature-box-content">
+                                <h3>이메일</h3>
+                                <h5>mail@google.com</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="feature-box text-center">
+                            <i class="far fa-calendar-alt"></i>
+                            <div class="feature-box-content">
+                                <h3>영업시간</h3>
+                                <h5>월 - 금 / 09:00 - 17:00</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="mt-6 mb-2">문의 메시지 보내기</h2>
+                    <form class="mb-0" th:action="@{/customerInquiry/submit}" method="post">
+                        <div class="form-group">
+                            <label class="mb-1" for="email">이메일 <span class="required">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" th:value="${memberId}" readonly/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="mb-1" for="title">문의 제목 <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="title" name="title" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="mb-1" for="category">문의 카테고리 <span class="required">*</span></label>
+                            <select class="form-control" id="category" name="category" required>
+                                <option value="" disabled selected>카테고리를 선택하세요</option>
+                                <option value="general">일반 문의</option>
+                                <option value="technical">기술 지원</option>
+                                <option value="billing">결제 관련</option>
+                                <option value="feedback">피드백</option>
+                                <option value="other">기타</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="mb-1" for="content">문의 내용 <span class="required">*</span></label>
+                            <textarea cols="30" rows="1" id="content" class="form-control" name="content" required></textarea>
+                        </div>
+
+                        <div class="form-footer mb-0">
+                            <button type="submit" class="btn btn-dark font-weight-normal" id="submitButton">
+                                메시지 보내기
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-6">
+                    <h2 class="mt-6 mb-1">자주 묻는 질문</h2>
+                    <div id="accordion">
+                        <div class="card card-accordion">
+                            <a class="card-header" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                최저가 검색 서비스는 어떻게 이용하나요?
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <p>
+                                    상단의 검색창에 원하는 컴퓨터 부품 이름을 입력하고 검색 버튼을 클릭하면, 최신 가격 정보를 확인할 수 있습니다.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card card-accordion">
+                            <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                검색 결과는 얼마나 자주 업데이트되나요?
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <p>
+                                    가격 데이터는 실시간으로 수집되며, 일반적으로 매시간 업데이트됩니다.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card card-accordion">
+                            <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                잘못된 정보가 있을 경우 어떻게 하나요?
+                            </a>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <p>
+                                    문의하기를 통해 오류를 신고해 주시면, 신속하게 확인 후 수정 조치를 취하겠습니다.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card card-accordion">
+                            <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                회원 가입이 필요한가요?
+                            </a>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <p>
+                                    기본 검색은 회원 가입 없이도 이용 가능하지만, 가격 알림 등 추가 기능을 이용하시려면 회원 가입이 필요합니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8"></div>
+    </main>
+</div>
+</html>
