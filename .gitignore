@@ -38,9 +38,8 @@ out/
 
 ### Addition ###
 .yml
+.log
 .md
 .sql
 .xml
-logs/
-.log
-src/main/java/org/example/stockradar/config/SecurityConfig.java
+
