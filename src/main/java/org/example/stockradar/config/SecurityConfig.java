@@ -7,7 +7,7 @@ import org.example.stockradar.feature.auth.service.RoutingOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,14 +25,16 @@ public class SecurityConfig {
     private final RoutingOAuth2UserService routingOAuth2UserService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
+    // 비밀번호 암호화
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // AuthenticationManager (필요 시)
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
@@ -40,15 +42,28 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+
+                // .authenticationManager(authenticationManager)
+
+                // -- feature/40 쪽 authorizeHttpRequests --
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/signup", "/auth/**", "/css/**", "/js/**", "/images/**", "/customerInquiry/**", "/board/**").permitAll()
+                        .requestMatchers(
+                                "/login", "/signup", "/auth/**",
+                                "/css/**", "/js/**", "/images/**",
+                                "/customerInquiry/**", "/board/**",
+                                "/assets/**", "/main", "/"  // feature/40에서 추가
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
+
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
+
+                        .loginPage("/login") // 커스텀 로그인 페이지
                         .userInfoEndpoint(userInfo -> userInfo.userService(routingOAuth2UserService))
                         .successHandler(oAuth2LoginSuccessHandler)
                 )
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
