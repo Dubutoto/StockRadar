@@ -14,5 +14,5 @@ public class CustomerInquiryUserRequestDto {
     private String category;    // 카테고리
     private String email;       // 이메일
     private String content;     // 문의 내용
-
 }
+

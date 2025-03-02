@@ -4,9 +4,11 @@
       layout:decorate="~{layout}">
 
 <head>
+    <title>문의하기</title>
     <th:block layout:fragment="head">
         <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/simple-line-icons/css/simple-line-icons.min.css}">
     </th:block>
+    <script type="text/javascript" th:src="@{/js/customerInquiry/customerInquiry.js}" defer></script>
 </head>
 
 <div class="container" layout:fragment="content">
@@ -78,24 +80,36 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h2 class="mt-6 mb-2">문의 메시지 보내기</h2>
-                    <form class="mb-0" action="#">
+                    <form class="mb-0" th:action="@{/customerInquiry/submit}" method="post">
                         <div class="form-group">
-                            <label class="mb-1" for="contact-name">이름 <span class="required">*</span></label>
-                            <input type="text" class="form-control" id="contact-name" name="contact-name" required />
+                            <label class="mb-1" for="email">이메일 <span class="required">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" th:value="${memberId}" readonly/>
                         </div>
 
                         <div class="form-group">
-                            <label class="mb-1" for="contact-email">이메일 <span class="required">*</span></label>
-                            <input type="email" class="form-control" id="contact-email" name="contact-email" required />
+                            <label class="mb-1" for="title">문의 제목 <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="title" name="title" required />
                         </div>
 
                         <div class="form-group">
-                            <label class="mb-1" for="contact-message">문의 내용 <span class="required">*</span></label>
-                            <textarea cols="30" rows="1" id="contact-message" class="form-control" name="contact-message" required></textarea>
+                            <label class="mb-1" for="category">문의 카테고리 <span class="required">*</span></label>
+                            <select class="form-control" id="category" name="category" required>
+                                <option value="" disabled selected>카테고리를 선택하세요</option>
+                                <option value="general">일반 문의</option>
+                                <option value="technical">기술 지원</option>
+                                <option value="billing">결제 관련</option>
+                                <option value="feedback">피드백</option>
+                                <option value="other">기타</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="mb-1" for="content">문의 내용 <span class="required">*</span></label>
+                            <textarea cols="30" rows="1" id="content" class="form-control" name="content" required></textarea>
                         </div>
 
                         <div class="form-footer mb-0">
-                            <button type="submit" class="btn btn-dark font-weight-normal">
+                            <button type="submit" class="btn btn-dark font-weight-normal" id="submitButton">
                                 메시지 보내기
                             </button>
                         </div>
