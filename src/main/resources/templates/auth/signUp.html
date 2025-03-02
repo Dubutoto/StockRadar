@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
+<!-- layout:decorate="~{layout}" 는 공통 레이아웃이 있을 때 사용 -->
+
 <div class="container" layout:fragment="content">
     <main class="main">
         <div class="page-header">
@@ -14,48 +16,81 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
 
-                <form action="#">
-                    <!-- 이메일 -->
-                    <label for="register-email">
-                        이메일
-                        <span class="required">*</span>
-                    </label>
-                    <input type="email" class="form-input form-wide" id="register-email" required/>
+                <!-- 오류/성공 메시지 표시 -->
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
 
-                    <!-- 패스워드 -->
-                    <label for="register-password">
-                        비밀번호
-                        <span class="required">*</span>
+                <!-- 첫 번째 폼: 인증번호 전송 -->
+                <form th:action="@{/auth/sendCode}" method="post">
+                    <!-- 이메일 -->
+                    <label for="memberId">
+                        이메일 <span class="required">*</span>
                     </label>
-                    <input type="password" class="form-input form-wide" id="register-password"
-                           required/>
+                    <input type="email" class="form-input form-wide" id="memberId"
+                           name="memberId" th:value="${memberId}" required />
+
+                    <!-- 비밀번호 -->
+                    <label for="memberPw">
+                        비밀번호 <span class="required">*</span>
+                    </label>
+                    <input type="password" class="form-input form-wide" id="memberPw"
+                           name="memberPw" th:value="${memberPw}" required />
 
                     <!-- 이름 -->
-                    <label for="register-name">
-                        이름
-                        <span class="required">*</span>
+                    <label for="userName">
+                        이름 <span class="required">*</span>
                     </label>
-                    <input type="text" class="form-input form-wide" id="register-name"
-                           required/>
+                    <input type="text" class="form-input form-wide" id="userName"
+                           name="userName" th:value="${userName}" required />
 
-                    <!-- 전화번호 -->
-                    <label for="register-phoneNumber">
-                        전화번호
-                        <span class="required">*</span>
+                    <!-- 휴대폰 번호 -->
+                    <label for="memberPhone">
+                        휴대폰 번호 <span class="required">*</span>
                     </label>
-                    <input type="text" class="form-input form-wide" id="register-phoneNumber"
-                           required/>
+                    <input type="text" class="form-input form-wide" id="memberPhone"
+                           name="memberPhone" th:value="${memberPhone}" required />
 
-                    <div class="form-footer mb-2">
-                        <button type="submit" class="btn btn-dark btn-md w-100 mr-0">
-                            회원가입
-                        </button>
-                    </div>
-
+                    <button type="submit" class="btn btn-primary btn-md w-100 mr-0" style="margin-top: 10px;">
+                        인증번호 전송
+                    </button>
                 </form>
+
+                <!-- 두 번째 폼: 인증번호 확인 -->
+                <form th:action="@{/auth/checkCode}" method="post" style="margin-top: 15px;">
+                    <!-- 숨김 필드: 기존 데이터 유지 -->
+                    <input type="hidden" name="memberId" th:value="${memberId}" />
+                    <input type="hidden" name="memberPw" th:value="${memberPw}" />
+                    <input type="hidden" name="userName" th:value="${userName}" />
+                    <input type="hidden" name="memberPhone" th:value="${memberPhone}" />
+
+                    <label for="verifyCode">
+                        인증번호
+                    </label>
+                    <input type="text" id="verifyCode" name="verifyCode"
+                           class="form-input form-wide"
+                           th:value="${verifyCode}"
+                           th:attr="disabled=${phoneVerified} ? 'disabled' : null" />
+
+                    <button type="submit" class="btn btn-success w-100" style="margin-top: 10px;">
+                        인증번호 확인
+                    </button>
+                </form>
+
+                <!-- 세 번째 폼: 최종 회원가입 -->
+                <form th:action="@{/auth/signup}" method="post" style="margin-top: 15px;">
+                    <input type="hidden" name="memberId" th:value="${memberId}" />
+                    <input type="hidden" name="memberPw" th:value="${memberPw}" />
+                    <input type="hidden" name="userName" th:value="${userName}" />
+                    <input type="hidden" name="memberPhone" th:value="${memberPhone}" />
+                    <!-- 인증 완료 후에만 가입 가능 -->
+
+                    <button type="submit" class="btn btn-dark w-100">
+                        회원가입
+                    </button>
+                </form>
+
             </div>
         </div>
     </main>
-    <!-- End .main -->
 </div>
 </html>
