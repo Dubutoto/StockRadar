@@ -65,6 +65,8 @@ dependencies {
     // CoolSMS
     implementation 'net.nurigo:sdk:4.3.0'
 
+    //SMTP
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
