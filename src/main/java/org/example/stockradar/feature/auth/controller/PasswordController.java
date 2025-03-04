@@ -6,6 +6,7 @@ import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.auth.repository.MemberRepository;
 import org.example.stockradar.feature.auth.service.SmtpMailService;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,9 @@ public class PasswordController {
     private final MemberRepository memberRepository;
     private final SmtpMailService smtpMailService;
     private final RedisTemplate<String, String> redisTemplate;
+
+    // ★ Inject the PasswordEncoder to hash the new password
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 비밀번호 찾기 폼(입력) - GET
@@ -54,7 +58,8 @@ public class PasswordController {
         // 예) http://localhost:8080/password/resetPwForm?token=xxx
         String resetLink = "http://localhost:8080/password/resetPwForm?token=" + token;
         String subject = "[StockRadar] 비밀번호 재설정 안내";
-        String text = "아래 링크를 클릭하여 비밀번호를 재설정하세요:\n" + resetLink + "\n(10분 이내 유효)";
+        String text = "아래 링크를 클릭하여 비밀번호를 재설정하세요:\n" + resetLink;
+
         smtpMailService.sendMail(email, subject, text);
 
         model.addAttribute("msg", "해당 이메일로 비밀번호 재설정 링크를 전송했습니다. 10분 내에 진행해주세요.");
@@ -110,9 +115,8 @@ public class PasswordController {
             return "auth/pwInquiry";
         }
 
-        // 4) 새 비밀번호 저장
-        // 보안을 위해 별도의 PasswordEncoder가 필요하나, 여기선 생략 예시
-        member.setMemberPw(newPassword);
+        // 4) 새 비밀번호를 PasswordEncoder로 해시하여 저장
+        member.setMemberPw(passwordEncoder.encode(newPassword));
         memberRepository.save(member);
 
         // 5) Redis 토큰 삭제
@@ -122,3 +126,4 @@ public class PasswordController {
         return "auth/signIn";
     }
 }
+
