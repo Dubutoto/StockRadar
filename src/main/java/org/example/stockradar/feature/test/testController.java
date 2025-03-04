@@ -83,12 +83,6 @@ public class testController {
         return "product/category";
     }
 
-    //커뮤니티 이동
-    @GetMapping("/board/boardList")
-    public String boardMain() {
-        return "board/boardList";
-    }
-
     // 커뮤니티 글 쓰기 페이지 이동
     
     //커뮤니티 글 삭제 페이지 이동
