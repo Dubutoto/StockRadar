@@ -22,4 +22,16 @@ public class ViewController {
     public String mainPage() {
         return "main"; // main.html
     }
+
+    // 아이디 찾기 폼
+    @GetMapping("/idInquiry")
+    public String idInquiryForm() {
+        return "auth/idInquiry"; // idInquiry.html
+    }
+
+    @GetMapping("/pwInquiry")
+    public String redirectPwInquiry() {
+         return "redirect:/password/pwInquiry";
+    }
+
 }

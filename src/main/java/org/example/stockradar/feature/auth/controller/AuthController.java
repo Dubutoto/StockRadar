@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,6 +36,25 @@ public class AuthController {
     // CoolSMS + Redis
     private final CoolsmsService coolsmsService;
     private final RedisTemplate<String, String> redisTemplate;
+
+    // 아이디 찾기 처리 (휴대폰 번호로 검색)
+    @PostMapping("/findIdByPhone")
+    public String findIdByPhone(@RequestParam("phone") String phone,
+                                Model model) {
+        // 1) DB에서 동일한 phone을 가진 모든 Member 조회
+        List<Member> members = memberRepository.findAllByMemberPhone(phone);
+
+        if (members.isEmpty()) {
+            // 가입된 회원 없음
+            model.addAttribute("error", "해당 번호로 등록된 아이디(이메일)가 없습니다.");
+        } else {
+            // 2) 여러 건이면 전부 화면에 표시
+            model.addAttribute("foundMembers", members);
+        }
+
+        // 다시 idInquiry.html 로 이동
+        return "auth/idInquiry";
+    }
 
     /**
      * (1) 휴대폰 인증번호 전송
