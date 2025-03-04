@@ -145,7 +145,7 @@
 
                     <a th:href="@{/auth/signIn}" class="header-icon" title="signIn"><i class="icon-user-2"></i></a>
 
-                    <a th:href="@{/auth/wishlist}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
+                    <a th:href="@{/alert/wishlist}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
 
                     <!-- 카트 말고 wishlist 오른쪽에 뜨게 바꾸기-->
                     <div class="dropdown cart-dropdown">
@@ -196,7 +196,7 @@
 
                                 <div class="dropdown-cart-action">
                                     <!--  로그인 돼있을 시 -->
-                                    <a th:href="@{/auth/wishlist}" class="btn btn-gray btn-block view-cart">
+                                    <a th:href="@{/alert/wishlist}" class="btn btn-gray btn-block view-cart">
                                         관심상품
                                     </a>
                                     <!--  로그인 돼있을 시 -->
@@ -263,7 +263,7 @@
                             <!-- End .megamenu -->
                         </li>
                         <li><a th:href="@{/news/news}">뉴스</a></li>
-                        <li><a th:href="@{/board/boardMain}">커뮤니티</a></li>
+                        <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
                         <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                     </ul>
                 </nav>
@@ -439,7 +439,7 @@
             <ul class="mobile-menu">
                 <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                 <!--  로그인 돼있을 시 -->
-                <li><a th:href="@{/auth/wishlist}">관심상품</a></li>
+                <li><a th:href="@{/alert/wishlist}">관심상품</a></li>
                 <!--  로그인 돼있을 시 -->
                 <!--  로그인 안 돼있을 시 -->
                 <li><a th:href="@{/auth/signIn}" class="login-link">로그인</a></li>
@@ -476,7 +476,7 @@
     </div>
     <div class="sticky-info">
         <!--  로그인 돼있을 시 -->
-        <a th:href="@{/auth/wishlist}" class="">
+        <a th:href="@{/alert/wishlist}" class="">
             <i class="icon-wishlist-2"></i>관심상품
         </a>
         <!--  로그인 돼있을 시 -->

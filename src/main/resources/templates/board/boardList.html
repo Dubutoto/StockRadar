@@ -7,7 +7,7 @@
         <!-- 게시판 목록 헤더 -->
         <div class="board-header">
             <h1>게시판</h1>
-            <a th:href="@{/board/form}" class="btn btn-primary">새 글 작성</a>
+            <a th:href="@{/board/boardWrite}" class="btn btn-primary">새 글 작성</a>
         </div>
 
         <!-- 검색 폼 -->
@@ -33,7 +33,7 @@
                 <tr th:each="post, iterStat : ${posts}">
                     <td th:text="${iterStat.index + 1}">1</td>
                     <td>
-                        <a th:href="@{'/board/' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
+                        <a th:href="@{'/board/boardDetail' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
                     </td>
                     <td th:text="${post.author}">작성자</td>
                     <td th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd')}">작성일</td>
