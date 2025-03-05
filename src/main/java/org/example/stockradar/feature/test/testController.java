@@ -71,16 +71,11 @@ public class testController {
         return "news/newsDetail";
     }
 
-    //상품 상세
-    @GetMapping("/product/productDetail")
-    public String productDetail() {
-        return "product/productDetail";
-    }
     
     //카테고리
-    @GetMapping("/product/category")
+    @GetMapping("/product/stockLayout")
     public String category() {
-        return "product/category";
+        return "/product/stockLayout";
     }
 
     //커뮤니티 이동
