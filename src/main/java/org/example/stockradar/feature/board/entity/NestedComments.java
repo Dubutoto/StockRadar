@@ -1,17 +1,14 @@
 package org.example.stockradar.feature.board.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Nested_comments")
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -78,6 +78,7 @@ public class testController {
         return "/product/stockLayout";
     }
 
+
     @GetMapping("/product/productCategory")
     public String productCategory() {return "/product/productCategory";}
 

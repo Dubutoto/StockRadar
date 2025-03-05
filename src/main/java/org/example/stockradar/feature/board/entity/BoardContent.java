@@ -1,18 +1,14 @@
 package org.example.stockradar.feature.board.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardContent {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
