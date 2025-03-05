@@ -52,7 +52,9 @@ public class SecurityConfig {
                     "/login", "/signup", "/auth/**",
                     "/css/**", "/js/**", "/images/**",
                     "/customerInquiry/**", "/board/**",
-                    "/assets/**", "/main", "/"  // feature/40에서 추가
+                    "/assets/**", "/main", "/", "/auth/idInquiry", "/idInquiry",
+                    "/password/**"
+
                 ).permitAll()
                 .anyRequest().authenticated()
             )

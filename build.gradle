@@ -39,6 +39,7 @@ dependencies {
 
     //Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 
     //Thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -65,6 +66,8 @@ dependencies {
     // CoolSMS
     implementation 'net.nurigo:sdk:4.3.0'
 
+    //SMTP
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
