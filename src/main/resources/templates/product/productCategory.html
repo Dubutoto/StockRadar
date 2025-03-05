@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head> <!-- 필요한 CSS 파일들을 불러옵니다 -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/demo4.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+</head>
+<div class="container" layout:fragment="content">
+    <main class="main"> <!-- 상단 정렬 옵션 (Toolbox) -->
+        <nav class="toolbox sticky-header" data-sticky-options="{'mobile': true}">
+            <div class="toolbox-left">
+                <div class="toolbox-item toolbox-sort"><label>Sort By:</label>
+                    <div class="select-custom"><select name="orderby" class="form-control">
+                        <option value="menu_order" selected="selected">Default sorting</option>
+                        <option value="popularity">Sort by popularity</option>
+                        <option value="rating">Sort by average rating</option>
+                        <option value="date">Sort by newness</option>
+                        <option value="price">Sort by price: low to high</option>
+                        <option value="price-desc">Sort by price: high to low</option>
+                    </select></div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- GPU 상품 그룹 섹션 -->
+        <h2>GPU</h2>
+        <div class="row products-group">
+            <!-- 아래 product card 코드를 8개 복사 (한 줄에 4개씩) -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx3050">
+                            <img src="/assets/images/product/rtx3050.jpeg" width="205" height="205"
+                                 alt="rtx3050 GPU Product">
+                            <img src="/assets/images/product/rtx3050.jpeg" width="205" height="205"
+                                 alt="rtx3050 GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                            <div class="product-label label-sale">-15%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/assets/images/product/rtx3050.jpeg" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx3050" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx3050">NVIDIA GeForce RTX 3050</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:100%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$800.00</span>
+                            <span class="product-price">$680.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 2 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- 복사 & 붙여넣기로 동일 구조, 제품 정보를 변경 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx3060Ti">
+                            <img src="/assets/images/product/rtx3060ti.jpeg" width="205" height="205"
+                                 alt="rtx3060ti GPU Product">
+                            <img src="/assets/images/product/rtx3060ti.jpeg" width="205" height="205"
+                                 alt="rtx3060ti GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-10%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx3060Ti" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx3060Ti" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx3060Ti">NVIDIA GeForce RTX 3060 Ti</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:90%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$700.00</span>
+                            <span class="product-price">$630.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 3 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- 제품 카드 내용 복사 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx4060">
+                            <img src="/assets/images/product/rtx4060.jpeg" width="205" height="205"
+                                 alt="rtx4060 GPU Product">
+                            <img src="/assets/images/product/rtx4060.jpeg" width="205" height="205"
+                                 alt="rtx4060 GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx4060" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx4060" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx4060">NVIDIA GeForce RTX 4060</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:85%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$600.00</span>
+                            <span class="product-price">$510.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 4 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- 제품 카드 내용 복사 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx4060Ti">
+                            <img src="/assets/images/product/rtx4060ti.jpeg" width="205" height="205"
+                                 alt="rtx4060ti GPU Product">
+                            <img src="/assets/images/product/rtx4060ti.jpeg" width="205" height="205"
+                                 alt="rtx4060ti GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-25%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx4060Ti" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx4060Ti" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx4060Ti">NVIDIA GeForce RTX 4060 Ti</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:80%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$500.00</span>
+                            <span class="product-price">$400.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 5 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- 복사본, GPU 상품 추가 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx4070">
+                            <img src="/assets/images/product/rtx4070.jpeg" width="205" height="205"
+                                 alt="rtx4070 GPU Product">
+                            <img src="/assets/images/product/rtx4070.jpeg" width="205" height="205"
+                                 alt="rtx4070 GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                            <div class="product-label label-sale">-10%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx4070" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx4070" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx4070">NVIDIA GeForce RTX 3050</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:75%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$400.00</span>
+                            <span class="product-price">$350.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 6 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- GPU 상품 카드 복사 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx4070Ti">
+                            <img src="/assets/images/product/rtx4070ti.jpeg" width="205" height="205"
+                                 alt="rtx4070ti GPU Product">
+                            <img src="/assets/images/product/rtx4070ti.jpeg" width="205" height="205"
+                                 alt="rtx4070ti GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-30%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx4070Ti" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx4070Ti" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx4070Ti">NVIDIA GeForce RTX 4070 Ti</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:95%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$1000.00</span>
+                            <span class="product-price">$850.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 7 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- GPU 상품 카드 복사 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx5070Ti">
+                            <img src="/assets/images/product/rtx5070ti.jpeg" width="205" height="205"
+                                 alt="rtx5070ti GPU Product">
+                            <img src="/assets/images/product/rtx5070ti.jpeg" width="205" height="205"
+                                 alt="rtx5070ti GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx5070Ti" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx5070Ti" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx5070Ti">NVIDIA GeForce RTX 5070 Ti</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:100%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$1500.00</span>
+                            <span class="product-price">$1350.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GPU 상품 아이템 8 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <!-- GPU 상품 카드 복사 -->
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/gpu/rtx5080">
+                            <img src="/assets/images/product/rtx5080.jpeg" width="205" height="205"
+                                 alt="rtx5080 GPU Product">
+                            <img src="/assets/images/product/rtx5080.jpeg" width="205" height="205"
+                                 alt="rtx5080 GPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-20%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <a href="/product/gpu/rtx5080" class="btn-quickview" title="Quick View">
+                            Quick View
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/gpu/rtx5080" class="product-category">GPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/gpu/rtx5080">NVIDIA GeForce RTX 5080</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:70%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$480.00</span>
+                            <span class="product-price">$420.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End GPU Section -->
+
+        <!-- CPU 섹션 -->
+        <h2>CPU</h2>
+        <div class="row products-group">
+            <!-- CPU 상품 아이템 1 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/ryzen9000">
+                            <img src="/assets/images/product/ryzen9000.jpeg" width="205" height="205"
+                                 alt="ryzen9000 CPU Product">
+                            <img src="/assets/images/product/ryzen9000.jpeg" width="205" height="205"
+                                 alt="ryzen9000 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/ryzen9000" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/ryzen9000" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/ryzen9000">AMD RYZEN 9000</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:85%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$550.00</span>
+                            <span class="product-price">$500.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 2 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/ryzen8000">
+                            <img src="/assets/images/product/ryzen7000.jpeg" width="205" height="205"
+                                 alt="ryzen8000 CPU Product">
+                            <img src="/assets/images/product/ryzen7000.jpeg" width="205" height="205"
+                                 alt="ryzen8000 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-10%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/ryzen8000" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/ryzen8000" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/ryzen8000">AMD RYZEN 8000</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:90%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$450.00</span>
+                            <span class="product-price">$400.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 3 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/ryzen7000">
+                            <img src="/assets/images/product/ryzen7000.jpeg" width="205" height="205"
+                                 alt="ryzen7000 CPU Product">
+                            <img src="/assets/images/product/ryzen7000.jpeg" width="205" height="205"
+                                 alt="ryzen7000CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/ryzen7000" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/ryzen7000" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/ryzen7000">AMD RYZEN 7000</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:80%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$350.00</span>
+                            <span class="product-price">$310.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 4 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/ryzen5000">
+                            <img src="/assets/images/product/ryzen5000.jpeg" width="205" height="205"
+                                 alt="ryzen5000 CPU Product">
+                            <img src="/assets/images/product/ryzen5000.jpeg" width="205" height="205"
+                                 alt="ryzen5000 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-20%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/ryzen5000" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/ryzen5000" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/ryzen5000">AMD RYZEN 5000</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:75%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$320.00</span>
+                            <span class="product-price">$280.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 5 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/intelultra9">
+                            <img src="/assets/images/product/intelultra9.jpeg" width="205" height="205"
+                                 alt="intelultra9 CPU Product">
+                            <img src="/assets/images/product/intelultra9.jpeg" width="205" height="205"
+                                 alt="intelultra9 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/intelultra9" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/intelultra9" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/intelultra9">Intel core ultra9</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:70%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$250.00</span>
+                            <span class="product-price">$220.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 6 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/intelultra7">
+                            <img src="/assets/images/product/intelultra7.jpeg" width="205" height="205"
+                                 alt="intelultra7 CPU Product">
+                            <img src="/assets/images/product/intelultra7.jpeg" width="205" height="205"
+                                 alt="intelultra7 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-15%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/intelultra7" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/intelultra7" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/intelultra7">Intel core ultra7</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:80%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$200.00</span>
+                            <span class="product-price">$180.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 7 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/intelI9">
+                            <img src="/assets/images/product/inteli9.jpeg" width="205" height="205"
+                                 alt="inteli9 CPU Product">
+                            <img src="/assets/images/product/inteli9.jpeg" width="205" height="205"
+                                 alt="inteli9 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/intelI9" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/intelI9" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/intelI9">Intel core i9</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:60%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$130.00</span>
+                            <span class="product-price">$110.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CPU 상품 아이템 8 -->
+            <div class="col-6 col-sm-4 col-md-3">
+                <div class="product-default inner-quickview inner-icon">
+                    <figure class="img-effect">
+                        <a href="/product/cpu/intelI7">
+                            <img src="/assets/images/product/inteli7.jpg" width="205" height="205"
+                                 alt="inteli7 CPU Product">
+                            <img src="/assets/images/product/inteli7.jpg" width="205" height="205"
+                                 alt="inteli7 CPU Product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-sale">-25%</div>
+                        </div>
+                        <div class="btn-icon-group">
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                    class="icon-shopping-cart"></i></a>
+                        </div>
+                        <a href="/product/cpu/intelI7" class="btn-quickview" title="Quick View">Quick View</a>
+                    </figure>
+                    <div class="product-details">
+                        <div class="category-wrap">
+                            <div class="category-list">
+                                <a href="/product/cpu/intelI7" class="product-category">CPU</a>
+                            </div>
+                        </div>
+                        <h3 class="product-title">
+                            <a href="/product/cpu/intelI7">Intel core i7</a>
+                        </h3>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:65%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span class="old-price">$110.00</span>
+                            <span class="product-price">$95.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End CPU Section -->
+    </main>
+</div>
+</html>
