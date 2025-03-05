@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<!--
+    이 파일은 resources/templates/auth/profile.html 라고 가정
+    "layout"은 Thymeleaf 레이아웃 사용 시 필요한 설정
+-->
+
+<div class="container" layout:fragment="content">
+  <main class="main">
+    <div class="page-header">
+      <div class="container d-flex flex-column align-items-center">
+        <h1>회원정보 수정</h1>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+
+        <!-- 에러 메시지 -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <!-- 성공 메시지 -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+        <!-- 프로필 수정 폼 -->
+        <form th:action="@{/profile/update}" method="post">
+          <!-- 아이디(이메일) - 수정 불가(읽기 전용) -->
+          <div class="form-group">
+            <label for="memberId">이메일(아이디)</label>
+            <input type="text" class="form-control" id="memberId" name="memberId"
+                   th:value="${member.memberId}" readonly />
+          </div>
+
+          <!-- 이름 -->
+          <div class="form-group">
+            <label for="userName">이름</label>
+            <input type="text" class="form-control" id="userName" name="userName"
+                   th:value="${member.userName}" />
+          </div>
+
+          <!-- 전화번호 -->
+          <div class="form-group">
+            <label for="memberPhone">전화번호</label>
+            <input type="text" class="form-control" id="memberPhone" name="memberPhone"
+                   th:value="${member.memberPhone}" />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">
+            수정
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+</html>
