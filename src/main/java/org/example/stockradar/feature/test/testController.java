@@ -72,17 +72,23 @@ public class testController {
     }
 
     
-    //카테고리
+    //상품
     @GetMapping("/product/stockLayout")
     public String category() {
         return "/product/stockLayout";
     }
+
+    @GetMapping("/product/productCategory")
+    public String productCategory() {return "/product/productCategory";}
 
     //커뮤니티 이동
     @GetMapping("/board/boardList")
     public String boardMain() {
         return "board/boardList";
     }
+
+    @GetMapping("/product/gpu/rtx3050")
+    public String gpuRtx3050() {return "/product/gpu/rtx3050";}
 
     // 커뮤니티 글 쓰기 페이지 이동
     
