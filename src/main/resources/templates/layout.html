@@ -72,11 +72,11 @@
                             <ul>
                                 <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                                 <li><a th:href="@{/common/aboutUs}">사이트 소개</a></li>
-                                <li><a th:href="@{/news/news}">뉴스</a></li>
+                                <li><a th:href="@{/news/list}">뉴스</a></li>
 
                                 <!-- 로그인 안 돼있을 때만 표시 -->
                                 <li sec:authorize="!isAuthenticated()">
-                                    <a th:href="@{/auth/signIn}" class="login-link">로그인</a>
+                                    <a th:href="@{/login}">로그인</a>
                                 </li>
                                 <!-- 로그인 되어있을 때만 표시 -->
                                 <li sec:authorize="isAuthenticated()">
@@ -150,7 +150,7 @@
                     <div class="header-icons d-flex align-items-center" style="gap: 1rem;">
                         <!-- 로그인 안 된 상태 -> 로그인 페이지로 -->
                         <a sec:authorize="!isAuthenticated()"
-                           th:href="@{/auth/signIn}"
+                           th:href="@{/login}"
                            class="header-icon"
                            title="로그인">
                             <i class="icon-user-2"></i>
@@ -222,7 +222,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li><a th:href="@{/news/news}">뉴스</a></li>
+                        <li><a th:href="@{/news/list}">뉴스</a></li>
                         <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
                         <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                     </ul>
@@ -379,7 +379,7 @@
                         </li>
                     </ul>
                 </li>
-                <li><a th:href="@{/news/news}">뉴스</a></li>
+                <li><a th:href="@{/news/list}">뉴스</a></li>
                 <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
             </ul>
 
@@ -388,7 +388,7 @@
 
                 <!-- 로그인 안 된 상태 -->
                 <li sec:authorize="!isAuthenticated()">
-                    <a th:href="@{/auth/signIn}" class="login-link">로그인</a>
+                    <a th:href="@{/login}">로그인</a>
                 </li>
                 <!-- 로그인 된 상태 -->
                 <li sec:authorize="isAuthenticated()">
@@ -396,7 +396,7 @@
                 </li>
                 <!-- 로그인 된 상태일 때만 관심상품 -->
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/auth/wishlist}">관심상품</a>
+                    <a th:href="@{/alert/wishlist}">관심상품</a>
                 </li>
             </ul>
         </nav>
@@ -424,14 +424,14 @@
     </div>
     <!-- 관심상품(로그인 시만) -->
     <div class="sticky-info" sec:authorize="isAuthenticated()">
-        <a th:href="@{/auth/wishlist}">
+        <a th:href="@{/alert/wishlist}">
             <i class="icon-wishlist-2"></i>관심상품
         </a>
     </div>
     <!-- 마이페이지/로그인 -->
     <div class="sticky-info">
         <!-- 로그인 안 됨 -> 로그인 페이지 -->
-        <a sec:authorize="!isAuthenticated()" th:href="@{/auth/signIn}">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
             <i class="icon-user-2"></i>로그인
         </a>
         <!-- 로그인 됨 -> 마이페이지 -->
