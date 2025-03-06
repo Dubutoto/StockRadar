@@ -11,4 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BoardRequestDto {
 
+    private int a;
+
 }

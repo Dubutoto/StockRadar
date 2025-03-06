@@ -10,4 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardResponseDto {
+
+    private int a;
 }
