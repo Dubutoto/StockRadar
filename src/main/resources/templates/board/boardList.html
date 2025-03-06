@@ -25,14 +25,16 @@
                 <thead>
                 <tr>
                     <th>번호</th>
+                    <th>카테고리</th>
                     <th>제목</th>
                     <th>작성자</th>
                     <th>작성일</th>
                 </tr>
-                </thead>
+                </thead><!DOCTYPE html>
                 <tbody>
-                <tr th:each="post, iterStat : ${posts}">
+                <tr th:each="post, iterStat : ${boardList}">
                     <td th:text="${iterStat.index + 1}">1</td>
+                    <td></td>
                     <td>
                         <a th:href="@{'/board/boardDetail' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
                     </td>
