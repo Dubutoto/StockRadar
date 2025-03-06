@@ -40,33 +40,35 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            
-            // .authenticationManager(authenticationManager)
 
-            // -- feature/40 쪽 authorizeHttpRequests --
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/login", "/signup", "/auth/**",
-                    "/css/**", "/js/**", "/images/**",
-                    "/customerInquiry/**", "/board/**",
-                    "/assets/**", "/main", "/", "/auth/idInquiry", "/idInquiry",
-                    "/password/**"
+                // .authenticationManager(authenticationManager)
 
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
+                // -- feature/40 쪽 authorizeHttpRequests --
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/login", "/signup", "/auth/**",
+                                "/css/**", "/js/**", "/images/**",
+                                "/customerInquiry/**", "/board/**",
+                                "/assets/**", "/main", "/", "/auth/idInquiry", "/idInquiry",
+                                "/password/**",
+                                "/main/check"
 
-            .oauth2Login(oauth2 -> oauth2
-                
-                .loginPage("/login") // 커스텀 로그인 페이지
-                .userInfoEndpoint(userInfo -> userInfo.userService(routingOAuth2UserService))
-                .successHandler(oAuth2LoginSuccessHandler)
-            )
 
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+
+                .oauth2Login(oauth2 -> oauth2
+
+                        .loginPage("/login") // 커스텀 로그인 페이지
+                        .userInfoEndpoint(userInfo -> userInfo.userService(routingOAuth2UserService))
+                        .successHandler(oAuth2LoginSuccessHandler)
+                )
+
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
