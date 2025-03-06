@@ -1,10 +1,7 @@
 package org.example.stockradar.feature.board.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
 
 import java.time.LocalDateTime;
@@ -12,18 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comments {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long commentId;
-
 
     @Column( nullable = false, length = 225)
     private String commentContent;

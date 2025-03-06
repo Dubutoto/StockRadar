@@ -155,6 +155,7 @@
                            class="header-icon"
                            title="로그인">
                             <i class="icon-user-2"></i>
+
                         </a>
 
                         <!-- 로그인 된 상태 -> 마이페이지로 -->
@@ -172,6 +173,7 @@
                            title="wishlist">
                             <i class="icon-wishlist-2"></i>
                         </a>
+
                     </div>
                     <!-- End .header-icons -->
                 </div>
@@ -222,8 +224,10 @@
                             </div>
                         </li>
                         <li><a th:href="@{/news/news}">뉴스</a></li>
+
                         <li><a th:href="@{/board/boardMain}">커뮤니티</a></li>
                         <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
+
 
                     </ul>
                 </nav>
@@ -387,7 +391,9 @@
             </ul>
 
             <ul class="mobile-menu">
+
                 <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
+
                 <!-- 로그인 안 된 상태 -->
                 <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{/auth/signIn}" class="login-link">로그인</a>

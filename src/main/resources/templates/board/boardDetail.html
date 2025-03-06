@@ -15,7 +15,7 @@
                 게시글 내용
             </div>
             <div class="detail-actions">
-                <a th:href="@{'/board/form/' + ${post.id}}" class="btn btn-secondary">수정</a>
+                <a th:href="@{'/board/boardForm/' + ${post.id}}" class="btn btn-secondary">수정</a>
                 <a th:href="@{'/board/delete/' + ${post.id}}" class="btn btn-danger">삭제</a>
                 <a th:href="@{/board}" class="btn btn-link">목록으로</a>
             </div>

@@ -1,10 +1,7 @@
 package org.example.stockradar.feature.board.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
 
 
@@ -13,18 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
-@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Board {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private Long boardId;
-
 
     @Column(nullable = false, length = 100)
     private String boardTitle;
@@ -40,13 +34,12 @@ public class Board {
 
 
     @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime dletedAt;
+    private LocalDateTime deletedAt;
 
-    //FUCK맴버와 관계 설정
+    //멤버와 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="memberCode")
     private Member member;
-
 
     // Board와 Comments는 1:N 관계 (Comments 테이블의 board_id가 FK)
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
