@@ -5,16 +5,13 @@ import lombok.*;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private Long contentId;
-
 
     @Column( nullable = false, columnDefinition = "TEXT")
     private String content;

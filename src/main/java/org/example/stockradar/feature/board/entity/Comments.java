@@ -10,9 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comments {
 
     @Id
