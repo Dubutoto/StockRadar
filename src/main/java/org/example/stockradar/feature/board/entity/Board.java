@@ -11,8 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 
     @Id
@@ -23,10 +22,10 @@ public class Board {
     @Column(nullable = false, length = 100)
     private String boardTitle;
 
-    @Column(length = 25)
+    @Column(nullable = false, length = 25)
     private String boardCategory;
 
-    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false ,columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")

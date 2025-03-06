@@ -5,6 +5,8 @@ import org.example.stockradar.feature.board.entity.Board;
 import org.example.stockradar.feature.board.repository.BoardRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -13,5 +15,9 @@ public class BoardService {
 
     public Board saveBoard(Board board) {
         return boardRepository.save(board);
+    }
+
+    public List<Board> findAllBoards() {
+        return boardRepository.findAll();
     }
 }
