@@ -13,7 +13,6 @@ public class BoardContent {
     @Column(nullable = false, unique = true)
     private Long contentId;
 
-
     @Column( nullable = false, columnDefinition = "TEXT")
     private String content;
 
