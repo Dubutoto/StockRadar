@@ -223,15 +223,7 @@
                         </li>
                         <li><a th:href="@{/news/news}">뉴스</a></li>
                         <li><a th:href="@{/board/boardMain}">커뮤니티</a></li>
-                        <li th:if="${viewResponseDto != null and viewResponseDto.role == 'MEMBER'}" class="member-only">
-                            <a th:href="@{/customerInquiry/customerInquiry}">고객문의</a>
-                        </li>
-                        <li th:if="${viewResponseDto != null and viewResponseDto.role == 'ADMIN'}" class="admin-only">
-                            <a th:href="@{/customerInquiryprocessing/customerInquiryprocessing}">고객문의 처리</a>
-                        </li>
-                        <li th:if="${viewResponseDto == null or viewResponseDto.role == 'GUEST'}" class="guest-only">
-                            <a th:href="@{/customerInquiry/customerInquiry}">고객문의</a>
-                        </li>
+                        <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
 
                     </ul>
                 </nav>
@@ -280,15 +272,7 @@
                         <div class="widget">
                             <h4 class="widget-title">고객 서비스</h4>
                             <ul class="links">
-                                <li th:if="${viewResponseDto != null and viewResponseDto.role == 'MEMBER'}" class="member-only">
-                                    <a th:href="@{/customerInquiry/customerInquiry}">고객문의</a>
-                                </li>
-                                <li th:if="${viewResponseDto != null and viewResponseDto.role == 'ADMIN'}" class="admin-only">
-                                    <a th:href="@{/customerInquiryprocessing/customerInquiryprocessing}">고객문의 처리</a>
-                                </li>
-                                <li th:if="${viewResponseDto == null or viewResponseDto.role == 'GUEST'}" class="guest-only">
-                                    <a th:href="@{/customerInquiry/customerInquiry}">고객문의</a>
-                                </li>
+                                <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
 
 
 
@@ -403,15 +387,7 @@
             </ul>
 
             <ul class="mobile-menu">
-                <li th:if="${viewResponseDto != null and viewResponseDto.role == 'MEMBER'}" class="member-only">
-                    <a th:href="@{/customerInquiry/customerInquiry}">고객문의</a>
-                </li>
-                <li th:if="${viewResponseDto != null and viewResponseDto.role == 'ADMIN'}" class="admin-only">
-                    <a th:href="@{/customerInquiryprocessing/customerInquiryprocessing}">고객문의 처리</a>
-                </li>
-                <li th:if="${viewResponseDto == null or viewResponseDto.role == 'GUEST'}" class="guest-only">
-                    <a th:href="@{/customerInquiry/customerInquiry}">고객문의</a>
-                </li>
+                <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
                 <!-- 로그인 안 된 상태 -->
                 <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{/auth/signIn}" class="login-link">로그인</a>
