@@ -28,7 +28,7 @@ public enum ErrorCode {
     INQUIRY_NOT_FOUND(404, "ERR-014", "문의 없음", "고객문의가 존재하지 않습니다."),
 
     // 500 Internal Server Error
-    INTERNAL_SERVER_ERROR(500, "ERR-005", "서버 오류", "서버 내부에 오류가 발생했습니다."),
+    INTERNAL_SERVER_ERROR(500, "ERR-005", "서버 오류", "관리자에게 문의하세요."),
     RESOURCE_SAVE_FAILED(500, "ERR-009", "데이터 저장 실패", "데이터베이스에 데이터를 저장하는 중 오류가 발생했습니다."),
     DATA_CONVERSION_ERROR(500, "ERR-015", "데이터 변환 오류", "데이터 DTO변환중 오류가 발생했습니다.");
     private final int httpStatus;          // HTTP 상태 코드

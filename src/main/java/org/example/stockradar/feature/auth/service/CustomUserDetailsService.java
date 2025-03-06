@@ -31,4 +31,15 @@ public class CustomUserDetailsService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority(roleName))
         );
     }
+
+    public String getMemberRole(String memberId) {
+        Member member = memberRepository.findByMemberId(memberId);
+        if (member == null) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + memberId);
+        }
+        return member.getRole().name();
+    }
+
+
+
 }
