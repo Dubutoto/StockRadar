@@ -72,6 +72,7 @@ logging:
     root: INFO
     org.springframework: INFO
     org.springframework.web: DEBUG
+    org.example.stockradar: DEBUG
     org.thymeleaf: INFO
     org.springframework.boot.web.servlet: ERROR
     org.hibernate.SQL: DEBUG
