@@ -9,6 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+/**
+ * @author Hyun7en
+ */
 public class BoardRequestDto {
 
     private int a;
