@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Duration;
 import java.util.List;
@@ -195,13 +196,19 @@ public class AuthController {
     @PostMapping("/login")
     public String login(LoginRequest request,
                         HttpServletResponse response,
-                        Model model) {
-        Member member = Optional.ofNullable(memberRepository.findByMemberId(request.getMemberId()))
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 아이디입니다."));
+                        RedirectAttributes redirectAttributes) {
 
+        Optional<Member> memberOptional = Optional.ofNullable(memberRepository.findByMemberId(request.getMemberId()));
+
+        if (memberOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "존재하지 않는 아이디입니다.");
+            return "redirect:/auth/signIn";
+        }
+
+        Member member = memberOptional.get();
         if (!passwordEncoder.matches(request.getMemberPw(), member.getMemberPw())) {
-            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
-            return "auth/signIn";
+            redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
+            return "redirect:/auth/signIn";
         }
 
         // JWT 토큰 생성
