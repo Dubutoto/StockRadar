@@ -3,19 +3,37 @@ package org.example.stockradar.feature.crawl.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
+@Data
 @Entity
-@Table(name = "product")
-@Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, unique = true)
+    private Long productId;
 
-    @Column(nullable = false)
-    private String name; // 예) "RTX 3060 Ti"
+
+    @Column(length = 100, nullable = false)
+    private String productName;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String productUrl;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="categoryId")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "storeId", nullable = false)
+    private Store store;
+
+    @OneToOne(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private StockStatus stockStatus;
+
 }
-
