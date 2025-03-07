@@ -28,7 +28,7 @@ public class ViewController {
     }
 
     // 회원가입 폼
-    @GetMapping("/signup")
+    @GetMapping("auth/signUp")
     public String signupForm() {
         return "auth/signUp"; // signup.html
     }
@@ -73,12 +73,12 @@ public class ViewController {
 
 
     // 아이디 찾기 폼
-    @GetMapping("/idInquiry")
+    @GetMapping("auth/idInquiry")
     public String idInquiryForm() {
         return "auth/idInquiry"; // idInquiry.html
     }
 
-    @GetMapping("/pwInquiry")
+    @GetMapping("auth/pwInquiry")
     public String redirectPwInquiry() {
         return "redirect:/password/pwInquiry";
     }
