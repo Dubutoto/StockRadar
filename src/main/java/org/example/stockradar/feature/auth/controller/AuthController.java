@@ -202,13 +202,13 @@ public class AuthController {
 
         if (memberOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "존재하지 않는 아이디입니다.");
-            return "redirect:/auth/signIn";
+            return "redirect:/login";
         }
 
         Member member = memberOptional.get();
         if (!passwordEncoder.matches(request.getMemberPw(), member.getMemberPw())) {
             redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-            return "redirect:/auth/signIn";
+            return "redirect:/login";
         }
 
         // JWT 토큰 생성
