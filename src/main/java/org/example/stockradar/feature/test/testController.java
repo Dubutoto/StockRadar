@@ -82,7 +82,7 @@ public class testController {
     @GetMapping("/product/productCategory")
     public String productCategory() {return "/product/productCategory";}
 
-       //커뮤니티 이동
+    //커뮤니티 이동
     @GetMapping("/board/boardList")
     public String boardMain() {
         return "board/boardList";
