@@ -53,7 +53,7 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/images/**",
                                 "/customerInquiry/**", "/board/**",
                                 "/assets/**", "/main", "/", "/auth/idInquiry", "/idInquiry",
-                                "/password/**",
+                                "/password/**","/product/**",
                                 "/main/check"
 
 
