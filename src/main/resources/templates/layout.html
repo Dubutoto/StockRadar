@@ -168,7 +168,7 @@
 
                         <!-- 위시리스트 (로그인 시만) -->
                         <a sec:authorize="isAuthenticated()"
-                           th:href="@{/alert/wishlist}"
+                           th:href="@{/notification/wishlist}"
                            class="header-icon"
                            title="wishlist">
                             <i class="icon-wishlist-2"></i>
@@ -212,7 +212,7 @@
                         </li>
                         <li> <a th:href="@{/product/productCategory}">상품</a></li>
                         <li><a th:href="@{/news/list}">뉴스</a></li>
-                        <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
+                        <li><a th:href="@{/board/list}">커뮤니티</a></li>
                         <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                     </ul>
                 </nav>
@@ -372,7 +372,7 @@
                     </ul>
                 </li>
                 <li><a th:href="@{/news/list}">뉴스</a></li>
-                <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
+                <li><a th:href="@{/board/list}">커뮤니티</a></li>
             </ul>
 
             <ul class="mobile-menu">
@@ -389,7 +389,7 @@
                 </li>
                 <!-- 로그인 된 상태일 때만 관심상품 -->
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/alert/wishlist}">관심상품</a>
+                    <a th:href="@{/notification/wishlist}">관심상품</a>
                 </li>
             </ul>
         </nav>
@@ -417,7 +417,7 @@
     </div>
     <!-- 관심상품(로그인 시만) -->
     <div class="sticky-info" sec:authorize="isAuthenticated()">
-        <a th:href="@{/alert/wishlist}">
+        <a th:href="@{/notification/wishlist}">
             <i class="icon-wishlist-2"></i>관심상품
         </a>
     </div>

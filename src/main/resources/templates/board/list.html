@@ -32,34 +32,34 @@
                 </tr>
                 </thead><!DOCTYPE html>
                 <tbody>
-                <tr th:each="post, iterStat : ${boardList}">
-                    <td th:text="${iterStat.index + 1}">1</td>
-                    <td></td>
+                <tr th:each="post : ${list}">
+                    <td th:text="${post.boardId}">1</td>
+                    <td th:text="${post.boardCategory}">카테고리</td>
                     <td>
-                        <a th:href="@{'/board/boardDetail' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
+                        <a th:href="@{'/board/boardDetail' + ${post.id}}" th:text="${post.boardTitle}">게시글 제목</a>
                     </td>
-                    <td th:text="${post.author}">작성자</td>
-                    <td th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd')}">작성일</td>
+                    <td th:text="">작성자</td>
+                    <td th:text="${#dates.format(post.createdAt, 'yyyy-MM-dd')}">작성일</td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
         <!-- 페이지네이션 -->
-<!--        <div class="pagination">-->
-<!--            <ul class="pagination">-->
-<!--                <li th:if="${page.hasPrevious()}" class="page-item">-->
-<!--                    <a th:href="@{'/board?page=' + ${page.number - 1}}" class="page-link">이전</a>-->
-<!--                </li>-->
-<!--                <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"-->
-<!--                    th:classappend="${page.number == i} ? 'active'">-->
-<!--                    <a th:href="@{'/board?page=' + ${i}}" th:text="${i + 1}" class="page-link">1</a>-->
-<!--                </li>-->
-<!--                <li th:if="${page.hasNext()}" class="page-item">-->
-<!--                    <a th:href="@{'/board?page=' + ${page.number + 1}}" class="page-link">다음</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
+        <div class="pagination-container">
+            <ul class="pagination justify-content-center">
+                <li th:if="${list.hasPrevious()}" class="page-item">
+                    <a th:href="@{'/board/list?page=' + ${list.number - 1}}" class="page-link">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, list.totalPages - 1)}"
+                    th:classappend="${list.number == i} ? 'active'">
+                    <a th:href="@{'/board/list?page=' + ${i}}" th:text="${i + 1}" class="page-link">1</a>
+                </li>
+                <li th:if="${list.hasNext()}" class="page-item">
+                    <a th:href="@{'/board/list?page=' + ${list.number + 1}}" class="page-link">다음</a>
+                </li>
+            </ul>
+        </div>
     </main>
 </div>
 </html>
