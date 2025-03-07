@@ -96,3 +96,22 @@ logging:
     output:
       ansi:
         enabled: ALWAYS
+# s3
+cloud:
+  aws:
+    credentials:
+      access-key: ${}
+      secret-key: ${}
+
+    s3:
+      bucket: stockradars3
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3path: "https://stockradars3.s3.ap-northeast-2.amazonaws.com"
+    cloudfrontpath: "https://dxhufg9x2pwyh.cloudfront.net"
+
+
+
+

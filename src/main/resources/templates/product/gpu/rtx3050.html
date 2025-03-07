@@ -9,7 +9,10 @@
         <!-- 이미지와 설명 섹션 - 가로 배치 -->
         <section class="product-header d-flex">
             <div class="image-container">
-                <img src="/assets/images/product/rtx5090.png" alt="NVIDIA RTX 5090">
+                <img src="/assets/images/product/rtx3050.jpeg" alt="NVIDIA RTX 5090">
+<!--                <img th:src="${@environment.getProperty('cloud.aws.s3path') + '/product/rtx3050.jpeg'}" alt="NVIDIA RTX 3050">-->
+<!--                <img th:src="${@environment.getProperty('cloud.aws.cloudfrontpath') + '/product/rtx3050.jpeg'}" alt="NVIDIA RTX 3050">-->
+
             </div>
             <div class="description-container ml-3">
                 <h1>NVIDIA RTX 5090</h1>
