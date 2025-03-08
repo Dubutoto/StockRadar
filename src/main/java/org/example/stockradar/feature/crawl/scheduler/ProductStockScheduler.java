@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.service.ProductStockService;
+import org.example.stockradar.feature.product.dto.ProductResponseDto;
 import org.example.stockradar.global.exception.CustomException;
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.CrawlException;
@@ -39,20 +40,20 @@ public class ProductStockScheduler {
         log.info("상품 재고 상태 조회 스케줄러 시작: {}", LocalDateTime.now().format(formatter));
 
         try {
-            List<Product> products = productStockService.getProductsWithStockAndPrice();
+            List<ProductResponseDto> products = productStockService.getProductsWithStockAndPrice();
 
             if (products == null) {
                 CrawlException.throwCustomException(ErrorCode.DATA_FETCH_TIMEOUT);
             }
 
-            for (Product product : products) {
+            for (ProductResponseDto product : products) {
                 try {
 
                     log.info("상품명: {}, 재고상태: {}, 가격: {}, 마지막 업데이트: {}",
                             product.getProductName(),
-                            product.getStockStatus().getAvailability(),
-                            product.getStockStatus().getPrice().getPrice(),
-                            product.getStockStatus().getLastUpdated().format(formatter));
+                            product.getAvailability(),
+                            product.getPrice(),
+                            product.getLastUpdated().format(formatter));
 
                 } catch (Exception e) {
                     // 개별 상품 처리 실패 시 로그만 남기고 다음 상품으로 진행
