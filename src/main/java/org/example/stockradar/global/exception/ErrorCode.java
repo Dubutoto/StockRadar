@@ -30,7 +30,12 @@ public enum ErrorCode {
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(500, "ERR-005", "서버 오류", "관리자에게 문의하세요."),
     RESOURCE_SAVE_FAILED(500, "ERR-009", "데이터 저장 실패", "데이터베이스에 데이터를 저장하는 중 오류가 발생했습니다."),
-    DATA_CONVERSION_ERROR(500, "ERR-015", "데이터 변환 오류", "데이터 DTO변환중 오류가 발생했습니다.");
+    DATA_CONVERSION_ERROR(500, "ERR-015", "데이터 변환 오류", "데이터 DTO변환중 오류가 발생했습니다."),
+    SCHEDULER_EXECUTION_FAILED(500, "ERR-101", "스케줄러 실행 실패", "스케줄러 작업 실행 중 오류가 발생했습니다."),
+    DATA_FETCH_TIMEOUT(500, "ERR-102", "데이터 조회 시간 초과", "데이터 조회 중 시간 초과가 발생했습니다."),
+    CONCURRENT_SCHEDULER_CONFLICT(500, "ERR-103", "스케줄러 충돌", "이전 스케줄러 작업이 아직 실행 중입니다.");
+
+
     private final int httpStatus;          // HTTP 상태 코드
     private final String errorCode;        // 고유 에러 코드
     private final String errorMessage;     // 에러 메시지
