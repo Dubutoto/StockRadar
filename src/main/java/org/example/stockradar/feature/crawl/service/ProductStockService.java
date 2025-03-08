@@ -16,6 +16,9 @@ import java.util.List;
 public class ProductStockService {
 
     private final ProductRepository productRepository;
+    //1.비동기식 조회 처리 비교
+    //2.Redis 캐싱후 성능 조회
+
 
     public List<Product> getProductsWithStockAndPrice() {
         List<Product> products = productRepository.findAllWithStockStatusAndPrice();
