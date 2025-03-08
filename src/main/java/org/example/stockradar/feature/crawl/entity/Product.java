@@ -29,9 +29,6 @@ public class Product {
     @JoinColumn(name="categoryId")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "storeId", nullable = false)
-    private Store store;
 
     @OneToOne(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private StockStatus stockStatus;
