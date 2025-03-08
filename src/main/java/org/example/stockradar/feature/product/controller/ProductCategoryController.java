@@ -19,4 +19,9 @@ public class ProductCategoryController {
         logger.info("ProductCategory진입");
         return "product/productCategory";
     }
+    @GetMapping("gpu/rtx3050")
+    public String gpuRtx3050() {
+        logger.info("gpuRtx3050");
+        return "product/gpu/rtx3050";
+    }
 }
