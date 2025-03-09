@@ -6,6 +6,7 @@ import org.example.stockradar.feature.crawl.service.ProductStockService;
 import org.example.stockradar.feature.product.dto.ProductResponseDto;
 import org.example.stockradar.global.exception.CustomException;
 import org.example.stockradar.global.exception.ErrorCode;
+import org.example.stockradar.global.exception.ErrorResponse;
 import org.example.stockradar.global.exception.specific.ProductException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +30,13 @@ public class Rtx3050Controller {
     private final ProductStockService productStockService;
 
     @GetMapping("gpu/rtx3050")
-    public ResponseEntity<?> gpuRtx3050(Model model) {
-        logger.info("gpuRtx3050 페이지 요청");
+    public String rtx3050() {
+        return "product/gpu/rtx3050";
+    }
+
+    @GetMapping("api/gpu/rtx3050")
+    public ResponseEntity<?> gpuRtx3050Api() {
+        logger.info("RTX 3050 API 요청");
 
         try {
             // 모든 제품 정보 가져오기
@@ -46,14 +52,6 @@ public class Rtx3050Controller {
             if (rtx3050Products.isEmpty()) {
                 logger.warn("RTX 3050 제품을 찾을 수 없습니다.");
                 ProductException.throwCustomException(ErrorCode.PRODUCT_NOT_FOUND);
-                // 빈 결과일 경우 응답 DTO 생성
-                ProductResponseDto responseDto = ProductResponseDto.builder()
-                        .status(404)
-                        .message("RTX 3050 제품을 찾을 수 없습니다.")
-                        .redirectUrl("product/productCategory")
-                        .build();
-                
-                return ResponseEntity.status(ErrorCode.PRODUCT_NOT_FOUND.getHttpStatus()).body(responseDto);
 
             }
 
@@ -63,24 +61,17 @@ public class Rtx3050Controller {
             ProductResponseDto responseDto = ProductResponseDto.builder()
                     .status(200)
                     .message("RTX 3050 제품 조회 성공")
+                    .data(rtx3050Products) // ProductResponseDto에 data 필드 추가 필요
                     .build();
-            model.addAttribute("rtx3050Products", rtx3050Products);
 
             return ResponseEntity.ok(responseDto);
 
-        } catch (CustomException e) {
+        } catch (Exception e) {
             logger.error("RTX 3050 제품 조회 중 오류 발생: {}", e.getMessage(), e);
+            ProductException.throwCustomException(ErrorCode.PRODUCT_NOT_FOUND);
 
-            // 오류 응답 DTO 생성
-            ProductResponseDto responseDto = ProductResponseDto.builder()
-                    .status(e.getHttpStatus())
-                    .message(e.getMessage())
-                    .redirectUrl("product/productCategory")
-                    .build();
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
-
+        return null;
     }
 }
 
