@@ -19,4 +19,5 @@ public class ProductCategoryController {
         logger.info("ProductCategory진입");
         return "product/productCategory";
     }
+
 }

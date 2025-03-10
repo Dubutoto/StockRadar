@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <script type="text/javascript" th:src="@{/assets/js/product/rxt3050.js}" defer></script>
+<!--    <script type="text/javascript" th:src="${@environment.getProperty('cloud.aws.cloudfrontpath')+'/assets/js/product/rxt3050.js'}" defer></script>-->
+
 
 </head>
 <div class="container" layout:fragment="content">
@@ -55,24 +58,21 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Store</th>
                     <th>Status</th>
                     <th>Last Price</th>
                     <th>Alert Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td th:text="'ASUS ROG Astral RTX 5090 OC'">ASUS ROG Astral RTX 5090 OC</td>
-                    <td th:text="'B&H Photo'">B&H Photo</td>
-                    <td th:text="'Out of Stock'">Out of Stock</td>
-                    <td th:text="'$3,079.99'">$3,079.99</td>
-                    <td>
-                        <button type="button" class="btn btn-md btn-primary btn-ellipse"><i class="icon-bell"></i> Track</button>
-
-                    </td>
+                <!-- JavaScript가 여기에 동적으로 행을 추가합니다 -->
+<!--                    <td>-->
+<!--                        <button type="button" class="btn btn-md btn-primary btn-ellipse">-->
+<!--                            <i class="icon-bell"></i> Track-->
+<!--                        </button>-->
+<!--                    </td>-->
                 </tr>
                 </tbody>
+
             </table>
         </section>
 

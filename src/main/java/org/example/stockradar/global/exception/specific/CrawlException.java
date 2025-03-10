@@ -3,7 +3,8 @@ package org.example.stockradar.global.exception.specific;
 import org.example.stockradar.global.exception.CustomException;
 import org.example.stockradar.global.exception.ErrorCode;
 
-public class ProductException {
+public class CrawlException {
+
     // 특정 에러 코드를 기반으로 CustomException을 던지는 메서드
     public static void throwCustomException(ErrorCode errorCode) {
         throw new CustomException(
@@ -23,4 +24,5 @@ public class ProductException {
                 errorCode.getHttpStatus()
         );
     }
+
 }
