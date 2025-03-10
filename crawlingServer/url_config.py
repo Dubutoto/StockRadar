@@ -128,8 +128,157 @@ URL_TASKS = [
     "categoryName": "GraphicsCard",
     "storeName": "SSG",
     "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000553898033&siteNo=6004&salestrNo=6005&advertBidId=9999999998"
-    }
+    },
 
-    # AMD 8000 Series
-    
+    # AMD 7000 & 8000 Series
+
+    {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-Ryzen-8500G-12-Thread-Processor/dp/B0CQ4JV8D5/ref=sr_1_1?crid=1TEQU170D3FLC&dib=eyJ2IjoiMSJ9.X6AilEzX5r3WdSskhCWvNQQbmLKebOQhOuFkt8pOwxVEwUpJKeBxsyZLLg-ME87c7b4NO_Mo5_MmcygWOP9WYdvldWN-rSkcyPUV_oORvgpknXy7vmRJSjKkW7QsOmMJ6TzwdE5kJh7OjGyJt85DTn4kiea7L83bTHF13ODmzvuYw7JPo2r5WVFjNo7PX8p1SJl-QNFrFY5z0B-GTy8h_nOpkLkZCYM9O-ydOQ5ScLU.f-RBT1xJokpyuW3NROtysuCfRj3o_2WvrUKv18wuM2s&dib_tag=se&keywords=amd+8000&qid=1741577208&sprefix=amd+8000%2Caps%2C367&sr=8-1"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-Ryzen-8700G-16-Thread-Processor/dp/B0CQ4JBKW3/ref=sr_1_2?crid=3J2DUCW1URFQY&dib=eyJ2IjoiMSJ9.X6AilEzX5r3WdSskhCWvNQQbmLKebOQhOuFkt8pOwxVEwUpJKeBxsyZLLg-ME87c7b4NO_Mo5_MmcygWOP9WYdvldWN-rSkcyPUV_oORvgpknXy7vmRJSjKkW7QsOmMJ6TzwdE5kJh7OjGyJt85DTn4kiea7L83bTHF13ODmzvuYw7JPo2r5WVFjNo7PX8p1cOfq5fegVOfIkEBIKBvsDgcGbVOWqP82I4SyzwVIJ_U.z_gltuFfcyd4WCI-OnZbLy0K9ze1BnlHwAhhLlvahfI&dib_tag=se&keywords=amd+8000&qid=1741578447&sprefix=amd+800%2Caps%2C314&sr=8-2"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-RyzenTM-5-8400F/dp/B0D2JD6P86/ref=sr_1_12?crid=3J2DUCW1URFQY&dib=eyJ2IjoiMSJ9.X6AilEzX5r3WdSskhCWvNQQbmLKebOQhOuFkt8pOwxVEwUpJKeBxsyZLLg-ME87c7b4NO_Mo5_MmcygWOP9WYdvldWN-rSkcyPUV_oORvgpknXy7vmRJSjKkW7QsOmMJ6TzwdE5kJh7OjGyJt85DTn4kiea7L83bTHF13ODmzvuYw7JPo2r5WVFjNo7PX8p1cOfq5fegVOfIkEBIKBvsDgcGbVOWqP82I4SyzwVIJ_U.z_gltuFfcyd4WCI-OnZbLy0K9ze1BnlHwAhhLlvahfI&dib_tag=se&keywords=amd+8000&qid=1741578447&sprefix=amd+800%2Caps%2C314&sr=8-12"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000666746891&siteNo=7024&salestrNo=6005"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000666747868&siteNo=7024&salestrNo=6005"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000608252469&siteNo=6004&salestrNo=6005&advertBidId=9999999998"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000666745764&siteNo=7024&salestrNo=6005"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000666745910&siteNo=7024&salestrNo=6005"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000580777050&siteNo=6001&salestrNo=6005"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7327357512?&trTypeCd=MAS101&trCtgrNo=585021&checkCtlgPrd=true"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-7600-12-Thread-Unlocked-Processor/dp/B0BMQJWBDM/ref=sr_1_1?crid=1WI1XEJ8LW8RM&dib=eyJ2IjoiMSJ9.awgRodPTFGe-vwOqr9CnNIC12o4imfzrQRtfiQhjVwdEwUpJKeBxsyZLLg-ME87cJTR-w8BTD6vrl8kBTQD09dBKtE7im8CYSfBBLte5EfaisvjoOoYQQ6YMc50vXHn4g0PEkR3Km2OFKW0xeiH7T5snpNd9D69zWh-jcPM8_zoRCwqEVMX7Duz1vm5bl9hVNhQEEQcS_V0KU5Uo-ti0_tUsuh7r5uFlHRN9qTz6WeY.PyUrdKGIk492MTKcFpyt3xReF2n0VGCdNM-owA5jbRc&dib_tag=se&keywords=amd+7000&qid=1741583458&sprefix=amd+7000%2Caps%2C361&sr=8-1"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-7700X-16-Thread-Unlocked-Processor/dp/B0BBHHT8LY/ref=sr_1_2?crid=1WI1XEJ8LW8RM&dib=eyJ2IjoiMSJ9.awgRodPTFGe-vwOqr9CnNIC12o4imfzrQRtfiQhjVwdEwUpJKeBxsyZLLg-ME87cJTR-w8BTD6vrl8kBTQD09dBKtE7im8CYSfBBLte5EfaisvjoOoYQQ6YMc50vXHn4g0PEkR3Km2OFKW0xeiH7T5snpNd9D69zWh-jcPM8_zoRCwqEVMX7Duz1vm5bl9hVNhQEEQcS_V0KU5Uo-ti0_tUsuh7r5uFlHRN9qTz6WeY.PyUrdKGIk492MTKcFpyt3xReF2n0VGCdNM-owA5jbRc&dib_tag=se&keywords=amd+7000&qid=1741583458&sprefix=amd+7000%2Caps%2C361&sr=8-2"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-7900X-24-Thread-Unlocked-Processor/dp/B0BBJ59WJ4/ref=sr_1_4?crid=1WI1XEJ8LW8RM&dib=eyJ2IjoiMSJ9.awgRodPTFGe-vwOqr9CnNIC12o4imfzrQRtfiQhjVwdEwUpJKeBxsyZLLg-ME87cJTR-w8BTD6vrl8kBTQD09dBKtE7im8CYSfBBLte5EfaisvjoOoYQQ6YMc50vXHn4g0PEkR3Km2OFKW0xeiH7T5snpNd9D69zWh-jcPM8_zoRCwqEVMX7Duz1vm5bl9hVNhQEEQcS_V0KU5Uo-ti0_tUsuh7r5uFlHRN9qTz6WeY.PyUrdKGIk492MTKcFpyt3xReF2n0VGCdNM-owA5jbRc&dib_tag=se&keywords=amd%2B7000&qid=1741583458&sprefix=amd%2B7000%2Caps%2C361&sr=8-4&th=1"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-Ryzen-7800X3D-16-Thread-Processor/dp/B0BTZB7F88/ref=sr_1_5?crid=1WI1XEJ8LW8RM&dib=eyJ2IjoiMSJ9.awgRodPTFGe-vwOqr9CnNIC12o4imfzrQRtfiQhjVwdEwUpJKeBxsyZLLg-ME87cJTR-w8BTD6vrl8kBTQD09dBKtE7im8CYSfBBLte5EfaisvjoOoYQQ6YMc50vXHn4g0PEkR3Km2OFKW0xeiH7T5snpNd9D69zWh-jcPM8_zoRCwqEVMX7Duz1vm5bl9hVNhQEEQcS_V0KU5Uo-ti0_tUsuh7r5uFlHRN9qTz6WeY.PyUrdKGIk492MTKcFpyt3xReF2n0VGCdNM-owA5jbRc&dib_tag=se&keywords=amd+7000&qid=1741583458&sprefix=amd+7000%2Caps%2C361&sr=8-5"
+  },
+  {
+    "categoryName": "CPU",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/AMD-7700-16-Thread-Unlocked-Processor/dp/B0BMQHSCVF/ref=sr_1_6?crid=1WI1XEJ8LW8RM&dib=eyJ2IjoiMSJ9.awgRodPTFGe-vwOqr9CnNIC12o4imfzrQRtfiQhjVwdEwUpJKeBxsyZLLg-ME87cJTR-w8BTD6vrl8kBTQD09dBKtE7im8CYSfBBLte5EfaisvjoOoYQQ6YMc50vXHn4g0PEkR3Km2OFKW0xeiH7T5snpNd9D69zWh-jcPM8_zoRCwqEVMX7Duz1vm5bl9hVNhQEEQcS_V0KU5Uo-ti0_tUsuh7r5uFlHRN9qTz6WeY.PyUrdKGIk492MTKcFpyt3xReF2n0VGCdNM-owA5jbRc&dib_tag=se&keywords=amd+7000&qid=1741583458&sprefix=amd+7000%2Caps%2C361&sr=8-6"
+  },
+  
+  ## 4070ti 
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/Gainward-RTX4070Ti-Phantom-Reunion-12GB/dp/B0BRXZ63PV/ref=sr_1_1?crid=1INTDK5VNYPD1&dib=eyJ2IjoiMSJ9.BQgNPfyImA3w5qECClhhAljI5kHcmwrLUHgiFWbEGLcmOvmamPyuvE0tG1pzVh6uE470h3gLTUw80yMYKvQH1ZUCo_japV0i9lD2JSqKXKjTJBDewqQVp16XFi1Z2p9SdIZcBlHW1DgGSMh9eD34ZzU-27w1ztgsdn5Ip0HvV48dJLBGGO5f6d7_OTga7nZU1zYkakS-arU-LNHAlazM-LFGx06PcS4o6EdREurqwqU.O8tH-HJEqj0NLBJHOAK4JmY4RaTcKqndth9oFne7Erw&dib_tag=se&keywords=4070ti&qid=1741590134&sprefix=4070ti%2Caps%2C345&sr=8-1"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/PNY-VCG4070TS16TFXXPB1-16GB-GDDR6X-Graphics/dp/B0D2J4DCW1/ref=sr_1_2?crid=1INTDK5VNYPD1&dib=eyJ2IjoiMSJ9.BQgNPfyImA3w5qECClhhAljI5kHcmwrLUHgiFWbEGLcmOvmamPyuvE0tG1pzVh6uE470h3gLTUw80yMYKvQH1ZUCo_japV0i9lD2JSqKXKjTJBDewqQVp16XFi1Z2p9SdIZcBlHW1DgGSMh9eD34ZzU-27w1ztgsdn5Ip0HvV48dJLBGGO5f6d7_OTga7nZU1zYkakS-arU-LNHAlazM-LFGx06PcS4o6EdREurqwqU.O8tH-HJEqj0NLBJHOAK4JmY4RaTcKqndth9oFne7Erw&dib_tag=se&keywords=4070ti&qid=1741590134&sprefix=4070ti%2Caps%2C345&sr=8-2"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/ASUS-ProArt-GeForce-Graphics-DisplayPort/dp/B0C6FXM199/ref=sr_1_4?crid=1INTDK5VNYPD1&dib=eyJ2IjoiMSJ9.BQgNPfyImA3w5qECClhhAljI5kHcmwrLUHgiFWbEGLcmOvmamPyuvE0tG1pzVh6uE470h3gLTUw80yMYKvQH1ZUCo_japV0i9lD2JSqKXKjTJBDewqQVp16XFi1Z2p9SdIZcBlHW1DgGSMh9eD34ZzU-27w1ztgsdn5Ip0HvV48dJLBGGO5f6d7_OTga7nZU1zYkakS-arU-LNHAlazM-LFGx06PcS4o6EdREurqwqU.O8tH-HJEqj0NLBJHOAK4JmY4RaTcKqndth9oFne7Erw&dib_tag=se&keywords=4070ti&qid=1741590134&sprefix=4070ti%2Caps%2C345&sr=8-4"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "Amazon",
+    "url": "https://www.amazon.com/MSI-Gaming-Graphics-NVIDIA-256-Bit/dp/B0CWS78Y5J/ref=sr_1_6?crid=1INTDK5VNYPD1&dib=eyJ2IjoiMSJ9.BQgNPfyImA3w5qECClhhAljI5kHcmwrLUHgiFWbEGLcmOvmamPyuvE0tG1pzVh6uE470h3gLTUw80yMYKvQH1ZUCo_japV0i9lD2JSqKXKjTJBDewqQVp16XFi1Z2p9SdIZcBlHW1DgGSMh9eD34ZzU-27w1ztgsdn5Ip0HvV48dJLBGGO5f6d7_OTga7nZU1zYkakS-arU-LNHAlazM-LFGx06PcS4o6EdREurqwqU.O8tH-HJEqj0NLBJHOAK4JmY4RaTcKqndth9oFne7Erw&dib_tag=se&keywords=4070ti&qid=1741590134&sprefix=4070ti%2Caps%2C345&sr=8-6"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7958287486?&trTypeCd=PW24&trCtgrNo=585021"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7958318835?&trTypeCd=PW24&trCtgrNo=585021"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7958223000?&trTypeCd=PW24&trCtgrNo=585021"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7906027595?&trTypeCd=PW24&trCtgrNo=585021"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7955330977?&trTypeCd=PW24&trCtgrNo=585021"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "11ST",
+    "url": "https://www.11st.co.kr/products/7936564260?&trTypeCd=PW24&trCtgrNo=585021"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000597656603&siteNo=6004&salestrNo=6005"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000577026700&siteNo=6004&salestrNo=6005"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000610824710&siteNo=6004&salestrNo=6005"
+  },
+  {
+    "categoryName": "GraphicsCard",
+    "storeName": "SSG",
+    "url": "https://www.ssg.com/item/itemView.ssg?itemId=1000640022631&siteNo=7024&salestrNo=6005"
+  }
+  
+  
 ]

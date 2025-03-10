@@ -10,7 +10,6 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    // 예시: 하드코딩. 실제로는 환경 변수나 application.yml에 저장 후 주입 권장
     private final String SECRET_KEY = "YOUR_SECRET_KEY_AtLeast_32chars_Long";
     private final long ACCESS_TOKEN_VALIDITY = 1000L * 60 * 30;       // 30분
     private final long REFRESH_TOKEN_VALIDITY = 1000L * 60 * 60 * 24; // 1일
