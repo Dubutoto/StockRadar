@@ -1,19 +1,26 @@
 package org.example.stockradar.feature.board.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+import java.time.LocalDateTime;
 
 /**
  * @author Hyun7en
  */
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class BoardResponseDto {
 
-    private int a;
+    private Long boardId;
+    private String boardTitle;
+    private String boardCategory;
+    private String content;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    // 작성자 정보
+    private Long memberCode;
+    private String userName;
 }

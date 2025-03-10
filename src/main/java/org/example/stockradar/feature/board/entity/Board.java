@@ -11,7 +11,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Board {
 
     @Id
@@ -59,5 +61,10 @@ public class Board {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+    // 엔터티 업데이트를 위한 도메인 메서드
+    public void updateBoard(String boardTitle, String boardCategory) {
+        this.boardTitle = boardTitle;
+        this.boardCategory = boardCategory;
     }
 }

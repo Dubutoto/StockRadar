@@ -7,10 +7,9 @@ import org.example.stockradar.feature.auth.entity.Member;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Nested_comments")
 @Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class NestedComments {
 

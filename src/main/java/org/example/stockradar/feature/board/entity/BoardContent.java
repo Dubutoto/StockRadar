@@ -5,7 +5,9 @@ import lombok.*;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class BoardContent {
 
     @Id
@@ -20,4 +22,9 @@ public class BoardContent {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
     private Board board;
+
+    // 도메인 메서드로 업데이트 로직 제공
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
