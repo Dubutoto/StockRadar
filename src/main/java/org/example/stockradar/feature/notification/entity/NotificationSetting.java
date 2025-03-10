@@ -1,9 +1,7 @@
 package org.example.stockradar.feature.notification.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
 
 /**
@@ -12,7 +10,9 @@ import org.example.stockradar.feature.auth.entity.Member;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "notification_settings")
 public class NotificationSetting {
 
