@@ -2,7 +2,6 @@ package org.example.stockradar.feature.crawl.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Data
