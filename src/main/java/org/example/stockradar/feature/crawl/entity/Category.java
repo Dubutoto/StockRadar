@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
