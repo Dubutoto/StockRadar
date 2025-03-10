@@ -36,6 +36,7 @@ public class ProductStockService {
             // Product 엔티티를 ProductResponseDto로 변환
             return products.stream()
                     .map(product -> ProductResponseDto.builder()
+                            .productId(product.getProductId())  // 이 부분 추가
                             .productName(product.getProductName())
                             .availability(product.getStockStatus().getAvailability())
                             .price(product.getStockStatus().getPrice().getPrice())
@@ -43,6 +44,7 @@ public class ProductStockService {
                             .redirectUrl(product.getProductUrl())
                             .build())
                     .collect(Collectors.toList());
+
         } catch (Exception e) {
             log.error("상품 정보 조회 중 오류 발생: {}", e.getMessage(), e);
             return Collections.emptyList(); // null 대신 빈 리스트 반환
