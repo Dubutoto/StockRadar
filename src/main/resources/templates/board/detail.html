@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security6"
       layout:decorate="~{layout}">
 
-<div class="container" layout:fragment="content">
+<div class="container mt-4" layout:fragment="content">
     <main class="main">
         <!-- 게시글 상세보기 카드 -->
         <div class="board-detail card mb-4">
@@ -12,10 +12,17 @@
             <div class="card-body border-bottom">
                 <!-- 상단: 제목과 조회/댓글 정보 -->
                 <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
-                    <div>
-                        <strong>제목:</strong>
-                        <span th:text="${board.boardTitle}">게시글 제목</span>
+                    <div class="row">
+                        <div class="col-auto">
+                            <strong>번호:</strong>
+                            <span id="boardId" th:text="${board.boardId}"></span>
+                        </div>
+                        <div class="col-auto">
+                            <strong>제목:</strong>
+                            <span th:text="${board.boardTitle}">게시글 제목</span>
+                        </div>
                     </div>
+
                     <div class="text-muted">
                         <span class="me-3">
                             <i class="fa fa-eye"></i>
@@ -48,11 +55,15 @@
                     </div>
                 </div>
                 <div class="detail-actions text-end">
-                    <sec:authorize access="isAuthenticated()">
-                        <a th:href="@{/board/boardForm(boardId=${board.boardId})}" class="btn btn-secondary me-2">수정</a>
-                        <a th:href="@{/board/delete(boardId=${board.boardId})}" class="btn btn-danger me-2">삭제</a>
-                    </sec:authorize>
-                    <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+                    <div th:if="${#authentication.name == board.memberId}" class="d-inline">
+                        <a th:href="@{/board/form(boardId=${board.boardId})}" class="btn btn-sm btn-secondary me-1 text-decoration-none">수정</a>
+                        <!-- 삭제 버튼 (모달 트리거) -->
+                        <button type="button" class="btn btn-sm btn-danger me-1 text-decoration-none" data-toggle="modal" data-target="#deleteConfirmModal">
+                            삭제
+                        </button>
+
+                    </div>
+                    <a th:href="@{/board/list}" class="btn btn-sm btn-secondary text-decoration-none">목록으로</a>
                 </div>
             </div>
         </div>
@@ -80,7 +91,7 @@
         <!-- 댓글 작성 폼 -->
         <div class="comment-form mb-4">
             <h4 class="mb-3">댓글 작성하기</h4>
-            <sec:authorize access="isAuthenticated()">
+            <div sec:authorize="isAuthenticated()">
                 <form th:action="@{/board/comment/insert}" method="post">
                     <div class="mb-3">
                         <label for="commentContent" class="form-label">댓글 내용</label>
@@ -90,14 +101,37 @@
                     <input type="hidden" name="boardId" th:value="${board.boardId}"/>
                     <button type="submit" class="btn btn-primary">댓글 등록</button>
                 </form>
-            </sec:authorize>
-            <sec:authorize access="!isAuthenticated()">
+            </div>
+            <div sec:authorize="!isAuthenticated()">
                 <div class="alert alert-warning">
                     댓글 작성은 로그인한 사용자만 가능합니다.
                     <a th:href="@{/login}" class="btn btn-link">로그인하기</a>
                 </div>
-            </sec:authorize>
+            </div>
         </div>
     </main>
+    <div layout:fragment="scripts">
+        <script th:inline="javascript">
+            function deleteBoard() {
+                var password = document.getElementById("deletePassword").value;
+                var boardId = document.getElementById("boardId").textContent.trim();
+
+                axios.post("/board/delete", {
+                    boardId: boardId,
+                    password: password
+                })
+                    .then(function(response) {
+                        console.log(boardId + "번 게시글 삭제 완료");
+                        $('#deleteConfirmModal').modal('hide');
+                    })
+                    .catch(function(error) {
+                        console.log(error.response.data || "삭제 실패: 비밀번호가 틀렸습니다");
+                    });
+            }
+        </script>
+    </div>
 </div>
+
+
+
 </html>

@@ -433,6 +433,27 @@
         </a>
     </div>
 </div>
+<!-- 삭제 확인 모달 -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">게시글 삭제</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>게시글을 삭제하려면 비밀번호를 입력하세요.</p>
+                <input type="password" name="password" id="deletePassword" class="form-control" placeholder="비밀번호 입력" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-danger" onclick="deleteBoard()">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 페이지별 추가 스크립트 -->
 <div layout:fragment="scripts"></div>
@@ -445,10 +466,12 @@
 <script th:src="@{/assets/js/jquery.appear.min.js}"></script>
 <script th:src="@{/assets/js/main.min.js}"></script>
 <script th:src="@{/assets/js/mainView/mainView.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <a id="scroll-top" href="#top" title="Top" role="button">
     <i class="icon-angle-up"></i>
 </a>
 
 </body>
+
 </html>
