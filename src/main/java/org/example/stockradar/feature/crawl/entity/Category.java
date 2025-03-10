@@ -2,8 +2,6 @@ package org.example.stockradar.feature.crawl.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-
 import java.util.List;
 
 @Data
@@ -11,15 +9,14 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
+    @Column(name = "category_id", nullable = false, unique = true)
     private Long categoryId;
 
-    @Column(nullable = false)
+    @Column(name = "category_name", nullable = false)
     private String categoryName;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
