@@ -1,5 +1,6 @@
 package org.example.stockradar.feature.board.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.board.dto.BoardRequestDto;
 import org.example.stockradar.feature.board.dto.BoardResponseDto;
@@ -31,10 +32,11 @@ public class BoardController {
      *
      * @return 게시글 목록을 보여주는 뷰 이름 "board/boardList"
      */
+    @GetMapping("list")
     public String getBoardList(@RequestParam(defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 10); // 한 페이지당 10개
-        Page<Board> boardPage = boardService.findAll(pageable);
-        model.addAttribute("list", boardPage);
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<BoardResponseDto> boardList = boardService.findBoardListDto(pageable);
+        model.addAttribute("boardList", boardList);
         return "board/list";
     }
 
@@ -54,7 +56,7 @@ public class BoardController {
      * @return 게시글 목록 board/boardWrite
      */
     @PostMapping("insert")
-    public String boardInsert(BoardRequestDto boardRequestDto) {
+    public String boardInsert(@Valid BoardRequestDto boardRequestDto) {
         boardService.saveBoard(boardRequestDto);
         return "redirect:/board/list";
     }
@@ -66,8 +68,8 @@ public class BoardController {
      */
     @GetMapping("detail")
     public String boardDetail(@RequestParam Long boardId, Model model) {
-        BoardResponseDto boardResponseDto = boardService.findBoardResponseDtoByBoardId(boardId);
-        model.addAttribute("board", boardResponseDto);
+        BoardResponseDto board = boardService.findBoardResponseDtoByBoardId(boardId);
+        model.addAttribute("board", board);
         return "board/detail";
     }
 
@@ -118,10 +120,11 @@ public class BoardController {
                               @RequestParam(defaultValue = "0") int page,
                               Model model) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Board> boardPage = boardService.searchBoards(keyword, pageable);
-        model.addAttribute("list", boardPage);
+        // DTO 반환으로 변경 (예: BoardResponseDto 또는 BoardListDto)
+        Page<BoardResponseDto> boardList = boardService.searchBoards(keyword, pageable);
+        model.addAttribute("boardList", boardList); // "board"로 통일
         model.addAttribute("keyword", keyword);
-        return "board/search";
+        return "board/list";
     }
 
 

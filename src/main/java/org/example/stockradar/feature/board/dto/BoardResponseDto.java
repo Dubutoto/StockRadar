@@ -16,8 +16,8 @@ public class BoardResponseDto {
 
     private Long boardId;
     private String boardTitle;
-    private String boardCategory;
     private String content;
+    private Long viewCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     // 작성자 정보

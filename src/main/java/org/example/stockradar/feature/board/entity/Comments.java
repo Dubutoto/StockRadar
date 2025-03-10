@@ -36,10 +36,6 @@ public class Comments {
     @JoinColumn(name = "boardId")
     private Board board;
 
-    //대댓글과 관계설정
-    @OneToMany(mappedBy = "comments",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<NestedComments> nestedComments = new ArrayList<>();
-
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

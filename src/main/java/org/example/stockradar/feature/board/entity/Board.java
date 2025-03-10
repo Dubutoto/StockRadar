@@ -24,8 +24,13 @@ public class Board {
     @Column(nullable = false, length = 100)
     private String boardTitle;
 
-    @Column(nullable = false, length = 25)
-    private String boardCategory;
+    // 조회수
+    @Column(nullable = false)
+    private Long viewCount = 0L;
+
+    // 댓글 수
+    @Column(nullable = false)
+    private Long commentCount = 0L;
 
     @Column(nullable = false ,columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
@@ -45,10 +50,6 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comments> comments = new ArrayList<>();
 
-    //대댓글과 관계설정
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<NestedComments> nestedComments = new ArrayList<>();
-
     // Board와 Board_Content는 1:1 관계로 가정 (Board_Content의 board_id가 유니크하다고 가정)
     @OneToOne(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private BoardContent boardContent;
@@ -62,9 +63,31 @@ public class Board {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
     // 엔터티 업데이트를 위한 도메인 메서드
     public void updateBoard(String boardTitle, String boardCategory) {
         this.boardTitle = boardTitle;
-        this.boardCategory = boardCategory;
+    }
+
+    // BoardContent 연결을 위한 편의 메서드
+    public void addBoardContent(BoardContent boardContent) {
+        this.boardContent = boardContent;
+    }
+
+    // 조회수 증가 로직
+    public void incrementViewCount() {
+        this.viewCount = (this.viewCount == null) ? 1L : this.viewCount + 1L;
+    }
+
+    // 댓글 수 증가
+    public void incrementCommentCount() {
+        this.commentCount++;
+    }
+
+    // 댓글 수 감소
+    public void decrementCommentCount() {
+        if (this.commentCount > 0) {
+            this.commentCount--;
+        }
     }
 }
