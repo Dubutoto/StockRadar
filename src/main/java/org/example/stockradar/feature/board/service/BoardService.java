@@ -10,8 +10,11 @@ import org.example.stockradar.feature.board.entity.BoardContent;
 import org.example.stockradar.feature.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 /**
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 게시글 목록 조회 (DTO 프로젝션 사용)
@@ -102,8 +106,23 @@ public class BoardService {
     /**
      * 게시글 삭제 처리
      */
-    public void deleteBoard(Long boardId) {
-        boardRepository.deleteById(boardId);
+    public boolean deleteBoard(Long boardId, String password) {
+        Optional<Board> boardOpt = boardRepository.findById(boardId);
+        if (!boardOpt.isPresent()) {
+            // 게시글이 없으면 삭제 실패 처리
+            return false;
+        }
+        Board board = boardOpt.get();
+        Member member = board.getMember();  // Board 엔티티에서 작성자(Member)를 가져온다고 가정
+
+        // 비밀번호 검증: 저장된 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 확인
+        if (!passwordEncoder.matches(password, member.getMemberPw())) {
+            return false;
+        }
+
+        // 비밀번호가 일치하면 게시글 삭제
+        boardRepository.delete(board);
+        return true;
     }
 
     /**

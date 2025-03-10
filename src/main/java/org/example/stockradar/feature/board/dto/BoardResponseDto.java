@@ -22,5 +22,6 @@ public class BoardResponseDto {
     private LocalDateTime updatedAt;
     // 작성자 정보
     private Long memberCode;
+    private String memberId;
     private String userName;
 }

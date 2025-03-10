@@ -25,11 +25,11 @@ public class Board {
     private String boardTitle;
 
     // 조회수
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "0L")
     private Long viewCount = 0L;
 
     // 댓글 수
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "0L")
     private Long commentCount = 0L;
 
     @Column(nullable = false ,columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author Hyun7en
@@ -103,8 +104,17 @@ public class BoardController {
      * @return
      */
     @PostMapping("delete")
-    public String boardDelete(@RequestParam Long boardId) {
-        boardService.deleteBoard(boardId);
+    public String deleteBoard(@RequestParam("boardId") Long boardId,
+                              @RequestParam("password") String password,
+                              RedirectAttributes redirectAttributes) {
+        boolean isDeleted = boardService.deleteBoard(boardId, password);
+
+        if (!isDeleted) {
+            redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 올바르지 않습니다.");
+            return "redirect:/board/detail?boardId=" + boardId;
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", "게시글이 삭제되었습니다.");
         return "redirect:/board/list";
     }
 
