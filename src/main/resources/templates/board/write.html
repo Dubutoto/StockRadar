@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6"
       layout:decorate="~{layout}">
 <div class="container" layout:fragment="content">
     <main class="main">
         <!-- 게시글 작성: 로그인한 사용자 전용 -->
         <div class="board-write" sec:authorize="isAuthenticated()">
             <h1>게시글 작성</h1>
-            <form th:action="@{/insertWithContent}" method="post">
+            <form th:action="@{/board/insert}" method="post">
                 <div class="form-group mb-3">
                     <label for="title">제목</label>
                     <input type="text" id="title" name="boardTitle" class="form-control" placeholder="제목을 입력하세요" required>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">작성 완료</button>
-                    <a th:href="@{/board/boardList}" class="btn btn-link">목록으로</a>
+                    <a th:href="@{/board/list}" class="btn btn-link">목록으로</a>
                 </div>
             </form>
         </div>

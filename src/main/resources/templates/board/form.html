@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6"
       layout:decorate="~{layout}">
 <div class="container" layout:fragment="content">
     <main class="main">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">작성 완료</button>
-                    <a th:href="@{/board/boardList}" class="btn btn-link">목록으로</a>
+                    <a th:href="@{/board/list}" class="btn btn-link">목록으로</a>
                 </div>
             </form>
         </div>
