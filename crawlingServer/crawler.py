@@ -79,6 +79,9 @@ def get_amazon_data(session, url):
             price_value = float(price_text)
         except ValueError:
             price_value = 0.0
+            
+    if price_value == 0.0:
+        in_stock = False        
 
     print(f"[DEBUG] Amazon -> {product_name}, 재고: {in_stock}, 가격: {price_value}")
     return product_name, in_stock, price_value
