@@ -5,11 +5,8 @@ import org.example.stockradar.feature.board.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,5 +49,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // 3개월마다 삭제할 게시물 찾기
     @Query("SELECT b FROM Board b WHERE b.deletedAt IS NOT NULL AND b.deletedAt <= :threeMonthsAgo")
     List<Board> findAllByDeletedAtBefore(LocalDateTime threeMonthsAgo);
+
+
 
 }

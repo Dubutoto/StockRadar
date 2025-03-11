@@ -56,9 +56,11 @@
                 </div>
                 <div class="detail-actions text-end">
                     <div th:if="${#authentication.name == board.memberId}" class="d-inline">
-                        <a th:href="@{/board/form(boardId=${board.boardId})}" class="btn btn-sm btn-secondary me-1 text-decoration-none">수정</a>
+                        <a th:href="@{/board/form(boardId=${board.boardId})}"
+                           class="btn btn-sm btn-secondary me-1 text-decoration-none">수정</a>
                         <!-- 삭제 버튼 (모달 트리거) -->
-                        <button type="button" class="btn btn-sm btn-danger me-1 text-decoration-none" data-toggle="modal" data-target="#deleteConfirmModal">
+                        <button type="button" class="btn btn-sm btn-danger me-1 text-decoration-none"
+                                data-toggle="modal" data-target="#deleteConfirmModal">
                             삭제
                         </button>
 
@@ -86,21 +88,34 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 댓글 페이지네이션 -->
+            <!--            <div class="pagination-container">-->
+            <!--                <ul class="pagination justify-content-center">-->
+            <!--                    <li th:if="${comments.hasPrevious()}" class="page-item">-->
+            <!--                        <a th:href="@{'/board/list?page=' + ${comments.number - 1}}" class="page-link">이전</a>-->
+            <!--                    </li>-->
+            <!--                    <li th:each="i : ${#numbers.sequence(0, comments.totalPages - 1)}"-->
+            <!--                        th:classappend="${comments.number == i} ? 'active'">-->
+            <!--                        <a th:href="@{'/board/list?page=' + ${i}}" th:text="${i + 1}" class="page-link">1</a>-->
+            <!--                    </li>-->
+            <!--                    <li th:if="${comments.hasNext()}" class="page-item">-->
+            <!--                        <a th:href="@{'/board/list?page=' + ${comments.number + 1}}" class="page-link">다음</a>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </div>-->
         </div>
 
         <!-- 댓글 작성 폼 -->
         <div class="comment-form mb-4">
             <h4 class="mb-3">댓글 작성하기</h4>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/board/comment/insert}" method="post">
-                    <div class="mb-3">
-                        <label for="commentContent" class="form-label">댓글 내용</label>
-                        <textarea id="commentContent" name="content" class="form-control" rows="4"
-                                  placeholder="댓글을 입력하세요" required></textarea>
-                    </div>
-                    <input type="hidden" name="boardId" th:value="${board.boardId}"/>
-                    <button type="submit" class="btn btn-primary">댓글 등록</button>
-                </form>
+                <div class="mb-3">
+                    <label for="commentContent" class="form-label">댓글 내용</label>
+                    <textarea id="commentContent" name="content" class="form-control" rows="4"
+                              placeholder="댓글을 입력하세요" required></textarea>
+                </div>
+                <button type="submit" onclick="insertComment()" class="btn btn-primary">댓글 등록</button>
             </div>
             <div sec:authorize="!isAuthenticated()">
                 <div class="alert alert-warning">
@@ -116,9 +131,6 @@
             function deleteBoard() {
                 let password = document.getElementById("deletePassword").value;
                 let boardId = document.getElementById("boardId").textContent.trim();
-
-                console.log(boardId);
-                console.log(password);
 
                 axios.post('/board/delete', {
                     password: password,
@@ -137,6 +149,36 @@
                         document.getElementById("deleteErrorMessage").textContent = error.response.data.message;
                     });
             }
+
+            function insertComment() {
+                let boardId = document.getElementById("boardId").textContent.trim();
+                let content = document.getElementById("commentContent").value;
+
+                axios.post('/comment/insert',{
+                    boardId: boardId,
+                    content: content
+                })
+                    .then(response => {
+                        console.log(response.data + " 삽입 완료");
+
+                    })
+                    .catch(error => {
+                        console.log("오류 발생: " + error);
+                    })
+            }
+
+            function readComments(){
+
+            }
+
+            function updateComment(){
+
+            }
+
+            function deleteComment(){
+
+            }
+
         </script>
     </div>
 </div>

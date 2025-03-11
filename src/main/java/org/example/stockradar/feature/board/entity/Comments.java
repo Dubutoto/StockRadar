@@ -17,14 +17,19 @@ public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long commentId;
 
     @Column( nullable = false, length = 225)
-    private String commentContent;
+    private String content;
 
-    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
+
+    @Column
+    private LocalDateTime deletedAt;
 
     //맴버와 관계설정 해
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,8 +42,26 @@ public class Comments {
     private Board board;
 
     @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
+    protected void onPrePersist() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
     }
+
+    @PreUpdate
+    protected void onPreUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+    public void updateContent(String newContent) {
+        this.content = newContent;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void softDelete() {
+        this.deletedAt = LocalDateTime.now();
+    }
+
+
 }
 
