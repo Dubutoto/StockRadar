@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.example.stockradar.feature.CustomerInquiry.entity.CustomerInquiry;
 import org.example.stockradar.feature.board.entity.Board;
 import org.example.stockradar.feature.board.entity.Comments;
-import org.example.stockradar.feature.board.entity.NestedComments;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -66,11 +65,6 @@ public class Member {
     //댓글과 관계설정(진오)
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comments> comments = new ArrayList<>();
-
-    //대댓글과 관계설정(진오)
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<NestedComments> nestedComments = new ArrayList<>();
-
 
     @PreUpdate
     protected void onUpdate() {

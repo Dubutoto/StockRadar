@@ -2164,25 +2164,25 @@ a.btn.disabled {
 }
 
 .btn-secondary {
-  border-color: #ff7272;
-  background-color: #ff7272;
+  border-color: #6c757d;
+  background-color: #6c757d;
   color: #fff;
   box-shadow: none;
 }
 .btn-secondary:hover, .btn-secondary:focus, .btn-secondary.focus {
-  border-color: #ff9b9b;
-  background-color: #ff9b9b;
+  border-color: #6c757d;
+  background-color: #6c757d;
   color: #fff;
   box-shadow: none;
 }
 .btn-secondary.disabled, .btn-secondary:disabled {
-  border-color: #ff7272;
-  background-color: #ff7272;
+  border-color: #6c757d;
+  background-color: #6c757d;
   color: #fff;
 }
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
-  border-color: #ff3232;
-  background-color: #ff3f3f;
+  border-color: #6c757d;
+  background-color: #6c757d;
   color: #fff;
 }
 

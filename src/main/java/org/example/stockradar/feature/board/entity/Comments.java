@@ -10,7 +10,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Comments {
 
     @Id
@@ -33,10 +35,6 @@ public class Comments {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
     private Board board;
-
-    //대댓글과 관계설정
-    @OneToMany(mappedBy = "comments",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<NestedComments> nestedComments = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
