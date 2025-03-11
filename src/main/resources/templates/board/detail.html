@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-auto">
                             <strong>번호:</strong>
-                            <span id="boardId" th:text="${board.boardId}"></span>
+                            <span name="boardId" id="boardId" th:text="${board.boardId}"></span>
                         </div>
                         <div class="col-auto">
                             <strong>제목:</strong>
@@ -112,26 +112,33 @@
     </main>
     <div layout:fragment="scripts">
         <script th:inline="javascript">
+            <!-- 게시물 삭제 -->
             function deleteBoard() {
-                var password = document.getElementById("deletePassword").value;
-                var boardId = document.getElementById("boardId").textContent.trim();
+                let password = document.getElementById("deletePassword").value;
+                let boardId = document.getElementById("boardId").textContent.trim();
 
-                axios.post("/board/delete", {
-                    boardId: boardId,
-                    password: password
+                console.log(boardId);
+                console.log(password);
+
+                axios.post('/board/delete', {
+                    password: password,
+                    boardId: boardId
                 })
-                    .then(function(response) {
-                        console.log(boardId + "번 게시글 삭제 완료");
-                        $('#deleteConfirmModal').modal('hide');
+                    .then(response => {
+                        if (response.data.success) {
+                            console.log(response.data.message);  // 성공 메시지 표시
+                            window.location.href = response.data.redirectUrl;  // 직접 이동
+                        } else {
+                            console.log(response.data.message);  // 오류 메시지 표시
+                        }
                     })
-                    .catch(function(error) {
-                        console.log(error.response.data || "삭제 실패: 비밀번호가 틀렸습니다");
+                    .catch(error => {
+                        console.log("오류 발생: " + error.response.data.message);
+                        document.getElementById("deleteErrorMessage").textContent = error.response.data.message;
                     });
             }
         </script>
     </div>
 </div>
-
-
 
 </html>
