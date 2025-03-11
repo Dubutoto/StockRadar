@@ -31,17 +31,40 @@ public class ProductStockScheduler {
     // 동시 실행 방지를 위한 플래그
     private final AtomicBoolean isRunning = new AtomicBoolean(false);
 
-    // 재고 상태 캐시 키 생성
-    private String createStockCacheKey(Long productId) {
-        return "product:stock:" + productId;
+//    // 재고 상태 캐시 키 생성 시나리오 2
+//    private String createStockCacheKey(Long productId) {
+//        return "product:stock:" + productId;
+//    }
+
+//    // 재고 상태 캐싱 시나리오 2
+//    private void cacheProductStock(Long productId, Integer availability) {
+//        String cacheKey = createStockCacheKey(productId);
+//        redisTemplate.opsForValue().set(cacheKey, availability, Duration.ofMinutes(1));
+//        log.debug("제품 ID {} 재고 상태 캐싱 완료: {}", productId, availability);
+//    }
+
+    // 제품 전체 데이터 캐시 키 생성 시나리오 3, 4, 5
+    private String createProductCacheKey(Long productId) {
+        return "product:data:" + productId;
     }
 
-    // 재고 상태 캐싱
-    private void cacheProductStock(Long productId, Integer availability) {
-        String cacheKey = createStockCacheKey(productId);
-        redisTemplate.opsForValue().set(cacheKey, availability, Duration.ofMinutes(1));
-        log.debug("제품 ID {} 재고 상태 캐싱 완료: {}", productId, availability);
+    // 제품 전체 데이터 캐싱 시나리오 3, 4, 5
+    private void cacheProductData(ProductResponseDto product) {
+        if (product.getProductId() != null) {
+            String cacheKey = createProductCacheKey(product.getProductId());
+
+            redisTemplate.opsForHash().put(cacheKey, "productName", product.getProductName());
+            redisTemplate.opsForHash().put(cacheKey, "availability", product.getAvailability());
+            redisTemplate.opsForHash().put(cacheKey, "productUrl", product.getProductUrl());
+            redisTemplate.opsForHash().put(cacheKey, "price", product.getPrice());
+
+            // 해시에 만료 시간 설정
+            redisTemplate.expire(cacheKey, Duration.ofMinutes(1));
+
+            log.debug("제품 ID {} 전체 데이터 캐싱 완료", product.getProductId());
+        }
     }
+
 
     // 매 1분마다 실행 (cron = "초 분 시 일 월 요일")
     @Scheduled(cron = "0 */1 * * * *")
@@ -71,11 +94,17 @@ public class ProductStockScheduler {
                             product.getPrice(),
                             product.getLastUpdated().format(formatter));
 
-                    // 재고 상태 캐싱 - 제품 ID가 있는 경우에만 캐싱
+//                    // 재고 상태 캐싱 - 제품 ID가 있는 경우에만 캐싱 시나리오2
+//                    if (product.getProductId() != null) {
+//                        cacheProductStock(product.getProductId(), product.getAvailability());
+//                        cachedCount++;
+//                    }
+                    // 제품 전체 데이터 캐싱 시나리오 3, 4, 5
                     if (product.getProductId() != null) {
-                        cacheProductStock(product.getProductId(), product.getAvailability());
+                        cacheProductData(product);
                         cachedCount++;
                     }
+
 
                 } catch (Exception e) {
                     // 개별 상품 처리 실패 시 로그만 남기고 다음 상품으로 진행

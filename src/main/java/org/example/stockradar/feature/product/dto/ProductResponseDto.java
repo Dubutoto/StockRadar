@@ -22,5 +22,6 @@ public class ProductResponseDto {
     private String message;
     private List data;
     private Long productId;
+    private String productUrl;
 
 }
