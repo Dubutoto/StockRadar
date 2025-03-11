@@ -23,8 +23,15 @@ public class BoardContent {
     @JoinColumn(name = "boardId")
     private Board board;
 
-    // 도메인 메서드로 업데이트 로직 제공
+    //도메인 메서드로 insert 로직 제공
+    public void linkBoard(Board board) {
+        this.board = board;
+    }
+
+    // 도메인 메서드로 update 로직 제공
     public void updateContent(String content) {
         this.content = content;
     }
+
+
 }

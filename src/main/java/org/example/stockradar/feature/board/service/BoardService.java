@@ -10,10 +10,14 @@ import org.example.stockradar.feature.board.entity.BoardContent;
 import org.example.stockradar.feature.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -21,6 +25,7 @@ import java.util.Optional;
  * @author Hyun7en
  */
 
+@lombok.extern.slf4j.Slf4j
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -66,7 +71,7 @@ public class BoardService {
      * 게시글 상세 조회 (DTO 프로젝션 사용)
      * 조회 시 viewCount 증가 로직을 함께 처리
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public BoardResponseDto findBoardResponseDtoByBoardId(Long boardId) {
         // 1) 게시글 상세 정보(DTO) 조회
         BoardResponseDto dto = boardRepository.findBoardResponseDtoByBoardId(boardId);
@@ -94,7 +99,7 @@ public class BoardService {
                 .orElseThrow(() -> new RuntimeException("Board not found"));
 
         // Board 엔터티의 도메인 메서드를 통해 제목,내용 업데이트 (필요에 따라 추가 업데이트 로직 작성)
-        board.updateBoard(boardRequestDto.getBoardTitle(), null);
+        board.updateBoard(boardRequestDto.getBoardTitle());
         // BoardContent 업데이트: 엔터티 내 도메인 메서드 updateContent() 사용
         if (board.getBoardContent() != null) {
             board.getBoardContent().updateContent(boardRequestDto.getContent());
@@ -109,20 +114,38 @@ public class BoardService {
     public boolean deleteBoard(Long boardId, String password) {
         Optional<Board> boardOpt = boardRepository.findById(boardId);
         if (!boardOpt.isPresent()) {
-            // 게시글이 없으면 삭제 실패 처리
             return false;
         }
-        Board board = boardOpt.get();
-        Member member = board.getMember();  // Board 엔티티에서 작성자(Member)를 가져온다고 가정
 
-        // 비밀번호 검증: 저장된 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 확인
+        Board board = boardOpt.get();
+        Member member = board.getMember();
+
+        // 비밀번호 검증
         if (!passwordEncoder.matches(password, member.getMemberPw())) {
             return false;
         }
 
-        // 비밀번호가 일치하면 게시글 삭제
-        boardRepository.delete(board);
+        // 실제 삭제 대신 `deletedAt` 업데이트 (소프트 딜리트)
+        board.softDelete();
+        boardRepository.save(board); // 변경 사항 저장
+
         return true;
+    }
+
+    /**
+     * 매일 새벽 2시에 3개월 지난 게시글 완전 삭제 => 정책에 공지하기
+     */
+    @Scheduled(cron = "0 0 2 * * ?")  // 매일 새벽 2시 실행
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOldSoftDeletedBoards() {
+        LocalDateTime threeMonthsAgo = LocalDateTime.now().minusMonths(3);
+
+        // 3개월 이상 지난 Soft Deleted 게시글 조회
+        List<Board> boardsToDelete = boardRepository.findAllByDeletedAtBefore(threeMonthsAgo);
+
+        boardRepository.deleteAll(boardsToDelete);
+
+        log.info("Deleted old soft deleted boards");
     }
 
     /**
