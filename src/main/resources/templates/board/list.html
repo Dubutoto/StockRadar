@@ -41,6 +41,7 @@
                     <th>제목</th>
                     <th>작성일</th>
                     <th>조회</th>
+                    <th>댓글</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,7 @@
                     </td>
                     <td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm:ss')}">작성일</td>
                     <td th:text="${board.viewCount}"></td>
+                    <td th:text="${board.commentCount}"></td>
                 </tr>
                 </tbody>
             </table>

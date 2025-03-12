@@ -65,7 +65,7 @@ public class CommentController {
         if(result) {
             response.put("success", true);
             response.put("message", "댓글 삭제에 성공했습니다.");
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             response.put("success", false);
             response.put("message", "비밀번호가 일치하지 않습니다.");

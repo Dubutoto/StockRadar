@@ -24,11 +24,11 @@ public class Board {
     private String boardTitle;
 
     // 조회수
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "bigint default 0")
     private Long viewCount;
 
     // 댓글 수
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "bigint default 0")
     private Long commentCount;
 
     @Column(nullable = false)

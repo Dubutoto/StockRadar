@@ -5,15 +5,19 @@ import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.board.dto.BoardDeleteRequestDto;
 import org.example.stockradar.feature.board.dto.BoardRequestDto;
 import org.example.stockradar.feature.board.dto.BoardResponseDto;
+import org.example.stockradar.feature.board.dto.CommentRequestDto;
 import org.example.stockradar.feature.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,10 +56,19 @@ public class BoardController {
      * 게시글 작성 후 db로 데이터 전송
      */
     @PostMapping("insert")
-    public String boardInsert(@Valid BoardRequestDto boardRequestDto) {
-        boardService.saveBoard(boardRequestDto);
+    public String boardInsert(@Valid BoardRequestDto boardRequestDto, Authentication authentication) throws ResponseStatusException {
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자입니다.");
+        }
+
+        // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
+        String memberId = String.valueOf(authentication.getName());
+
+        boardService.saveBoard(boardRequestDto,memberId);
         return "redirect:/board/list";
     }
+
 
     /**
      * 게시글 상세 페이지로 이동합니다.

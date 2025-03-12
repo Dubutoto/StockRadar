@@ -30,7 +30,7 @@
                         </span>
                         <span class="me-3">
                             <i class="fa fa-comment"></i>
-                            <span th:text="${board.viewCount}">3</span>
+                            <span th:text="${board.commentCount}">3</span>
                         </span>
                     </div>
                 </div>
@@ -264,9 +264,10 @@
                     .then(response => {
                         if (response.data.success) {
                             console.log(response.data.message);  // 성공 메시지 출력
-                            // 모달은 data-dismiss 속성 등으로 닫히거나, 별도 코드로 닫을 수 있습니다.
-                            // 댓글 목록 새로 갱신 (예: readComments() 호출)
-                            readComments();
+
+                            $('#deleteCommentModal').modal('hide');
+                            <!-- 댓글 갱신 -->
+                            readComments(page = 0);
                         } else {
                             console.log(response.data.message);  // 오류 메시지 출력
                         }
@@ -277,7 +278,7 @@
                     });
             }
 
-            readComments();
+            readComments(page = 0);
 
         </script>
     </div>
