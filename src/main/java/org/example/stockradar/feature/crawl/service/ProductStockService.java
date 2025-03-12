@@ -41,7 +41,7 @@ public class ProductStockService {
                             .availability(product.getStockStatus().getAvailability())
                             .price(product.getStockStatus().getPrice().getPrice())
                             .lastUpdated(product.getStockStatus().getLastUpdated())
-                            .redirectUrl(product.getProductUrl())
+                            .productUrl(product.getProductUrl())
                             .build())
                     .collect(Collectors.toList());
 
