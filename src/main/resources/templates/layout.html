@@ -42,6 +42,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" th:href="@{/assets/css/demo4.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}"/>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- 자식 템플릿에서 head 확장 가능 -->
     <th:block layout:fragment="head"></th:block>
@@ -456,6 +457,29 @@
     </div>
 </div>
 
+<!-- 댓글 삭제 확인 모달 -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCommentModalLabel">댓글 삭제</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>댓글을 삭제하려면 비밀번호를 입력하세요.</p>
+                <input type="password" id="deleteCommentPassword" class="form-control" placeholder="비밀번호 입력" required>
+                <div id="deleteCommentErrorMessage" class="text-danger mt-2"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-danger" onclick="deleteComment()">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 페이지별 추가 스크립트 -->
 <div layout:fragment="scripts"></div>
 
@@ -467,7 +491,6 @@
 <script th:src="@{/assets/js/jquery.appear.min.js}"></script>
 <script th:src="@{/assets/js/main.min.js}"></script>
 <script th:src="@{/assets/js/mainView/mainView.js}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <a id="scroll-top" href="#top" title="Top" role="button">
     <i class="icon-angle-up"></i>

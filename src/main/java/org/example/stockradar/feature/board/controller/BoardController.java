@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.board.dto.BoardDeleteRequestDto;
 import org.example.stockradar.feature.board.dto.BoardRequestDto;
 import org.example.stockradar.feature.board.dto.BoardResponseDto;
-import org.example.stockradar.feature.board.entity.Board;
 import org.example.stockradar.feature.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.HashMap;
 import java.util.Map;
 
