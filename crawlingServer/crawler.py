@@ -2,6 +2,11 @@ import requests
 import random
 import time
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 # 무작위 User-Agent 목록
 USER_AGENTS = [
@@ -38,52 +43,70 @@ def fetch_with_retries(session, url, max_retries=3, timeout=15):
                 return None
     return None
 
-def get_amazon_data(session, url):
+def get_amazon_data(url):
     """
-    Amazon 크롤링
-    - 상품명: #productTitle
-    - 재고: #availability 안의 텍스트에 "in stock", "only", "order soon"
-    - 가격: <span class="a-offscreen">$526.89</span>
+    Amazon 상품 정보 크롤링 (Selenium 사용)
+    - 상품명: <span id="productTitle">
+    - 재고 여부: "in stock", "In Stock", "only" 포함 여부 (가격 없으면 재고 없음)
+    - 가격: <span class="a-price-whole"> + <span class="a-price-decimal">
     """
-    print("[DEBUG] Amazon 크롤링(BeautifulSoup) 시작:", url)
+    print("[DEBUG] Amazon 크롤링(Selenium) 시작:", url)
     product_name = "Unknown Product"
     in_stock = False
     price_value = 0.0
 
-    response = fetch_with_retries(session, url)
-    if not response or response.status_code != 200:
-        print(f"[Amazon] 요청 실패 (status_code={response.status_code if response else 'None'})")
-        return product_name, in_stock, price_value
+    # Selenium 옵션 설정 (헤드리스 모드)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # 브라우저 UI 없이 실행
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("window-size=1920x1080")
 
-    soup = BeautifulSoup(response.text, "html.parser")
+    # 웹드라이버 실행
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
-    # 1) 상품명
-    title_elem = soup.select_one("#productTitle")
-    if title_elem:
-        product_name = title_elem.get_text(strip=True)
+    try:
+        driver.get(url)
+        time.sleep(3)  # 페이지 로딩 대기
 
-    # 2) 재고 여부
-    availability_elem = soup.select_one("#availability")
-    if availability_elem:
-        availability_text = availability_elem.get_text(strip=True).lower()
-        if ("in stock" in availability_text
-            or "only" in availability_text
-            or "order soon" in availability_text):
-            in_stock = True
-
-    # 3) 가격
-    price_elem = soup.select_one("span.a-offscreen")
-    if price_elem:
-        price_text = price_elem.get_text(strip=True).replace("$", "").replace(",", "")
+        # 1) 상품명 가져오기
         try:
-            price_value = float(price_text)
-        except ValueError:
-            price_value = 0.0
-            
-    if price_value == 0.0:
-        in_stock = False        
+            product_name_elem = driver.find_element(By.ID, "productTitle")
+            product_name = product_name_elem.text.strip()
+        except Exception:
+            print("[WARNING] Amazon 상품명 추출 실패")
 
-    print(f"[DEBUG] Amazon -> {product_name}, 재고: {in_stock}, 가격: {price_value}")
+        # 2) 재고 여부 확인
+        try:
+            availability_elem = driver.find_element(By.ID, "availability")
+            availability_text = availability_elem.text.strip().lower()
+            if "in stock" in availability_text or "only" in availability_text:
+                in_stock = True
+        except Exception:
+            print("[WARNING] Amazon 재고 정보 추출 실패")
+
+        # 3) 가격 가져오기 (할인율 제외)
+        try:
+            price_whole = driver.find_element(By.CLASS_NAME, "a-price-whole").text.strip()
+            price_decimal = driver.find_element(By.CLASS_NAME, "a-price-decimal").text.strip()
+            price_value = float(f"{price_whole}{price_decimal}")
+        except Exception:
+            print("[WARNING] Amazon 가격 정보 추출 실패")
+            price_value = 0.0  # 가격 정보 없으면 0으로 설정
+
+        # 💡 가격이 없으면 재고 없음으로 설정
+        if price_value == 0.0:
+            in_stock = False
+
+        print(f"[INFO] Amazon 크롤링 결과 -> 상품명: {product_name}, 재고: {in_stock}, 가격: {price_value}")
+
+    except Exception as e:
+        print(f"[ERROR] Amazon 크롤링 실패: {e}")
+
+    finally:
+        driver.quit()  # 드라이버 종료
+
     return product_name, in_stock, price_value
 
 def get_ssg_data(session, url):
