@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.crawl.service.ProductStockService;
 import org.example.stockradar.feature.product.dto.ProductResponseDto;
+import org.example.stockradar.feature.product.rtx3060Ti.service.Rtx3060TiService;
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.ProductException;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class Rtx3060Ticontroller {
 
     private final ProductStockService productStockService;
+    private final Rtx3060TiService rtx3060TiService;
 
 
     @GetMapping("gpu/rtx3060Ti")
@@ -81,7 +83,7 @@ public class Rtx3060Ticontroller {
 
         try {
             // 최적화된 쿼리로 RTX 3060Ti 제품 정보 가져오기
-            List<ProductResponseDto> rtx3060TiProducts = productStockService.getRtx3060TiInfo();
+            List<ProductResponseDto> rtx3060TiProducts = rtx3060TiService.getRtx3060TiInfo();
 
             if (rtx3060TiProducts.isEmpty()) {
                 log.warn("RTX 3060Ti 제품을 찾을 수 없습니다.");
