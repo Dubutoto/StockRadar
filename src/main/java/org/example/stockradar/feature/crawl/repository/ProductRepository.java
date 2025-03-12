@@ -29,4 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("keyword4") String keyword4,
             @Param("keyword5") String keyword5);
 
+    @Query("SELECT p FROM Product p JOIN FETCH p.stockStatus s JOIN FETCH s.price WHERE p.productId = :productId")
+    Product findProductWithStockStatusById(@Param("productId") Long productId);
+
 }

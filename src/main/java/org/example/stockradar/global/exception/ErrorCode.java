@@ -28,6 +28,7 @@ public enum ErrorCode {
     INQUIRY_NOT_FOUND(404, "ERR-014", "문의 없음", "고객문의가 존재하지 않습니다."),
     STOCK_INFO_NOT_FOUND(404, "ERR-203", "재고 정보 없음", "상품의 재고 정보를 찾을 수 없습니다."),
     PRODUCT_NOT_FOUND(404, "ERR-004", "상품 없음", "상품을 조회 할수 없습니다."),
+    PRODUCT_ID_NULL(400, "ERR-204", "상품 ID 없음", "상품 ID가 null입니다. 데이터 무결성 오류가 발생했습니다."),
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(500, "ERR-005", "서버 오류", "관리자에게 문의하세요."),
