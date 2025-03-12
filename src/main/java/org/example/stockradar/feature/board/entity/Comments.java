@@ -53,15 +53,9 @@ public class Comments {
         updatedAt = LocalDateTime.now();
     }
 
-    public void updateContent(String newContent) {
-        this.content = newContent;
-        this.updatedAt = LocalDateTime.now();
-    }
-
     public void softDelete() {
         this.deletedAt = LocalDateTime.now();
     }
-
 
 }
 

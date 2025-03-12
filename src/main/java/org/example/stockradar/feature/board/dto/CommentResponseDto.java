@@ -17,9 +17,12 @@ import java.time.LocalDateTime;
 @Data
 public class CommentResponseDto {
 
-    private String userName;
+    private long commentId;
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    //작성자 정보
+    private String userName;
 
 }

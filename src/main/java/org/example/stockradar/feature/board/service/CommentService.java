@@ -1,6 +1,7 @@
 package org.example.stockradar.feature.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.stockradar.feature.board.dto.CommentDeleteRequestDto;
 import org.example.stockradar.feature.board.dto.CommentRequestDto;
 import org.example.stockradar.feature.board.dto.CommentResponseDto;
 import org.example.stockradar.feature.board.entity.Board;
@@ -11,6 +12,7 @@ import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.auth.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CommentService {
 
+    private final PasswordEncoder passwordEncoder;
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
@@ -55,32 +58,35 @@ public class CommentService {
     }
 
     // 댓글 목록 조회 (페이징 처리, 소프트 삭제된 댓글 제외)
-    public Page<CommentResponseDto> getComments(Pageable pageable) {
-        return commentRepository.findByDeletedAtIsNull(pageable)
+    public Page<CommentResponseDto> getComments(Long boardId, Pageable pageable) {
+        return commentRepository.findByBoardBoardIdAndDeletedAtIsNull(boardId, pageable)
                 .map(comment -> CommentResponseDto.builder()
                         .userName(comment.getMember() != null ? comment.getMember().getUserName() : "anonymous")
+                        .commentId(comment.getCommentId())
                         .content(comment.getContent())
                         .createdAt(comment.getCreatedAt())
                         .build());
     }
 
     // 댓글 소프트 삭제: 도메인 메서드 softDelete()를 호출하여 deletedAt 필드를 갱신
-    public void softDeleteComment(Long commentId) {
+    public boolean softDeleteComment(CommentDeleteRequestDto request) {
+        Long commentId = request.getCommentId();
+        String password = request.getPassword();
+
+        // commentId에 해당하는 댓글 조회
         Comments comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
+
+        // 댓글 작성자(Member)가 존재하고, 비밀번호가 일치하는지 검증
+        if (comment.getMember() == null || !passwordEncoder.matches(password, comment.getMember().getMemberPw())) {
+            return false;
+        }
+
+        // 도메인 메서드 softDelete()를 호출하여 deletedAt 필드를 갱신
         comment.softDelete();
         commentRepository.save(comment);
+
+        return true;
     }
 
-    // 댓글 업데이트: 도메인 메서드 updateContent()를 호출하여 내용 변경
-    public CommentRequestDto updateComment(Long commentId, CommentRequestDto commentRequestDto) {
-        Comments comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
-        comment.updateContent(commentRequestDto.getContent());
-        Comments updatedComment = commentRepository.save(comment);
-        return CommentRequestDto.builder()
-                .boardId(updatedComment.getBoard() != null ? updatedComment.getBoard().getBoardId() : commentRequestDto.getBoardId())
-                .content(updatedComment.getContent())
-                .build();
-    }
 }

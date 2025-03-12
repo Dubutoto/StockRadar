@@ -2,6 +2,7 @@ package org.example.stockradar.feature.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.stockradar.feature.board.dto.CommentDeleteRequestDto;
 import org.example.stockradar.feature.board.dto.CommentRequestDto;
 import org.example.stockradar.feature.board.dto.CommentResponseDto;
 import org.example.stockradar.feature.board.service.CommentService;
@@ -13,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * author Hyun7en
@@ -44,23 +48,29 @@ public class CommentController {
 
     // 댓글 목록 조회 (페이징 처리 포함)
     @GetMapping("read")
-    public ResponseEntity<Page<CommentResponseDto>> getComments(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<CommentResponseDto>> getComments(@RequestParam Long boardId,@RequestParam(defaultValue = "0") int page) {
+        System.out.println("boardId: " + boardId);
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
-        Page<CommentResponseDto> commentPage = commentService.getComments(pageable);
+        Page<CommentResponseDto> commentPage = commentService.getComments(boardId,pageable);
         return new ResponseEntity<>(commentPage, HttpStatus.OK);
     }
 
-    // 댓글 소프트 삭제 (Soft delete)
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<Void> softDeleteComment(@PathVariable Long id) {
-        commentService.softDeleteComment(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PostMapping("delete")
+    public ResponseEntity<Map<String, Object>> softDeleteComment(@RequestBody CommentDeleteRequestDto request) {
+        boolean result = commentService.softDeleteComment(request);
+
+        log.info("Delete comment request: {}", request);
+
+        Map<String, Object> response = new HashMap<>();
+        if(result) {
+            response.put("success", true);
+            response.put("message", "댓글 삭제에 성공했습니다.");
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+        } else {
+            response.put("success", false);
+            response.put("message", "비밀번호가 일치하지 않습니다.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    // 댓글 업데이트 (Update)
-    @PutMapping("update/{id}")
-    public ResponseEntity<CommentRequestDto> updateComment(@PathVariable Long id, @RequestBody CommentRequestDto commentDto) {
-        CommentRequestDto updatedComment = commentService.updateComment(id, commentDto);
-        return new ResponseEntity<>(updatedComment, HttpStatus.OK);
-    }
 }
