@@ -6,6 +6,7 @@ import org.example.stockradar.feature.crawl.service.ProductStockService;
 import org.example.stockradar.feature.product.dto.ProductResponseDto;
 import org.example.stockradar.feature.product.rtx4060Ti.service.Rtx4060TiService;
 import org.example.stockradar.feature.product.rtx4060Ti.service.Rtx4060TiStockCacheService;
+import org.example.stockradar.feature.product.rtx4060Ti.service.Rtx4060TiStockCacheTestService;
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.ProductException;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ public class Rtx4060Ticontroller {
 
     private final ProductStockService productStockService;
     private final Rtx4060TiService rtx4060TiService;
-    private final Rtx4060TiStockCacheService rtx4060TiStockCacheService;
+    private final Rtx4060TiStockCacheService rtx4060TiStockCacheService; //시나리오3 서비스
+    private final Rtx4060TiStockCacheTestService rtx4060TiStockCacheTestService;//시나리오3테스트 서비스
 
 
     @GetMapping("gpu/rtx4060Ti")
@@ -113,7 +115,9 @@ public class Rtx4060Ticontroller {
         log.info("Rtx4060Ti 요청");
 
         try {
-            List<ProductResponseDto> allProducts = rtx4060TiStockCacheService.getRtx4060TiInfo();
+            //List<ProductResponseDto> allProducts = rtx4060TiStockCacheService.getRtx4060TiInfo(); //시나리오 3 서비스
+
+            List<ProductResponseDto> allProducts = rtx4060TiStockCacheTestService.getRtx4060TiInfo(); //캐시 테스트 서비스 시나리오3
 
             // RTX 4060Ti 제품만 필터링
             List<ProductResponseDto> rtx4060TiProducts = allProducts.stream()
