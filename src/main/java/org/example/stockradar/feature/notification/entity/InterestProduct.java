@@ -3,6 +3,7 @@ package org.example.stockradar.feature.notification.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
+import org.example.stockradar.feature.crawl.entity.Product;
 import java.time.LocalDateTime;
 
 /**
@@ -14,30 +15,28 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "member_notifications")
-public class MemberNotification {
+@Table(name = "interest_products")
+public class InterestProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 알림을 받을 회원
+    // 관심 상품 등록 사용자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "memberCode")
     private Member member;
 
-    // 전송된 알림
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "notification_id")
-    private Notification notification;
+    // 상품과의 연관관계 (Product 엔터티 참조)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    // 알림 읽음 여부
-    private boolean isRead;
+    // 웹 푸시는 기본적으로 활성화 (재고 입고 시 기본 알림)
+    @Builder.Default
+    private boolean webPushNotification = true;
 
-    // 읽은 시각 (읽지 않았다면 null)
-    private LocalDateTime readAt;
-
-    // 생성 시각 (알림 생성 시각)
+    // 생성 시각 (audit 용)
     private LocalDateTime createdAt;
 
     @PrePersist

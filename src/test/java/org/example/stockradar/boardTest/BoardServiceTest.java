@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Hyun7en
+ */
 
 @SpringBootTest
 @Transactional
