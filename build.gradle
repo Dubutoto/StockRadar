@@ -64,6 +64,7 @@ dependencies {
 
     //kafka
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.apache.kafka:kafka-streams' // Kafka Streams 라이브러리
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
