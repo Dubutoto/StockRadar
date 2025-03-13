@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.product.dto.ProductResponseDto;
+import org.example.stockradar.feature.product.dto.ProductStaticCacheDto;
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.CrawlException;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,31 +17,28 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class ProductStockScheduler {
 
+
     private final ProductRepository productRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final String STOCK_CACHE_PREFIX = "product:stock:";
 
+
     // 동시 실행 방지를 위한 플래그
     private final AtomicBoolean isRunning = new AtomicBoolean(false);
 
-    // 재고 상태 캐시 키 생성
+    // 재고 상태 캐시 키 생성 시나리오3
     private String createStockCacheKey(Long productId) {
         return STOCK_CACHE_PREFIX + productId;
     }
-
-    // 재고 상태 캐싱_시나리오3
-    private void cacheProductStock(Long productId, Integer availability) {
-        String cacheKey = createStockCacheKey(productId);
-        redisTemplate.opsForValue().set(cacheKey, availability, Duration.ofMinutes(6));
-        log.debug("제품 ID {} 재고 상태 캐싱 완료: {}", productId, availability);
-    }
+    
 
     // 매 5분마다 실행 (cron = "초 분 시 일 월 요일")
     @Scheduled(cron = "0 */5 * * * *")
@@ -101,4 +99,6 @@ public class ProductStockScheduler {
             log.info("상품 재고 상태 캐싱 스케줄러 종료: {}", LocalDateTime.now().format(formatter));
         }
     }
-}
+
+
+  }
