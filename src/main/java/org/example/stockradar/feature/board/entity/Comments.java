@@ -3,10 +3,11 @@ package org.example.stockradar.feature.board.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.stockradar.feature.auth.entity.Member;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
+/**
+ * @author Hyun7en
+ */
 
 @Entity
 @Getter

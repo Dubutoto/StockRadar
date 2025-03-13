@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * author Hyun7en
+ * @author Hyun7en
  */
 
 @Builder

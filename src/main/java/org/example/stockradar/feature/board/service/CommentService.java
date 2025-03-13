@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 /**
- * author Hyun7en
+ * @author Hyun7en
  */
 
 @Service

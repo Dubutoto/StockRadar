@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.board.dto.BoardDeleteRequestDto;
 import org.example.stockradar.feature.board.dto.BoardRequestDto;
 import org.example.stockradar.feature.board.dto.BoardResponseDto;
-import org.example.stockradar.feature.board.dto.CommentRequestDto;
 import org.example.stockradar.feature.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
