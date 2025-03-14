@@ -60,13 +60,39 @@ public class Rtx4060TiAllCacheServiceV2 {
             Object value = cachedValues.get(i);
 
             if (value != null) {
-                // 캐시 히트
-                result.put(productId, (ProductCacheDto) value);
+                // 캐시 히트 - Map인 경우 변환
+                if (value instanceof Map) {
+                    Map<String, Object> map = (Map<String, Object>) value;
+                    try {
+                        ProductCacheDto dto = ProductCacheDto.builder()
+                                .productId(productId)
+                                .productName((String) map.get("productName"))
+                                .productUrl((String) map.get("productUrl"))
+                                .price(map.get("price") instanceof Number ?
+                                        ((Number) map.get("price")).longValue() : null)
+                                .availability(map.get("availability") instanceof Number ?
+                                        ((Number) map.get("availability")).intValue() : null)
+                                // LocalDateTime은 문자열로 처리하거나 null 사용
+                                .lastUpdated(LocalDateTime.now())
+                                .build();
+                        result.put(productId, dto);
+                    } catch (Exception e) {
+                        log.error("캐시 데이터 변환 중 오류: {}", e.getMessage());
+                        cacheMissIds.add(productId);
+                    }
+                } else if (value instanceof ProductCacheDto) {
+                    result.put(productId, (ProductCacheDto) value);
+                } else {
+                    cacheMissIds.add(productId);
+                }
             } else {
                 // 캐시 미스
                 cacheMissIds.add(productId);
             }
         }
+
+
+
 
         // 캐시 미스가 있는 경우 DB에서 조회
         if (!cacheMissIds.isEmpty()) {
