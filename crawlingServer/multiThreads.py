@@ -12,7 +12,7 @@ from url_config import URL_TASKS
 dbconfig = {
     "host": "localhost",
     "user": "root",
-    "password": "Dubutoto22!",
+    "password": "1234",
     "database": "stockradar"
 }
 
