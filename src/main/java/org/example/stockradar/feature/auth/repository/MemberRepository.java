@@ -10,4 +10,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     // 여러 회원을 반환하기 위해 List<Member> 메서드를 사용
     List<Member> findAllByMemberPhone(String memberPhone);
+
 }

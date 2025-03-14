@@ -30,7 +30,7 @@
                         </span>
                         <span class="me-3">
                             <i class="fa fa-comment"></i>
-                            <span th:text="${board.viewCount}">3</span>
+                            <span th:text="${board.commentCount}">3</span>
                         </span>
                     </div>
                 </div>
@@ -56,9 +56,11 @@
                 </div>
                 <div class="detail-actions text-end">
                     <div th:if="${#authentication.name == board.memberId}" class="d-inline">
-                        <a th:href="@{/board/form(boardId=${board.boardId})}" class="btn btn-sm btn-secondary me-1 text-decoration-none">수정</a>
+                        <a th:href="@{/board/form(boardId=${board.boardId})}"
+                           class="btn btn-sm btn-secondary me-1 text-decoration-none">수정</a>
                         <!-- 삭제 버튼 (모달 트리거) -->
-                        <button type="button" class="btn btn-sm btn-danger me-1 text-decoration-none" data-toggle="modal" data-target="#deleteConfirmModal">
+                        <button type="button" class="btn btn-sm btn-danger me-1 text-decoration-none"
+                                data-toggle="modal" data-target="#deleteConfirmModal">
                             삭제
                         </button>
 
@@ -68,39 +70,16 @@
             </div>
         </div>
 
-        <!-- 댓글 섹션 -->
-        <div class="comments-section mb-4">
-            <h4 class="mb-3">댓글</h4>
-            <!-- 댓글 목록 -->
-            <div th:if="${#lists.isEmpty(comments)}">
-                <p>댓글이 없습니다. 첫 번째 댓글을 남겨보세요.</p>
-            </div>
-            <div th:each="comment : ${comments}" class="card mb-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
-                        <strong th:text="${comment.userName}">댓글 작성자</strong>
-                        <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</span>
-                    </div>
-                    <div th:utext="${comment.content}">
-                        댓글 내용
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- 댓글 작성 폼 -->
         <div class="comment-form mb-4">
             <h4 class="mb-3">댓글 작성하기</h4>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/board/comment/insert}" method="post">
-                    <div class="mb-3">
-                        <label for="commentContent" class="form-label">댓글 내용</label>
-                        <textarea id="commentContent" name="content" class="form-control" rows="4"
-                                  placeholder="댓글을 입력하세요" required></textarea>
-                    </div>
-                    <input type="hidden" name="boardId" th:value="${board.boardId}"/>
-                    <button type="submit" class="btn btn-primary">댓글 등록</button>
-                </form>
+                <div class="mb-3">
+                    <label for="commentContent" class="form-label">댓글 내용</label>
+                    <textarea id="commentContent" name="content" class="form-control" rows="4"
+                              placeholder="댓글을 입력하세요" required></textarea>
+                </div>
+                <button type="submit" onclick="insertComment()" class="btn btn-primary">댓글 등록</button>
             </div>
             <div sec:authorize="!isAuthenticated()">
                 <div class="alert alert-warning">
@@ -109,6 +88,17 @@
                 </div>
             </div>
         </div>
+
+        <!-- 댓글 섹션 -->
+        <div class="comments-section mb-4" id="commentSection">
+            <!-- AJAX 사용 -->
+        </div>
+
+        <!-- 페이지네이션 컨테이너 -->
+        <div id="pagination" class="pagination-container mt-3">
+            <!-- AJAX 사용 -->
+        </div>
+
     </main>
     <div layout:fragment="scripts">
         <script th:inline="javascript">
@@ -116,9 +106,6 @@
             function deleteBoard() {
                 let password = document.getElementById("deletePassword").value;
                 let boardId = document.getElementById("boardId").textContent.trim();
-
-                console.log(boardId);
-                console.log(password);
 
                 axios.post('/board/delete', {
                     password: password,
@@ -137,6 +124,162 @@
                         document.getElementById("deleteErrorMessage").textContent = error.response.data.message;
                     });
             }
+
+            function insertComment() {
+                let boardId = document.getElementById("boardId").textContent.trim();
+                let content = document.getElementById("commentContent").value;
+
+                axios.post('/comment/insert',{
+                    boardId: boardId,
+                    content: content
+                })
+                    .then(response => {
+                        console.log(response.data + " 삽입 완료");
+                        // 댓글 등록 후 댓글 목록 새로 불러오기
+                        readComments(page = 0);
+                        // 입력 필드 초기화
+                        document.getElementById("commentContent").value = "";
+
+                    })
+                    .catch(error => {
+                        console.log("오류 발생: " + error);
+                    })
+            }
+
+            function readComments(page = 0) {
+                let boardId = document.getElementById("boardId").textContent.trim();
+
+                axios.get('/comment/read?boardId=' + boardId + '&page=' + page)
+                    .then(response => {
+                        console.log(response.data);
+                        // response.data는 Page 객체 구조를 갖습니다.
+                        const commentPage = response.data;
+                        const comments = commentPage.content;
+                        const commentSection = document.getElementById('commentSection');
+                        const paginationContainer = document.getElementById('pagination');
+
+                        // 댓글 목록 초기화
+                        commentSection.innerHTML = '<h4 class="mb-3">댓글</h4>';
+                        if (comments.length === 0) {
+                            commentSection.innerHTML += '<p>댓글이 없습니다. 첫 번째 댓글을 남겨보세요.</p>';
+                        } else {
+                            comments.forEach(comment => {
+                                const commentCard = document.createElement('div');
+                                commentCard.classList.add('card', 'mb-3');
+                                commentCard.innerHTML = `
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <strong>${comment.userName}</strong>
+                                <span>${new Date(comment.createdAt).toLocaleString()}</span>
+                            </div>
+                            <div>${comment.content}</div>
+                            <button class="btn btn-sm btn-danger mt-2" data-comment-id="${comment.commentId}" data-toggle="modal" data-target="#deleteCommentModal" onclick="setCommentId(this)">삭제</button>
+                        </div>
+                    `;
+                                commentSection.appendChild(commentCard);
+                            });
+                        }
+
+                        // 페이지네이션 컨트롤 생성 (Bootstrap 4 스타일)
+                        // 기존 페이지네이션 초기화
+                        paginationContainer.innerHTML = '';
+                        const ul = document.createElement("ul");
+                        ul.className = "pagination justify-content-center";
+
+                        // 이전 버튼
+                        const liPrev = document.createElement("li");
+                        liPrev.className = "page-item" + (commentPage.first ? " disabled" : "");
+                        const aPrev = document.createElement("a");
+                        aPrev.className = "page-link";
+                        aPrev.href = "#";
+                        aPrev.textContent = "이전";
+                        aPrev.addEventListener("click", function(event) {
+                            event.preventDefault();
+                            if (!commentPage.first) {
+                                readComments(commentPage.number - 1);
+                            }
+                        });
+                        liPrev.appendChild(aPrev);
+                        ul.appendChild(liPrev);
+
+                        // 페이지 번호 버튼 생성
+                        for (let i = 0; i < commentPage.totalPages; i++) {
+                            const liPage = document.createElement("li");
+                            liPage.className = "page-item" + (i === commentPage.number ? " active" : "");
+                            const aPage = document.createElement("a");
+                            aPage.className = "page-link";
+                            aPage.href = "#";
+                            aPage.textContent = i + 1;
+                            aPage.addEventListener("click", function(event) {
+                                event.preventDefault();
+                                readComments(i);
+                            });
+                            liPage.appendChild(aPage);
+                            ul.appendChild(liPage);
+                        }
+
+                        // 다음 버튼
+                        const liNext = document.createElement("li");
+                        liNext.className = "page-item" + (commentPage.last ? " disabled" : "");
+                        const aNext = document.createElement("a");
+                        aNext.className = "page-link";
+                        aNext.href = "#";
+                        aNext.textContent = "다음";
+                        aNext.addEventListener("click", function(event) {
+                            event.preventDefault();
+                            if (!commentPage.last) {
+                                readComments(commentPage.number + 1);
+                            }
+                        });
+                        liNext.appendChild(aNext);
+                        ul.appendChild(liNext);
+
+                        // paginationContainer에 ul 추가
+                        paginationContainer.appendChild(ul);
+                    })
+                    .catch(error => {
+                        console.error('댓글 불러오기 오류: ', error);
+                    });
+            }
+
+            // 전역 변수: 삭제할 댓글 ID 저장
+            let commentId = null;
+
+            function setCommentId(button) {
+                // 버튼의 data-comment-id 값을 전역 변수에 저장
+                commentId = button.getAttribute('data-comment-id');
+                console.log("설정된 commentId: " + commentId);
+            }
+
+            function deleteComment() {
+                let password = document.getElementById("deleteCommentPassword").value;
+
+                console.log("password: " + password );
+                console.log("commentId: " + commentId);
+
+                axios.post('/comment/delete', {
+                    commentId: commentId,
+                    password: password
+                })
+                    .then(response => {
+                        if (response.data.success) {
+                            console.log(response.data.message);  // 성공 메시지 출력
+
+                            $('#deleteCommentModal').modal('hide');
+                            <!-- 댓글 갱신 -->
+                            readComments(page = 0);
+                        } else {
+                            console.log(response.data.message);  // 오류 메시지 출력
+                        }
+                    })
+                    .catch(error => {
+                        console.log("오류 발생: " + error.response.data.message);
+                        document.getElementById("deleteCommentErrorMessage").textContent = error.response.data.message;
+                    });
+            }
+
+            readComments(page = 0);
+
         </script>
     </div>
 </div>

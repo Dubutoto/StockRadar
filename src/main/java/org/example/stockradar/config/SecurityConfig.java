@@ -54,7 +54,8 @@ public class SecurityConfig {
                                 "/customerInquiry/**", "/board/**",
                                 "/assets/**", "/main", "/", "/auth/idInquiry", "/idInquiry",
                                 "/password/**","/product/**",
-                                "/main/check"
+                                "/main/check","/common/**", "comment/read",
+                                "/monitoring/**"
 
 
                         ).permitAll()

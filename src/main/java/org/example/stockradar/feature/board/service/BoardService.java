@@ -3,6 +3,8 @@ package org.example.stockradar.feature.board.service;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.auth.entity.Member;
+import org.example.stockradar.feature.auth.repository.MemberRepository;
+import org.example.stockradar.feature.auth.service.CustomUserDetailsService;
 import org.example.stockradar.feature.board.dto.BoardRequestDto;
 import org.example.stockradar.feature.board.dto.BoardResponseDto;
 import org.example.stockradar.feature.board.entity.Board;
@@ -11,12 +13,12 @@ import org.example.stockradar.feature.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -45,11 +48,13 @@ public class BoardService {
      * 게시글 등록 처리
      */
     @Transactional(rollbackFor = Exception.class)
-    public Board saveBoard(BoardRequestDto boardRequestDto) {
-        // 실제 환경에서는 SecurityContext에서 인증된 사용자 정보를 가져옵니다.
-        Member member = new Member();
-        member.setMemberCode(1L);      // 예시 값
-        member.setUserName("DefaultUser");
+    public Board saveBoard(BoardRequestDto boardRequestDto,String memberId) {
+
+        // 전달받은 memberId를 이용해 Member 엔터티 조회
+        Member member = memberRepository.findByMemberId(memberId);
+        if (member == null) {
+            throw new RuntimeException("Member not found with id: " + memberId);
+        }
 
         // Board 엔터티 생성 (빌더 사용)
         Board board = Board.builder()
@@ -94,6 +99,7 @@ public class BoardService {
     /**
      * 게시글 수정 처리
      */
+    @Transactional(rollbackFor = Exception.class)
     public Board updateBoard(Long boardId, BoardRequestDto boardRequestDto) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("Board not found"));
@@ -111,6 +117,7 @@ public class BoardService {
     /**
      * 게시글 삭제 처리
      */
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteBoard(Long boardId, String password) {
         Optional<Board> boardOpt = boardRepository.findById(boardId);
         if (!boardOpt.isPresent()) {

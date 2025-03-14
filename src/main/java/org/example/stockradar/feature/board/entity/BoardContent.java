@@ -12,7 +12,6 @@ public class BoardContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
     private Long contentId;
 
     @Column( nullable = false, columnDefinition = "TEXT")
