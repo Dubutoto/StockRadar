@@ -31,6 +31,11 @@ public class MemberNotification {
     @JoinColumn(name = "notification_id")
     private Notification notification;
 
+    // 알림이 발생한 관심 상품과의 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "interest_product_id", nullable = false)
+    private InterestProduct interestProduct;
+
     // 알림 읽음 여부
     private boolean isRead;
 

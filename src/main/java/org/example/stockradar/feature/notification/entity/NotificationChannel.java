@@ -5,7 +5,8 @@ package org.example.stockradar.feature.notification.entity;
  */
 
 public enum NotificationChannel {
+    SMS,
     EMAIL,
     DISCORD,
-    SMS
+    WEB_PUSH
 }
