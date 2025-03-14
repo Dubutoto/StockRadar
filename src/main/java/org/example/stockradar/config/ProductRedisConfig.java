@@ -1,5 +1,7 @@
 package org.example.stockradar.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,15 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 public class ProductRedisConfig {
+
+    // JacksonConfig에서 설정한 ObjectMapper 주입
+    private final ObjectMapper objectMapper;
+
+    @Autowired
+    public ProductRedisConfig(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         return new LettuceConnectionFactory();
@@ -26,7 +37,15 @@ public class ProductRedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
         template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+
+        // 설정된 ObjectMapper를 사용하는 직렬화기 생성
+        GenericJackson2JsonRedisSerializer serializer =
+                new GenericJackson2JsonRedisSerializer(objectMapper);
+
+        template.setValueSerializer(serializer);
+        template.setHashValueSerializer(serializer);
+        template.setDefaultSerializer(serializer);
+
         return template;
     }
 
@@ -34,7 +53,7 @@ public class ProductRedisConfig {
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                 .prefixCacheNameWith("stockradar.")
-                .entryTtl(Duration.ofMinutes(1))  // 1분 TTL 설정
+                .entryTtl(Duration.ofMinutes(6))  // 1분 TTL 설정
                 .disableCachingNullValues();
 
         return RedisCacheManager.builder(connectionFactory)
@@ -42,5 +61,3 @@ public class ProductRedisConfig {
                 .build();
     }
 }
-
-
