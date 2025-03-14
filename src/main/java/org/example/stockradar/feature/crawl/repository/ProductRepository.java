@@ -33,6 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p JOIN FETCH p.stockStatus s JOIN FETCH s.price WHERE p.productId = :productId")
     Product findProductWithStockStatusById(@Param("productId") Long productId);
 
+    //쿼리튜닝 2-2
     @Query("SELECT new org.example.stockradar.feature.product.dto.ProductResponseDto(" +
             "p.productId, p.productName, s.availability, s.price.price, s.lastUpdated, p.productUrl) " +
             "FROM Product p JOIN p.stockStatus s JOIN s.price " +
