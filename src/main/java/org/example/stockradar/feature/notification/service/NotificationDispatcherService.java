@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.auth.repository.MemberRepository;
 import org.example.stockradar.feature.auth.service.CoolsmsService;
-import org.example.stockradar.feature.auth.service.MemberService;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.NotificationEvent;
 import org.example.stockradar.feature.notification.entity.NotificationChannel;
