@@ -3,6 +3,7 @@ package org.example.stockradar.feature.crawl.repository;
 
 
 import org.example.stockradar.feature.crawl.entity.Product;
+import org.example.stockradar.feature.product.dto.ProductResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,5 +32,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN FETCH p.stockStatus s JOIN FETCH s.price WHERE p.productId = :productId")
     Product findProductWithStockStatusById(@Param("productId") Long productId);
+
+    @Query("SELECT new org.example.stockradar.feature.product.dto.ProductResponseDto(" +
+            "p.productId, p.productName, s.availability, s.price.price, s.lastUpdated, p.productUrl) " +
+            "FROM Product p JOIN p.stockStatus s JOIN s.price " +
+            "WHERE LOWER(p.productName) LIKE %:keyword1% OR " +
+            "LOWER(p.productName) LIKE %:keyword2% OR " +
+            "LOWER(p.productName) LIKE %:keyword3% OR " +
+            "LOWER(p.productName) LIKE %:keyword4% OR " +
+            "LOWER(p.productName) LIKE %:keyword5%")
+    List<ProductResponseDto> findKeywordProductDtos(
+            @Param("keyword1") String keyword1,
+            @Param("keyword2") String keyword2,
+            @Param("keyword3") String keyword3,
+            @Param("keyword4") String keyword4,
+            @Param("keyword5") String keyword5);
 
 }
