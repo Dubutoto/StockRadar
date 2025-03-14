@@ -24,4 +24,16 @@ public class ProductResponseDto {
     private Long productId;
     private String productUrl;
 
+    // 쿼리에서 필요한 생성자 추가
+    public ProductResponseDto(Long productId, String productName,
+                              Integer availability, Long price,
+                              LocalDateTime lastUpdated, String productUrl) {
+        this.productId = productId;
+        this.productName = productName;
+        this.availability = availability;
+        this.price = price;
+        this.lastUpdated = lastUpdated;
+        this.productUrl = productUrl;
+    }
+
 }
