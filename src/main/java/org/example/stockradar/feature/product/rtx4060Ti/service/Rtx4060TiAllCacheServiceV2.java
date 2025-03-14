@@ -42,6 +42,8 @@ public class Rtx4060TiAllCacheServiceV2 {
             return Collections.emptyMap();
         }
 
+        log.info("캐시 조회 시작: {} 개 제품 ID 조회 요청", productIds.size());
+
         // 캐시 키 목록 생성
         List<String> cacheKeys = productIds.stream()
                 .map(this::createCacheKey)
@@ -53,6 +55,8 @@ public class Rtx4060TiAllCacheServiceV2 {
 
         // 캐시 미스 목록
         List<Long> cacheMissIds = new ArrayList<>();
+        int cacheHitCount = 0;
+        int cacheMissCount = 0;
 
         // 캐시 결과 처리
         for (int i = 0; i < productIds.size(); i++) {
@@ -60,6 +64,10 @@ public class Rtx4060TiAllCacheServiceV2 {
             Object value = cachedValues.get(i);
 
             if (value != null) {
+                // 캐시 히트 로깅
+                log.debug("캐시 히트 - 제품 ID: {}, 캐시 타입: {}", productId, value.getClass().getSimpleName());
+                cacheHitCount++;
+
                 // 캐시 히트 - Map인 경우 변환
                 if (value instanceof Map) {
                     Map<String, Object> map = (Map<String, Object>) value;
@@ -72,33 +80,49 @@ public class Rtx4060TiAllCacheServiceV2 {
                                         ((Number) map.get("price")).longValue() : null)
                                 .availability(map.get("availability") instanceof Number ?
                                         ((Number) map.get("availability")).intValue() : null)
-                                // LocalDateTime은 문자열로 처리하거나 null 사용
                                 .lastUpdated(LocalDateTime.now())
                                 .build();
                         result.put(productId, dto);
+
+                        // 재고 상태 로깅
+                        log.debug("제품 ID: {}, 캐시에서 조회된 재고 상태: {}",
+                                productId, dto.getAvailability());
                     } catch (Exception e) {
-                        log.error("캐시 데이터 변환 중 오류: {}", e.getMessage());
+                        log.error("캐시 데이터 변환 중 오류: 제품 ID: {}, 오류: {}", productId, e.getMessage());
                         cacheMissIds.add(productId);
+                        cacheMissCount++;
                     }
                 } else if (value instanceof ProductCacheDto) {
-                    result.put(productId, (ProductCacheDto) value);
+                    ProductCacheDto dto = (ProductCacheDto) value;
+                    result.put(productId, dto);
+
+                    // 재고 상태 로깅
+                    log.debug("제품 ID: {}, 캐시에서 조회된 재고 상태: {}",
+                            productId, dto.getAvailability());
                 } else {
+                    log.warn("캐시에서 알 수 없는 타입 반환: 제품 ID: {}, 타입: {}",
+                            productId, value.getClass().getName());
                     cacheMissIds.add(productId);
+                    cacheMissCount++;
                 }
             } else {
                 // 캐시 미스
+                log.debug("캐시 미스 - 제품 ID: {}", productId);
                 cacheMissIds.add(productId);
+                cacheMissCount++;
             }
         }
 
-
-
+        log.info("캐시 조회 결과: 총 {}개 중 {}개 히트, {}개 미스",
+                productIds.size(), cacheHitCount, cacheMissCount);
 
         // 캐시 미스가 있는 경우 DB에서 조회
         if (!cacheMissIds.isEmpty()) {
-            log.debug("캐시 미스 - 제품 ID: {}, DB에서 조회합니다.", cacheMissIds);
+            log.info("캐시 미스 처리 시작: {}개 제품 ID DB 조회", cacheMissIds.size());
 
-            // DB에서 한 번에 조회 (실제 구현은 DB가 벌크 조회를 지원하는지에 따라 달라질 수 있음)
+            int dbFetchSuccessCount = 0;
+
+            // DB에서 한 번에 조회
             for (Long productId : cacheMissIds) {
                 try {
                     Product product = productRepository.findProductWithStockStatusById(productId);
@@ -115,7 +139,7 @@ public class Rtx4060TiAllCacheServiceV2 {
                                 .lastUpdated(product.getStockStatus().getLastUpdated())
                                 .build();
 
-                        // 재고 상태는 6분, 정적 데이터는 7일이므로 더 짧은 6분으로 설정
+                        // 캐시에 저장
                         redisTemplate.opsForValue().set(
                                 createCacheKey(productId),
                                 cacheDto,
@@ -124,15 +148,24 @@ public class Rtx4060TiAllCacheServiceV2 {
 
                         // 결과에 추가
                         result.put(productId, cacheDto);
+                        dbFetchSuccessCount++;
+
+                        log.debug("DB에서 조회 성공 - 제품 ID: {}, 재고 상태: {}",
+                                productId, cacheDto.getAvailability());
+                    } else {
+                        log.warn("DB에서 제품 정보 조회 실패 - 제품 ID: {}, 제품 또는 필수 정보 누락", productId);
                     }
                 } catch (Exception e) {
-                    log.error("제품 ID {}의 데이터 조회 중 오류 발생: {}", productId, e.getMessage());
+                    log.error("제품 ID {}의 DB 조회 중 오류 발생: {}", productId, e.getMessage());
                 }
             }
+
+            log.info("DB 조회 결과: 총 {}개 중 {}개 성공", cacheMissIds.size(), dbFetchSuccessCount);
         }
 
         return result;
     }
+
 
     /**
      * 모든 제품 정보를 ProductResponseDto 형태로 반환 (벌크 캐시 조회 활용)
