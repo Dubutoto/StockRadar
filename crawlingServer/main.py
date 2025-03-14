@@ -1,5 +1,3 @@
-# main.py
-
 import schedule
 import time
 import requests
@@ -14,11 +12,10 @@ from url_config import URL_TASKS
 dbconfig = {
     "host": "localhost",
     "user": "root",
-    "password": "1234",
+    "password": "Dubutoto22!",
     "database": "stockradar"
 }
 
-# pool_size=5 -> 최대 5개 커넥션
 pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_name="mypool",
     pool_size=5,
@@ -33,99 +30,92 @@ def save_to_db(category_name, store_name, product_name, product_url, in_stock, p
     conn = pool.get_connection()
     cursor = conn.cursor()
 
-    # 1) category
-    select_cat_sql = "SELECT category_id FROM category WHERE category_name = %s"
-    cursor.execute(select_cat_sql, (category_name,))
-    cat_row = cursor.fetchone()
+    try:
+        # 1) category
+        cursor.execute("SELECT category_id FROM category WHERE category_name = %s", (category_name,))
+        cat_row = cursor.fetchone()
 
-    if cat_row:
-        category_id = cat_row[0]
-    else:
-        insert_cat_sql = "INSERT INTO category (category_name) VALUES (%s)"
-        cursor.execute(insert_cat_sql, (category_name,))
-        category_id = cursor.lastrowid
+        if cat_row:
+            category_id = cat_row[0]
+        else:
+            cursor.execute("INSERT INTO category (category_name) VALUES (%s)", (category_name,))
+            category_id = cursor.lastrowid
 
-    # 2) store
-    select_store_sql = "SELECT store_id FROM store WHERE store_name = %s"
-    cursor.execute(select_store_sql, (store_name,))
-    store_row = cursor.fetchone()
+        # 2) store
+        cursor.execute("SELECT store_id FROM store WHERE store_name = %s", (store_name,))
+        store_row = cursor.fetchone()
 
-    if store_row:
-        store_id = store_row[0]
-    else:
-        insert_store_sql = "INSERT INTO store (store_name) VALUES (%s)"
-        cursor.execute(insert_store_sql, (store_name,))
-        store_id = cursor.lastrowid
+        if store_row:
+            store_id = store_row[0]
+        else:
+            cursor.execute("INSERT INTO store (store_name) VALUES (%s)", (store_name,))
+            store_id = cursor.lastrowid
 
-    # 3) product
-    select_product_sql = "SELECT product_id FROM product WHERE product_url = %s"
-    cursor.execute(select_product_sql, (product_url,))
-    prod_row = cursor.fetchone()
+        # 3) product
+        cursor.execute("SELECT product_id FROM product WHERE product_url = %s", (product_url,))
+        prod_row = cursor.fetchone()
 
-    if prod_row:
-        product_id = prod_row[0]
-        update_product_sql = """
-            UPDATE product
-            SET product_name = %s, category_id = %s, store_id = %s
-            WHERE product_id = %s
-        """
-        cursor.execute(update_product_sql, (product_name, category_id, store_id, product_id))
-    else:
-        insert_product_sql = """
-            INSERT INTO product (product_name, product_url, category_id, store_id)
-            VALUES (%s, %s, %s, %s)
-        """
-        cursor.execute(insert_product_sql, (product_name, product_url, category_id, store_id))
-        product_id = cursor.lastrowid
+        if prod_row:
+            product_id = prod_row[0]
+            cursor.execute("""
+                UPDATE product
+                SET product_name = %s, category_id = %s, store_id = %s
+                WHERE product_id = %s
+            """, (product_name, category_id, store_id, product_id))
+        else:
+            cursor.execute("""
+                INSERT INTO product (product_name, product_url, category_id, store_id)
+                VALUES (%s, %s, %s, %s)
+            """, (product_name, product_url, category_id, store_id))
+            product_id = cursor.lastrowid
 
-    # 4) stock_status
-    availability_value = 1 if in_stock else 0
+        # 4) stock_status
+        availability_value = 1 if in_stock else 0
+        cursor.execute("SELECT stock_id FROM stock_status WHERE product_id = %s", (product_id,))
+        stock_row = cursor.fetchone()
 
-    select_stock_sql = "SELECT stock_id FROM stock_status WHERE product_id = %s"
-    cursor.execute(select_stock_sql, (product_id,))
-    stock_row = cursor.fetchone()
+        if stock_row:
+            stock_id = stock_row[0]
+            cursor.execute("""
+                UPDATE stock_status
+                SET availability = %s, last_updated = NOW()
+                WHERE stock_id = %s
+            """, (availability_value, stock_id))
+        else:
+            cursor.execute("""
+                INSERT INTO stock_status (availability, last_updated, product_id)
+                VALUES (%s, NOW(), %s)
+            """, (availability_value, product_id))
+            stock_id = cursor.lastrowid
 
-    if stock_row:
-        stock_id = stock_row[0]
-        update_stock_sql = """
-            UPDATE stock_status
-            SET availability = %s, last_updated = NOW()
-            WHERE stock_id = %s
-        """
-        cursor.execute(update_stock_sql, (availability_value, stock_id))
-    else:
-        insert_stock_sql = """
-            INSERT INTO stock_status (availability, last_updated, product_id)
-            VALUES (%s, NOW(), %s)
-        """
-        cursor.execute(insert_stock_sql, (availability_value, product_id))
-        stock_id = cursor.lastrowid
+        # 5) price
+        cursor.execute("SELECT price_id FROM price WHERE stock_id = %s", (stock_id,))
+        price_row = cursor.fetchone()
 
-    # 5) price
-    select_price_sql = "SELECT price_id FROM price WHERE stock_id = %s"
-    cursor.execute(select_price_sql, (stock_id,))
-    price_row = cursor.fetchone()
+        price_int = int(price)
 
-    price_int = int(price)
+        if price_row:
+            price_id = price_row[0]
+            cursor.execute("""
+                UPDATE price
+                SET price = %s, last_update = NOW()
+                WHERE price_id = %s
+            """, (price_int, price_id))
+        else:
+            cursor.execute("""
+                INSERT INTO price (price, last_update, stock_id)
+                VALUES (%s, NOW(), %s)
+            """, (price_int, stock_id))
 
-    if price_row:
-        price_id = price_row[0]
-        update_price_sql = """
-            UPDATE price
-            SET price = %s, last_update = NOW()
-            WHERE price_id = %s
-        """
-        cursor.execute(update_price_sql, (price_int, price_id))
-    else:
-        insert_price_sql = """
-            INSERT INTO price (price, last_update, stock_id)
-            VALUES (%s, NOW(), %s)
-        """
-        cursor.execute(insert_price_sql, (price_int, stock_id))
+        conn.commit()
 
-    conn.commit()
-    cursor.close()
-    conn.close()  # 풀에 반환
+    except Exception as e:
+        print(f"[ERROR] DB 저장 중 오류 발생: {e}")
+        conn.rollback()
+
+    finally:
+        cursor.close()
+        conn.close()
 
 def crawl_one(task):
     """
@@ -137,7 +127,7 @@ def crawl_one(task):
 
     with requests.Session() as session:
         if store_name == "Amazon":
-            product_name, in_stock, price = get_amazon_data(session, product_url)
+            product_name, in_stock, price = get_amazon_data(product_url)  # Selenium 사용
         elif store_name == "SSG":
             product_name, in_stock, price = get_ssg_data(session, product_url)
         elif store_name == "11ST":
@@ -151,12 +141,13 @@ def crawl_one(task):
     return (product_url, product_name, in_stock, price)
 
 def job():
+    """
+    멀티스레드 크롤링 작업 실행
+    """
     print("\n=== job() 함수 실행 (멀티스레드 + 커넥션 풀) ===")
     start_time = time.perf_counter()
 
-    # 멀티스레드 풀
     max_workers = 5
-    from concurrent.futures import ThreadPoolExecutor
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         results = list(executor.map(crawl_one, URL_TASKS))
 
@@ -165,7 +156,7 @@ def job():
     print(f"=== 모든 URL 크롤링 및 DB 저장 완료! 총 {len(results)}건, 소요 시간: {elapsed:.2f}초 ===")
 
 if __name__ == "__main__":
-    print("Requests + BeautifulSoup + New Entity 크롤링 서버 (멀티스레드 + 커넥션 풀) 시작!")
+    print("Requests + BeautifulSoup + Selenium 크롤링 서버 시작!")
     job()
     schedule.every(5).minutes.do(job)
 
