@@ -1,5 +1,6 @@
 package org.example.stockradar.feature.notification.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class WebPushService {
 
     public void sendWebPush(Long interestProductId, String messageContent) {

@@ -25,6 +25,7 @@ public class NotificationDispatcherService {
     private final WebPushService webPushService;
     private final IntertestProductService intertestProductService;
     private final MemberRepository memberRepository;
+    private final KafkaNotificationProducer kafkaNotificationProducer;
 
     public void registerInterestProductAndDispatchNotification(InterestProductRequestDto request,String memberId) {
         // 관심 상품 등록 (비즈니스 로직은 InterestProductService로 위임)
@@ -42,8 +43,8 @@ public class NotificationDispatcherService {
                 .messageContent("관심 상품 등록이 완료되었습니다.")
                 .build();
 
-        // 알림 전송
-        dispatchNotification(event);
+        // Kafka 프로듀서를 통해 이벤트 발행(비동기 처리)
+        kafkaNotificationProducer.sendNotification(event);
     }
 
     public void dispatchNotification(NotificationEvent event) {

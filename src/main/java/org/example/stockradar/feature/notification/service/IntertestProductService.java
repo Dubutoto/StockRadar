@@ -5,10 +5,14 @@ import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
+import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
 import org.example.stockradar.feature.notification.entity.InterestProduct;
 import org.example.stockradar.feature.notification.repository.InterestProductRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author Hyun7en
@@ -49,6 +53,9 @@ public class IntertestProductService {
     }
 
     //관심상품 조회
+    public Page<InterestProductResponseDto> getInterestProductsByMemberId(String memberId) {
+
+    }
 
     //관심상품 삭제
 

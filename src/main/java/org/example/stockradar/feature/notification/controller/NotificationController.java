@@ -2,10 +2,14 @@ package org.example.stockradar.feature.notification.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
+import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
+import org.example.stockradar.feature.notification.service.IntertestProductService;
 import org.example.stockradar.feature.notification.service.NotificationDispatcherService;
 import org.example.stockradar.feature.notification.service.NotificationService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +24,7 @@ public class NotificationController {
 
     private final NotificationService notificationService;
     private final NotificationDispatcherService notificationDispatcherService;
+    private final IntertestProductService intertestProductService;
 
     /**
      * 관심 상품 등록 + 알림 전송
@@ -43,17 +48,24 @@ public class NotificationController {
         notificationDispatcherService.registerInterestProductAndDispatchNotification(request, memberId);
 
         // 성공 시 문자열 메시지 반환
-        return ResponseEntity.ok("관심 상품 등록 및 알림 전송 완료");
+        return ResponseEntity.ok("관심 상품 등록 및 기본 알림 설정 완료");
     }
 
     /**
      * 관심 상품 조회
      * 예시: 특정 회원의 관심 상품 목록을 조회합니다.
      */
-//    @GetMapping("")
-//    public ResponseEntity<?> getInterestProducts(@RequestParam Long memberId) {
-//        return ResponseEntity.ok(notificationService.getInterestProductsByMemberId(memberId));
-//    }
+    @GetMapping("read")
+    public ResponseEntity<Page<InterestProductResponseDto>> getInterestProducts(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("로그인 해주세요.");
+        }
+        // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
+        String memberId = String.valueOf(authentication.getName());
+
+        return ResponseEntity.ok(intertestProductService.getInterestProductsByMemberId(memberId));
+    }
 
     /**
      * 관심 상품 삭제 + 알림 삭제

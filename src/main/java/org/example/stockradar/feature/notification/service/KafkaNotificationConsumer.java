@@ -1,5 +1,6 @@
 package org.example.stockradar.feature.notification.service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.stockradar.feature.notification.dto.NotificationEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,10 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class KafkaNotificationConsumer {
 
     private final NotificationDispatcherService notificationDispatcherService;
-
-    public KafkaNotificationConsumer(NotificationDispatcherService notificationDispatcherService) {
-        this.notificationDispatcherService = notificationDispatcherService;
-    }
 
     @KafkaListener(topics = "notification-events", groupId = "notification-group")
     public void listen(NotificationEvent event) {
