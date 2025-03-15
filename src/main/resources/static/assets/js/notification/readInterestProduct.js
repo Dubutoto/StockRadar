@@ -1,11 +1,13 @@
-function readInterestProduct() {
-    axios.get('/notification/read')
+function readInterestProduct(page = 0) {
+    axios.get('/notification/read', {
+        params: { page: page }
+    })
         .then(response => {
             console.log("관심 상품 데이터:", response.data);
-            // 응답 데이터가 배열이라고 가정
-            const data = response.data.content;
-            const tbody = document.querySelector("table.table-wishlist tbody");
+            const pageData = response.data; // Page 객체 전체 (content, totalPages, number, first, last 등)
+            const data = pageData.content;  // 실제 관심 상품 목록 배열
 
+            const tbody = document.querySelector("table.table-wishlist tbody");
             // 기존 tbody 내용 초기화
             tbody.innerHTML = "";
 
@@ -22,7 +24,7 @@ function readInterestProduct() {
                 // 상품명 td 생성 (상품 상세 페이지 링크 포함)
                 const tdProductName = document.createElement("td");
                 const a = document.createElement("a");
-                // 필요에 따라 item.productUrl 또는 productId 기반 링크 구성
+                // item.productUrl가 있으면 사용, 없으면 기본 링크 구성
                 a.href = item.productUrl ? item.productUrl : `/product/productDetail?productId=${item.productId}`;
                 a.textContent = item.productName;
                 tdProductName.appendChild(a);
@@ -30,7 +32,6 @@ function readInterestProduct() {
 
                 // 재고 상태 td 생성
                 const tdAvailability = document.createElement("td");
-                // availability가 0 이상이면 "재고 있음", 아니면 "재고 없음" 등으로 처리
                 tdAvailability.textContent = (item.availability > 0 ? "재고 있음" : "재고 없음");
                 tr.appendChild(tdAvailability);
 
@@ -46,6 +47,64 @@ function readInterestProduct() {
                 // tbody에 tr 추가
                 tbody.appendChild(tr);
             });
+
+            // 페이지네이션 컨트롤 생성
+            // HTML에 <div id="paginationContainer"></div> 가 존재해야 합니다.
+            const paginationContainer = document.getElementById("paginationContainer");
+            paginationContainer.innerHTML = ""; // 기존 페이지네이션 초기화
+
+            const ul = document.createElement("ul");
+            ul.className = "pagination justify-content-center";
+
+            // 이전 버튼
+            const liPrev = document.createElement("li");
+            liPrev.className = "page-item" + (pageData.first ? " disabled" : "");
+            const aPrev = document.createElement("a");
+            aPrev.className = "page-link";
+            aPrev.href = "#";
+            aPrev.textContent = "이전";
+            aPrev.addEventListener("click", function(event) {
+                event.preventDefault();
+                if (!pageData.first) {
+                    readInterestProduct(pageData.number - 1);
+                }
+            });
+            liPrev.appendChild(aPrev);
+            ul.appendChild(liPrev);
+
+            // 페이지 번호 버튼 생성
+            for (let i = 0; i < pageData.totalPages; i++) {
+                const liPage = document.createElement("li");
+                liPage.className = "page-item" + (i === pageData.number ? " active" : "");
+                const aPage = document.createElement("a");
+                aPage.className = "page-link";
+                aPage.href = "#";
+                aPage.textContent = i + 1;
+                aPage.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    readInterestProduct(i);
+                });
+                liPage.appendChild(aPage);
+                ul.appendChild(liPage);
+            }
+
+            // 다음 버튼
+            const liNext = document.createElement("li");
+            liNext.className = "page-item" + (pageData.last ? " disabled" : "");
+            const aNext = document.createElement("a");
+            aNext.className = "page-link";
+            aNext.href = "#";
+            aNext.textContent = "다음";
+            aNext.addEventListener("click", function(event) {
+                event.preventDefault();
+                if (!pageData.last) {
+                    readInterestProduct(pageData.number + 1);
+                }
+            });
+            liNext.appendChild(aNext);
+            ul.appendChild(liNext);
+
+            paginationContainer.appendChild(ul);
         })
         .catch(error => {
             console.error("관심 상품 조회 에러:", error);
@@ -53,4 +112,6 @@ function readInterestProduct() {
 }
 
 // 페이지 로딩 후 함수 호출
-readInterestProduct();
+document.addEventListener('DOMContentLoaded', function() {
+    readInterestProduct();
+});
