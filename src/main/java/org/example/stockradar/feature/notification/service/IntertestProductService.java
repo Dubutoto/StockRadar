@@ -9,6 +9,7 @@ import org.example.stockradar.feature.notification.dto.InterestProductResponseDt
 import org.example.stockradar.feature.notification.entity.InterestProduct;
 import org.example.stockradar.feature.notification.repository.InterestProductRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class IntertestProductService {
     private final InterestProductRepository interestProductRepository;
 
     //관심상품 추가
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long registerInterestProduct(InterestProductRequestDto request, Member member) {
         // productId로 상품 정보 조회
         Product product = productRepository.findProductWithStockStatusById(request.getProductId());
@@ -53,8 +54,9 @@ public class IntertestProductService {
     }
 
     //관심상품 조회
-    public Page<InterestProductResponseDto> getInterestProductsByMemberId(String memberId) {
-
+    @Transactional(rollbackFor = Exception.class)
+    public Page<InterestProductResponseDto> getInterestProductsByMemberId(String memberId, Pageable pageable) {
+        return interestProductRepository.findInterestProductByMember_MemberId(memberId,pageable);
     }
 
     //관심상품 삭제

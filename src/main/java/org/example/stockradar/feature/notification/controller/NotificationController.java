@@ -1,12 +1,16 @@
 package org.example.stockradar.feature.notification.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.stockradar.feature.board.dto.CommentResponseDto;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
 import org.example.stockradar.feature.notification.service.IntertestProductService;
 import org.example.stockradar.feature.notification.service.NotificationDispatcherService;
 import org.example.stockradar.feature.notification.service.NotificationService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -56,15 +60,16 @@ public class NotificationController {
      * 예시: 특정 회원의 관심 상품 목록을 조회합니다.
      */
     @GetMapping("read")
-    public ResponseEntity<Page<InterestProductResponseDto>> getInterestProducts(Authentication authentication) {
+    public ResponseEntity<Page<InterestProductResponseDto>> getInterestProducts(Authentication authentication, @RequestParam(defaultValue = "0") int page) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("로그인 해주세요.");
+            System.out.println("페이지를 불러올 수 없음");
         }
         // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
         String memberId = String.valueOf(authentication.getName());
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
+        Page<InterestProductResponseDto> interestProductPage = intertestProductService.getInterestProductsByMemberId(memberId,pageable);
 
-        return ResponseEntity.ok(intertestProductService.getInterestProductsByMemberId(memberId));
+        return ResponseEntity.ok(interestProductPage);
     }
 
     /**
