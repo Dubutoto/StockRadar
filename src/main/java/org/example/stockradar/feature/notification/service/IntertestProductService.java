@@ -54,10 +54,19 @@ public class IntertestProductService {
     }
 
     //관심상품 조회
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public Page<InterestProductResponseDto> getInterestProductsByMemberId(String memberId, Pageable pageable) {
-        return interestProductRepository.findInterestProductByMember_MemberId(memberId,pageable);
+        return interestProductRepository.findByMember_MemberId(memberId, pageable)
+                .map(interestProduct -> InterestProductResponseDto.builder()
+                        .productId(String.valueOf(interestProduct.getProduct().getProductId()))
+                        .productName(interestProduct.getProduct().getProductName())
+                        .category(interestProduct.getProduct().getCategory().getCategoryName())
+                        .productUrl(interestProduct.getProduct().getProductUrl())
+                        .availability(interestProduct.getProduct().getStockStatus().getAvailability())
+                        .build());
     }
+
+
 
     //관심상품 삭제
 

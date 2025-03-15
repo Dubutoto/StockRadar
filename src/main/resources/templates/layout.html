@@ -173,7 +173,7 @@
 
                         <!-- 위시리스트 (로그인 시만) -->
                         <a sec:authorize="isAuthenticated()"
-                           th:href="@{/notificationView/wishlist}"
+                           th:href="@{/notification/wishlist}"
                            class="header-icon"
                            title="wishlist">
                             <i class="icon-wishlist-2"></i>
@@ -394,7 +394,7 @@
                 </li>
                 <!-- 로그인 된 상태일 때만 관심상품 -->
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/notificationView/wishlist}">관심상품</a>
+                    <a th:href="@{/notification/wishlist}">관심상품</a>
                 </li>
             </ul>
         </nav>
@@ -422,7 +422,7 @@
     </div>
     <!-- 관심상품(로그인 시만) -->
     <div class="sticky-info" sec:authorize="isAuthenticated()">
-        <a th:href="@{/notificationView/wishlist}">
+        <a th:href="@{/notification/wishlist}">
             <i class="icon-wishlist-2"></i>관심상품
         </a>
     </div>

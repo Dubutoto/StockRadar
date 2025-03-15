@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller("notificationViewController")
 @RequiredArgsConstructor
-@RequestMapping("notificationView")
 public class ViewController {
 
-
-    @GetMapping("wishlist")
+    @GetMapping("notification/wishlist")
     public String wishlist() {
-        return "notificationView/wishlist";
+        return "notification/wishlist";
     }
 
 

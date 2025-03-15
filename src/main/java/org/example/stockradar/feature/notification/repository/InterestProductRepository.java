@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface InterestProductRepository extends JpaRepository<InterestProduct, Long> {
     boolean existsByMemberAndProduct(Member member, Product product);
 
-    Page<InterestProductResponseDto> findInterestProductByMember_MemberId(String memberMemberId, Pageable pageable);
+    Page<InterestProduct> findByMember_MemberId(String memberId, Pageable pageable);
 
 }
