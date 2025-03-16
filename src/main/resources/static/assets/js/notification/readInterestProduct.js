@@ -40,7 +40,11 @@ function readInterestProduct(page = 0) {
                 const btnDelete = document.createElement("button");
                 btnDelete.textContent = "삭제";
                 btnDelete.classList.add("btn", "btn-danger");
-                // 예: btnDelete.addEventListener("click", () => { /* 삭제 로직 */ });
+                // 클릭 시 deleteInterestProduct 함수를 호출하여 해당 상품 삭제
+                btnDelete.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    deleteInterestProduct(item.productId);
+                });
                 tdDelete.appendChild(btnDelete);
                 tr.appendChild(tdDelete);
 
@@ -111,21 +115,21 @@ function readInterestProduct(page = 0) {
         });
 }
 
+function deleteInterestProduct(productId) {
+    axios.post('/notification/delete', {
+        productId: productId
+    })
+        .then(response => {
+            console.log("관심 상품 삭제 및 알림 삭제 완료:", response.data);
+            // 삭제 후, 목록을 다시 로드하여 화면 갱신
+            readInterestProduct();
+        })
+        .catch(error => {
+            console.error("관심 상품 삭제 에러:", error);
+        });
+}
+
 // 페이지 로딩 후 함수 호출
 document.addEventListener('DOMContentLoaded', function() {
     readInterestProduct();
 });
-
-function deleteInterestProduct(){
-
-    axios.post('',{
-
-    })
-        .then(response => {
-
-        })
-        .catch(error => {
-
-        })
-
-}

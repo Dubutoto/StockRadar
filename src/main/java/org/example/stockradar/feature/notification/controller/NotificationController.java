@@ -76,13 +76,20 @@ public class NotificationController {
      * 관심 상품 삭제 + 알림 삭제
      * 예시: 관심 상품 삭제 시 해당 관심 상품과 관련된 알림도 함께 삭제합니다.
      */
-//    @PostMapping("delete/{interestProductId}")
-//    public ResponseEntity<String> deleteInterestProduct(@PathVariable Long interestProductId) {
-//        notificationService.deleteInterestProduct(interestProductId);
-//        // 필요에 따라, 관심 상품과 연관된 알림도 삭제 처리
-//        notificationService.deleteNotificationsByInterestProductId(interestProductId);
-//        return ResponseEntity.ok("관심 상품 및 관련 알림 삭제 완료");
-//    }
+    @PostMapping("delete")
+    public ResponseEntity<String> deleteInterestProduct(@RequestBody InterestProductRequestDto request, Authentication authentication) {
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("로그인 해주세요.");
+        }
+        String memberId = String.valueOf(authentication.getName());
+
+        Long interestProductId = intertestProductService.deleteInterestProduct(request.getProductId(), memberId);
+        // 필요에 따라, 관심 상품과 연관된 알림도 삭제 처리
+        notificationService.deleteNotificationsByInterestProductId(interestProductId,memberId);
+        return ResponseEntity.ok("관심 상품 및 관련 알림 삭제 완료");
+    }
 
     /**
      * 알림 전송 (수동 트리거)

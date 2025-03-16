@@ -70,5 +70,14 @@ public class IntertestProductService {
 
     //관심상품 삭제
 
+    @Transactional(rollbackFor = Exception.class)
+    public Long deleteInterestProduct(Long productId, String memberId) {
+        InterestProduct interestProduct = interestProductRepository
+                .findByMember_MemberIdAndProduct_ProductId(memberId, productId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 관심 상품이 존재하지 않습니다."));
+        Long interestProductId = interestProduct.getId();
+        interestProductRepository.delete(interestProduct);
+        return interestProductId;
+    }
 
 }
