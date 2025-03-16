@@ -115,3 +115,17 @@ function readInterestProduct(page = 0) {
 document.addEventListener('DOMContentLoaded', function() {
     readInterestProduct();
 });
+
+function deleteInterestProduct(){
+
+    axios.post('',{
+
+    })
+        .then(response => {
+
+        })
+        .catch(error => {
+
+        })
+
+}
