@@ -1,4 +1,4 @@
-# main.py (Single-thread version)
+# multiThreads.py (Single-thread version)
 
 import schedule
 import time
