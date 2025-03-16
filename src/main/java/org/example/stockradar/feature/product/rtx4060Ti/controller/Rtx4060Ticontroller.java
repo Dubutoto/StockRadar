@@ -29,6 +29,7 @@ public class Rtx4060Ticontroller {
     //private final Rtx4060TiAllCacheService rtx4060TiAllCacheService;//시나리오 4 테스트 서비스
     private final Rtx4060TiAllCacheServiceV2 rtx4060TiAllCacheServiceV2;//시나리오 4 테스트 서비스v2
     private final Rtx4060TiAllCacheServiceV3 rtx4060TiAllCacheServiceV3;//시나리오 4 ttl 개선
+    private final Rtx4060TiAllCacheServiceV3CompletableFuture rtx4060TiAllCacheServiceV3CompletableFuture;
 
 
     @GetMapping("gpu/rtx4060Ti")
@@ -170,7 +171,8 @@ public ResponseEntity<?> getRtx4060Ti() {
     try {
         // V3 서비스를 직접 사용하여 RTX 4060 Ti 제품 정보 조회
         // 이 서비스는 정적 데이터와 재고 상태를 별도 TTL로 관리
-        List<ProductResponseDto> rtx4060TiProducts = rtx4060TiAllCacheServiceV3.getRtx4060TiInfo();
+        //List<ProductResponseDto> rtx4060TiProducts = rtx4060TiAllCacheServiceV3.getRtx4060TiInfo();
+        List<ProductResponseDto> rtx4060TiProducts = rtx4060TiAllCacheServiceV3CompletableFuture.getRtx4060TiInfo();
 
         if (rtx4060TiProducts.isEmpty()) {
             log.warn("RTX 4060Ti 제품을 찾을 수 없습니다.");
