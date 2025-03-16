@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Hyun7en
+ */
+
 @Entity
 @Getter
 @Builder
@@ -69,6 +73,7 @@ public class Board {
 
     // Board와 Comments는 1:N 관계 (Comments 테이블의 board_id가 FK)
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Comments> comments = new ArrayList<>();
 
     // 엔터티 업데이트를 위한 도메인 메서드

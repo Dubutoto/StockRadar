@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 /**
- * author Hyun7en
+ * @author Hyun7en
  */
 
 @Service
@@ -64,7 +64,7 @@ public class CommentService {
     }
 
     // 댓글 목록 조회 (페이징 처리, 소프트 삭제된 댓글 제외)
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public Page<CommentResponseDto> getComments(Long boardId, Pageable pageable) {
         return commentRepository.findByBoardBoardIdAndDeletedAtIsNull(boardId, pageable)
                 .map(comment -> CommentResponseDto.builder()

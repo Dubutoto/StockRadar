@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * author Hyun7en
+ * @author Hyun7en
  */
 
 //RestController 사용해서 해보기

@@ -50,8 +50,8 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
 
     //Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     //MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -64,14 +64,22 @@ dependencies {
 
     //kafka
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.apache.kafka:kafka-streams' // Kafka Streams 라이브러리
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // CoolSMS
     implementation 'net.nurigo:sdk:4.3.0'
+
+    //Discord
+    implementation 'net.dv8tion:JDA:5.0.0-alpha.13'
 
     //SMTP
     implementation 'org.springframework.boot:spring-boot-starter-mail'

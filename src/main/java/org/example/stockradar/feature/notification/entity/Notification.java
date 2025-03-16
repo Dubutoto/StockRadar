@@ -21,17 +21,21 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 알림 제목이나 유형 (ex: 새 메시지, 경고 등) -> 확장 가능성
+    // 알림 제목 (예: “상품 재고 입고” 등)
     private String title;
 
     // 알림 내용
     private String content;
 
-    // 생성 시각
-    private LocalDateTime createdAt;
-
-    // 추가 정보가 필요한 경우 예) 관련 링크 등
+    // 추가 정보 (예: 상품 링크, 이미지 등)
     private String extraData;
 
+    // 생성 시각 (audit 용)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
 
