@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,8 +39,8 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
 
     /**
      * RTX 4060 Ti 제품 정보 조회
-     * 1. 캐시에서 조회
-     * 2. 캐시 미스 시 DB에서 조회 후 캐시에 저장 (비동기 처리)
+     * 1. 캐시에서 비동기로 조회
+     * 2. 캐시 미스 시 DB에서 조회 후 캐시에 비동기로 저장
      */
     public List<ProductResponseDto> getRtx4060TiInfo() {
         try {
@@ -63,18 +64,33 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
                     .map(ProductResponseDto::getProductId)
                     .collect(Collectors.toList());
 
-            // 3. 캐시에서 데이터 조회
+            // 3. 캐시에서 데이터 조회 - CompletableFuture 활용한 비동기 처리
+            Map<Long, CompletableFuture<ProductResponseDto>> futureMap = new HashMap<>();
+
+            // 각 제품 ID에 대해 비동기로 캐시 조회 요청
+            for (Long productId : productIds) {
+                futureMap.put(productId, CompletableFuture.supplyAsync(() ->
+                        getProductFromCache(productId)));
+            }
+
+            // 모든 비동기 작업 완료 대기
+            CompletableFuture.allOf(futureMap.values().toArray(new CompletableFuture[0])).join();
+
+            // 결과 맵과 캐시 미스 ID 목록 구성
             Map<Long, ProductResponseDto> resultMap = new HashMap<>();
             List<Long> cacheMissIds = new ArrayList<>();
 
             for (Long productId : productIds) {
-                // 캐시에서 정적 데이터와 재고 상태 조회
-                ProductResponseDto cachedProduct = getProductFromCache(productId);
-
-                if (cachedProduct != null) {
-                    resultMap.put(productId, cachedProduct);
-                } else {
-                    cacheMissIds.add(productId);
+                try {
+                    ProductResponseDto cachedProduct = futureMap.get(productId).get(); // 결과 가져오기
+                    if (cachedProduct != null) {
+                        resultMap.put(productId, cachedProduct);
+                    } else {
+                        cacheMissIds.add(productId);
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    log.error("캐시 조회 결과 처리 중 오류: {}", e.getMessage());
+                    cacheMissIds.add(productId); // 오류 발생 시 캐시 미스로 처리
                 }
             }
 
@@ -125,6 +141,7 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
             return Collections.emptyList();
         }
     }
+
 
     /**
      * 캐시에서 제품 정보를 조회하는 메서드

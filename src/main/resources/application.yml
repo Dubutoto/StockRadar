@@ -125,6 +125,8 @@ cloud:
     s3path: "https://stockradars3.s3.ap-northeast-2.amazonaws.com"
     cloudfrontpath: "https://dxhufg9x2pwyh.cloudfront.net"
 
-
+discord:
+  bot:
+    token: ""
 
 
