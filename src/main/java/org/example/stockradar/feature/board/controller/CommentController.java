@@ -25,14 +25,14 @@ import java.util.Map;
 //RestController 사용해서 해보기
 @Slf4j
 @RestController
-@RequestMapping("comment")
+@RequestMapping("/comment")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
     // 댓글 삽입 (Insert)
-    @PostMapping("insert")
+    @PostMapping("/insert")
     public ResponseEntity<CommentRequestDto> insertComment(@RequestBody CommentRequestDto commentDto, Authentication authentication) {
 
         log.info("Insert comment request: {}", commentDto);
@@ -47,7 +47,7 @@ public class CommentController {
     }
 
     // 댓글 목록 조회 (페이징 처리 포함)
-    @GetMapping("read")
+    @GetMapping("/read")
     public ResponseEntity<Page<CommentResponseDto>> getComments(@RequestParam Long boardId,@RequestParam(defaultValue = "0") int page) {
         System.out.println("boardId: " + boardId);
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
@@ -55,7 +55,7 @@ public class CommentController {
         return new ResponseEntity<>(commentPage, HttpStatus.OK);
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public ResponseEntity<Map<String, Object>> softDeleteComment(@RequestBody CommentDeleteRequestDto request) {
         boolean result = commentService.softDeleteComment(request);
 

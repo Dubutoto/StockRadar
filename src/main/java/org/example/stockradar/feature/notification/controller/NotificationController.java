@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("notification")
+@RequestMapping("/notification")
 @RequiredArgsConstructor
 public class NotificationController {
 
@@ -38,7 +38,7 @@ public class NotificationController {
      * 예시: 사용자가 관심 상품을 등록하면 해당 정보를 저장하고,
      * 등록 완료 후 알림 이벤트를 생성하여 선택된 채널로 알림을 발송합니다.
      */
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<String> registerInterestProduct(@RequestBody InterestProductRequestDto request, Authentication authentication) {
 
         log.info("Registering interest product");
@@ -62,7 +62,7 @@ public class NotificationController {
      * 관심 상품 조회
      * 예시: 특정 회원의 관심 상품 목록을 조회합니다.
      */
-    @GetMapping("read")
+    @GetMapping("/read")
     public ResponseEntity<Page<InterestProductResponseDto>> getInterestProducts(Authentication authentication, @RequestParam(defaultValue = "0") int page) {
         if (authentication == null || !authentication.isAuthenticated()) {
             log.info("Do NOT read interest products");
@@ -80,7 +80,7 @@ public class NotificationController {
      * 관심 상품 삭제 + 알림 삭제
      * 예시: 관심 상품 삭제 시 해당 관심 상품과 관련된 알림도 함께 삭제합니다.
      */
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public ResponseEntity<String> deleteInterestProduct(@RequestBody InterestProductRequestDto request, Authentication authentication) {
 
         if (authentication == null || !authentication.isAuthenticated()) {

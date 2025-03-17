@@ -26,7 +26,7 @@ import java.util.Map;
 
 //게시판은 다양한 방법 써서 구현 해보기
 @Controller
-@RequestMapping("board")
+@RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -35,7 +35,7 @@ public class BoardController {
     /**
      * 모든 게시글 목록을 조회하여 모델에 추가한 후, 게시글 목록 페이지로 이동합니다.
      */
-    @GetMapping("list")
+    @GetMapping("/list")
     public String getBoardList(@RequestParam(defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 10);
         Page<BoardResponseDto> boardList = boardService.findBoardListDto(pageable);
@@ -46,7 +46,7 @@ public class BoardController {
     /**
      * 게시글 작성 페이지로 이동합니다.
      */
-    @GetMapping("write")
+    @GetMapping("/write")
     public String boardWrite() {
         return "board/write";
     }
@@ -54,7 +54,7 @@ public class BoardController {
     /**
      * 게시글 작성 후 db로 데이터 전송
      */
-    @PostMapping("insert")
+    @PostMapping("/insert")
     public String boardInsert(@Valid BoardRequestDto boardRequestDto, Authentication authentication) throws ResponseStatusException {
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -72,7 +72,7 @@ public class BoardController {
     /**
      * 게시글 상세 페이지로 이동합니다.
      */
-    @GetMapping("detail")
+    @GetMapping("/detail")
     public String boardDetail(@RequestParam Long boardId, Model model) {
         BoardResponseDto board = boardService.findBoardResponseDtoByBoardId(boardId);
         model.addAttribute("board", board);
@@ -82,7 +82,7 @@ public class BoardController {
     /**
      * 게시글 수정/삭제 폼 페이지로 이동합니다.
      */
-    @GetMapping("form")
+    @GetMapping("/form")
     public String boardForm(@RequestParam Long boardId, Model model) {
         BoardResponseDto board = boardService.findBoardResponseDtoByBoardId(boardId);
         model.addAttribute("board", board);
@@ -92,7 +92,7 @@ public class BoardController {
     /**
      * 게시글 수정 처리
      */
-    @PostMapping("update")
+    @PostMapping("/update")
     public String boardUpdate(@RequestParam Long boardId, BoardRequestDto boardRequestDto) {
         boardService.updateBoard(boardId, boardRequestDto);
         return "redirect:/board/detail?boardId=" + boardId;
@@ -101,7 +101,7 @@ public class BoardController {
     /**
      * 게시글 삭제 처리
      */
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public ResponseEntity<Map<String, Object>> deleteBoard(@RequestBody BoardDeleteRequestDto request) {
         Long boardId = request.getBoardId();
         String password = request.getPassword();
@@ -125,7 +125,7 @@ public class BoardController {
     /**
      * 게시글 제목 검색
      */
-    @GetMapping("search")
+    @GetMapping("/search")
     public String boardSearch(@RequestParam String keyword,
                               @RequestParam(defaultValue = "0") int page,
                               Model model) {
@@ -134,7 +134,7 @@ public class BoardController {
         Page<BoardResponseDto> boardList = boardService.searchBoards(keyword, pageable);
         model.addAttribute("boardList", boardList); // "board"로 통일
         model.addAttribute("keyword", keyword);
-        return "board/list";
+        return "/board/list";
     }
 
 }
