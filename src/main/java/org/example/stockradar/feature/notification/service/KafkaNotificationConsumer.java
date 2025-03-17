@@ -19,6 +19,7 @@ public class KafkaNotificationConsumer {
 
     @KafkaListener(topics = "notification-events", groupId = "notification-group")
     public void listen(NotificationEvent event) {
+        log.info("Kafka에서 이벤트 수신: {}", event);
         try {
             notificationDispatcherService.dispatchNotification(event);
         } catch (Exception e) {

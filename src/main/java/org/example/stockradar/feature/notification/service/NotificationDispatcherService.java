@@ -60,6 +60,7 @@ public class NotificationDispatcherService {
                 .emailAddress(member.getMemberId()) // 이메일 주소 예시로 memberId 사용
                 .messageContent(htmlContent)
                 .build();
+
         // Kafka 프로듀서를 통해 이벤트 발행 (비동기 처리)
         kafkaNotificationProducer.sendNotification(event);
     }
