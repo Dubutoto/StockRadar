@@ -30,10 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // (1) 쿠키에서 AccessToken 추출
         String token = getTokenFromCookie(request, "ACCESS_TOKEN");
-        // 만약 쿠키 대신 Authorization 헤더를 사용한다면, 아래처럼 대체 가능:
-        // String token = resolveTokenFromHeader(request);
 
         if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
             String memberId = jwtTokenProvider.getMemberIdFromToken(token);
@@ -54,14 +51,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .map(Cookie::getValue)
                 .findFirst()
                 .orElse(null);
-    }
-
-    // (대안) 헤더에서 Bearer 토큰 추출
-    private String resolveTokenFromHeader(HttpServletRequest request) {
-        String bearer = request.getHeader("Authorization");
-        if (bearer != null && bearer.startsWith("Bearer ")) {
-            return bearer.substring(7);
-        }
-        return null;
     }
 }
