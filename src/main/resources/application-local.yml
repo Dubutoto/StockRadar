@@ -73,3 +73,7 @@ cloud:
     credentials:
       accessKey: # fill out
       secretKey: # fill out
+
+discord:
+  bot:
+    token: "MTM0OTk4NzUyNjkzNjM2NzEwNQ.GS5Fcb.1vpxdDvggb_WHZWe9IdSUyLYkOfOmmth6X1dIM"
