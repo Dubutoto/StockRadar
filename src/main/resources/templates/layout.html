@@ -1,92 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:sec2="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Stock Radar</title>
 
     <meta name="keywords" content="HTML5 Template"/>
-    <meta name="description" content="Porto - Bootstrap eCommerce Template">
-    <meta name="author" content="SW-THEMES">
+    <meta name="description" content="Porto - Bootstrap eCommerce Template"/>
+    <meta name="author" content="SW-THEMES"/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/StockRadarLogo.jpg}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/StockRadarLogo.jpg}"/>
 
-
+    <!-- WebFont -->
     <script th:inline="javascript">
         WebFontConfig = {
             google: {
-                families: ['Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700,800', 'Oswald:300,400,500,600,700,800']
+                families: [
+                    'Open+Sans:300,400,600,700,800',
+                    'Poppins:300,400,500,600,700,800',
+                    'Oswald:300,400,500,600,700,800'
+                ]
             }
         };
         (function (d) {
-            var wf = d.createElement('script'),
-                s = d.scripts[0];
+            var wf = d.createElement('script'), s = d.scripts[0];
             wf.src = /*[[@{/assets/js/webfont.js}]]*/ "";
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
     </script>
 
-
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"/>
 
     <!-- Main CSS File -->
-    <link rel="stylesheet" th:href="@{/assets/css/demo4.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/demo4.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}"/>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <th:block layout:fragment="head"></th:block> <!-- 개별 페이지의 head 확장 가능 -->
+    <!-- 알림 기능 -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+
+    <!-- 자식 템플릿에서 head 확장 가능 -->
+    <th:block layout:fragment="head"></th:block>
 </head>
-
 
 <body>
 <div class="page-wrapper">
 
-    <!-- 사이트 들어오자 마자 설명 -->
-    <!-- Start notice -->
+    <!-- 공지/알림 영역 -->
     <div class="top-notice bg-primary text-white">
         <div class="container text-center">
             <h5 class="d-inline-block">실시간 PC 부품 재고 &amp; 최저가 확인!</h5>
             <small>원하는 부품, 한눈에 비교하고 최저가 득템!</small>
-            <!-- 닫기 -->
             <button title="Close (Esc)" type="button" class="mfp-close">×</button>
         </div>
     </div>
-    <!-- End notice -->
+    <!-- End .top-notice -->
 
-    <!-- Start .header  -->
+    <!-- 헤더 -->
     <header class="header">
+        <!-- header-top -->
         <div class="header-top">
             <div class="container">
-
-                <!-- 데스크탑, 노트북 화면시 위 헤더 -->
                 <div class="header-right header-dropdowns ml-0 ml-sm-auto w-sm-100">
                     <div class="header-dropdown dropdown-expanded d-none d-lg-block">
                         <a href="#">Links</a>
                         <div class="header-menu">
                             <ul>
-                                <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
+                                <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
                                 <li><a th:href="@{/common/aboutUs}">사이트 소개</a></li>
-                                <li><a th:href="@{/news/news}">뉴스</a></li>
-                                <!--  로그인 안 돼있을 시 -->
-                                <li><a th:href="@{/auth/signIn}" class="login-link">로그인</a></li>
-                                <!--  로그인 안 돼있을 시 -->
-                                <!--  로그인 돼있을 시 -->
-                                <li><a th:href="@{#}">로그아웃</a></li>
-                                <!--  로그인 돼있을 시 -->
+                                <li><a th:href="@{/news/list}">뉴스</a></li>
+
+                                <!-- 로그인 안 돼있을 때만 표시 -->
+                                <li sec:authorize="!isAuthenticated()">
+                                    <a th:href="@{/login}">로그인</a>
+                                </li>
+                                <!-- 로그인 되어있을 때만 표시 -->
+                                <li sec:authorize="isAuthenticated()">
+                                    <a th:href="@{/auth/logout}">로그아웃</a>
+                                </li>
                             </ul>
                         </div>
                         <!-- End .header-menu -->
                     </div>
-                    <!-- End .header-dropown -->
-
                 </div>
                 <!-- End .header-right -->
             </div>
@@ -94,6 +98,7 @@
         </div>
         <!-- End .header-top -->
 
+        <!-- header-middle -->
         <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
             <div class="container">
                 <div class="header-left col-lg-2 w-auto pl-0">
@@ -101,20 +106,22 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <a th:href="@{/main}" class="logo">
-                        <img th:src="@{/assets/images/StockRadarLogo.jpg}" width="130" height="44" alt="Porto Logo">
+                        <img th:src="@{/assets/images/StockRadarLogo.jpg}"
+                             width="130" height="44"
+                             alt="Porto Logo"/>
                     </a>
                 </div>
                 <!-- End .header-left -->
 
                 <div class="header-right w-lg-max">
+                    <!-- 검색 -->
                     <div class="header-icon header-search header-search-inline header-search-category w-lg-max text-right mt-0">
                         <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
                         <form action="#" method="get">
                             <div class="header-search-wrapper">
                                 <input type="search" class="form-control" name="q" id="q" placeholder="Search..."
-                                       required>
+                                       required/>
                                 <div class="select-custom">
-                                    <!-- 카테고리 옵션 넣기 -->
                                     <select id="cat" name="cat">
                                         <option value="">카테고리</option>
                                         <option value="1">컴퓨터 부품</option>
@@ -127,87 +134,53 @@
                                         <option value="8">- 케이스 & 쿨링</option>
                                     </select>
                                 </div>
-                                <!-- End .select-custom -->
                                 <button class="btn icon-magnifier p-0" title="search" type="submit"></button>
                             </div>
-                            <!-- End .header-search-wrapper -->
                         </form>
                     </div>
                     <!-- End .header-search -->
 
+                    <!-- 전화번호 안내 -->
                     <div class="header-contact d-none d-lg-flex pl-4 pr-4">
-                        <img alt="전화" th:src="@{/assets/images/phone.png}" width="30" height="30" class="pb-1">
+                        <img alt="전화"
+                             th:src="@{/assets/images/phone.png}"
+                             width="30" height="30"
+                             class="pb-1"/>
                         <h6>
                             <span>전화문의:</span>
                             <a href="tel:01012345678" class="text-dark font1">010-1234-5678</a>
                         </h6>
                     </div>
 
-                    <a th:href="@{/auth/signIn}" class="header-icon" title="signIn"><i class="icon-user-2"></i></a>
+                    <!-- 아이콘들 (유저 / 위시리스트 등) -->
+                    <div class="header-icons d-flex align-items-center" style="gap: 1rem;">
+                        <!-- 로그인 안 된 상태 -> 로그인 페이지로 -->
+                        <a sec:authorize="!isAuthenticated()"
+                           th:href="@{/login}"
+                           class="header-icon"
+                           title="로그인">
+                            <i class="icon-user-2"></i>
 
-                    <a th:href="@{/auth/wishlist}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
-
-                    <!-- 카트 말고 wishlist 오른쪽에 뜨게 바꾸기-->
-                    <div class="dropdown cart-dropdown">
-                        <a href="#" title="wishlist" class="dropdown-toggle dropdown-arrow cart-toggle" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                            <i class="minicart-icon"></i>
-                            <span class="cart-count badge-circle">3</span>
                         </a>
 
-                        <div class="cart-overlay"></div>
+                        <!-- 로그인 된 상태 -> 마이페이지로 -->
+                        <a sec:authorize="isAuthenticated()"
+                           th:href="@{/profile}"
+                           class="header-icon"
+                           title="마이페이지">
+                            <i class="icon-user-2"></i>
+                        </a>
 
-                        <div class="dropdown-menu mobile-cart">
-                            <a href="#" title="Close (Esc)" class="btn-close">×</a>
+                        <!-- 위시리스트 (로그인 시만) -->
+                        <a sec:authorize="isAuthenticated()"
+                           th:href="@{/notification/wishlist}"
+                           class="header-icon"
+                           title="wishlist">
+                            <i class="icon-wishlist-2"></i>
+                        </a>
 
-                            <div class="dropdownmenu-wrapper custom-scrollbar">
-                                <div class="dropdown-cart-header">관심상품</div>
-                                <!-- End .dropdown-cart-header -->
-
-                                <!-- My Wishlist 사이드에서 볼 수 있게-->
-                                <div class="dropdown-cart-products">
-
-                                    <!-- 반복문으로 그리기 -->
-                                    <div class="product">
-                                        <div class="product-details">
-                                            <h4 class="product-title">
-                                                <a th:href="@{/product/productDetail}">Ultimate 3D Bluetooth Speaker</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-													<span class="cart-product-qty">1</span> × $99.00
-                                                </span>
-                                        </div>
-                                        <!-- End .product-details -->
-
-                                        <figure class="product-image-container">
-                                            <a th:href="@{/product/productDetail}" class="product-image">
-                                                <img th:src="@{/assets/images/products/product-1.jpg}" alt="product"
-                                                     width="80" height="80">
-                                            </a>
-
-                                            <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
-                                        </figure>
-                                    </div>
-                                    <!-- End .product -->
-
-                                </div>
-                                <!-- End .wish-product -->
-
-                                <div class="dropdown-cart-action">
-                                    <!--  로그인 돼있을 시 -->
-                                    <a th:href="@{/auth/wishlist}" class="btn btn-gray btn-block view-cart">
-                                        관심상품
-                                    </a>
-                                    <!--  로그인 돼있을 시 -->
-                                </div>
-                                <!-- End .dropdown-cart-total -->
-                            </div>
-                            <!-- End .dropdownmenu-wrapper -->
-                        </div>
-                        <!-- End .dropdown-menu -->
                     </div>
-                    <!-- End .dropdown -->
+                    <!-- End .header-icons -->
                 </div>
                 <!-- End .header-right -->
             </div>
@@ -215,14 +188,12 @@
         </div>
         <!-- End .header-middle -->
 
-        <!-- 데스크탑, 노트북 화면시 아래 헤더 -->
+        <!-- PC화면용 아래 네비게이션 -->
         <div class="header-bottom sticky-header d-none d-lg-block" data-sticky-options="{'mobile': false}">
             <div class="container">
                 <nav class="main-nav w-100">
                     <ul class="menu">
-                        <li class="active">
-                            <a th:href="@{/main}">Home</a>
-                        </li>
+                        <li class="active"><a th:href="@{/main}">Home</a></li>
                         <li>
                             <a href="category.html">카테고리</a>
                             <div class="megamenu megamenu-fixed-width megamenu-3cols">
@@ -237,98 +208,77 @@
                                         <a href="#" class="nolink">카테고리</a>
                                         <ul class="submenu">
                                             <li><a href="category-list.html">List Types</a></li>
-                                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a>
-                                            </li>
+                                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
                                             <li><a href="category.html">3 Columns Products</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End .megamenu -->
                         </li>
-                        <li>
-                            <a th:href="@{/product/productDetail}">상품</a>
-                            <div class="megamenu megamenu-fixed-width">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <a href="#" class="nolink">상품</a>
-                                        <ul class="submenu">
-                                            <li><a th:href="@{/product/productDetail}">CPU</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- End .col-lg-4 -->
-                                </div>
-                                <!-- End .row -->
-                            </div>
-                            <!-- End .megamenu -->
-                        </li>
-                        <li><a th:href="@{/news/news}">뉴스</a></li>
-                        <li><a th:href="@{/board/boardMain}">커뮤니티</a></li>
+                        <li> <a th:href="@{/product/productCategory}">상품</a></li>
+                        <li><a th:href="@{/news/list}">뉴스</a></li>
+                        <li><a th:href="@{/board/list}">커뮤니티</a></li>
                         <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                     </ul>
                 </nav>
             </div>
-            <!-- End .container -->
         </div>
         <!-- End .header-bottom -->
     </header>
     <!-- End .header -->
 
-    <!-- Start .container  -->
+    <!-- 자식 템플릿의 layout:fragment="content" 가 삽입될 영역 -->
     <div class="container" layout:fragment="content">
-
+        <!-- 자식 템플릿이 여기를 채움 -->
     </div>
-    <!-- End .container -->
 
-    <!-- Start .footer -->
+    <!-- 푸터 -->
     <footer class="footer bg-dark">
         <div class="footer-middle">
             <div class="container">
                 <div class="row">
+                    <!-- 문의 정보 -->
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget">
                             <h4 class="widget-title">문의 정보</h4>
                             <ul class="contact-info">
                                 <li>
-                                    <span class="contact-info-label">Address:</span>123 Street Name, City, Korea
+                                    <span class="contact-info-label">Address:</span>
+                                    123 Street Name, City, Korea
                                 </li>
                                 <li>
-                                    <span class="contact-info-label">전화문의:</span><a th:href="@{tel:}">(010)
-                                    1234-5678</a>
+                                    <span class="contact-info-label">전화문의:</span>
+                                    <a th:href="@{'tel:01012345678'}">(010) 1234-5678</a>
                                 </li>
                                 <li>
                                     <span class="contact-info-label">Email:</span>
                                     <a th:href="'mailto:mail@google.com'">mail@google.com</a>
                                 </li>
                                 <li>
-                                    <span class="contact-info-label">Working Days/Hours:</span> Mon - Fri / 9:00 AM -
-                                    5:00 PM
+                                    <span class="contact-info-label">Working Days/Hours:</span>
+                                    Mon - Fri / 9:00 AM - 5:00 PM
                                 </li>
                             </ul>
                         </div>
-                        <!-- End .widget -->
                     </div>
-                    <!-- End .col-lg-3 -->
-
+                    <!-- 고객 서비스 -->
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget">
                             <h4 class="widget-title">고객 서비스</h4>
-
                             <ul class="links">
-                                <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
+                                <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
+
+
+
                                 <li><a th:href="@{/common/aboutUs}">사이트 소개</a></li>
                                 <li><a th:href="@{/common/privacy}">개인정보처리방침</a></li>
                             </ul>
                         </div>
-                        <!-- End .widget -->
                     </div>
-                    <!-- End .col-lg-3 -->
-
-                    <!-- 많이 검색하는 부품 -->
+                    <!-- 인기 태그 -->
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget">
                             <h4 class="widget-title">인기 태그</h4>
-
                             <div class="tagcloud">
                                 <a href="#">Bag</a>
                                 <a href="#">Black</a>
@@ -336,36 +286,33 @@
                                 <a href="#">Clothes</a>
                             </div>
                         </div>
-                        <!-- End .widget -->
                     </div>
-                    <!-- End .col-lg-3 -->
-
+                    <!-- 최저가 알림 구독 -->
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget widget-newsletter">
                             <h4 class="widget-title">최저가 알림 구독</h4>
-                            <p>최신 CPU, GPU 가격 정보와 할인 소식을 받아보세요. 구독하면 최적의 가격 정보를 가장 먼저 확인할 수 있습니다.</p>
+                            <p>
+                                최신 CPU, GPU 가격 정보와 할인 소식을 받아보세요.
+                                구독하면 최적의 가격 정보를 가장 먼저 확인할 수 있습니다.
+                            </p>
                             <form action="#" class="mb-0">
-                                <input type="email" class="form-control m-b-3" placeholder="이메일 주소" required>
-                                <input type="submit" class="btn btn-primary shadow-none" value="구독하기">
+                                <input type="email" class="form-control m-b-3" placeholder="이메일 주소" required/>
+                                <input type="submit" class="btn btn-primary shadow-none" value="구독하기"/>
                             </form>
                         </div>
-                        <!-- End .widget -->
                     </div>
-                    <!-- End .col-lg-3 -->
                 </div>
-                <!-- End .row -->
             </div>
-            <!-- End .container -->
         </div>
-        <!-- End .footer-middle -->
 
         <div class="container">
             <div class="footer-bottom">
                 <div class="container d-sm-flex align-items-center">
                     <div class="footer-left">
-                        <span class="footer-copyright">© Stock Radar. 2025. All Rights Reserved</span>
+                        <span class="footer-copyright">
+                            © Stock Radar. 2025. All Rights Reserved
+                        </span>
                     </div>
-
                     <div class="footer-right ml-auto mt-1 mt-sm-0">
                         <div class="payment-icons">
                             <a th:href="@{https://github.com/Hyun7en}">
@@ -384,9 +331,7 @@
                     </div>
                 </div>
             </div>
-            <!-- End .footer-bottom -->
         </div>
-        <!-- End .container -->
     </footer>
     <!-- End .footer -->
 </div>
@@ -400,10 +345,10 @@
     </div>
 </div>
 
+<!-- 모바일 메뉴 오버레이 -->
 <div class="mobile-menu-overlay"></div>
-<!-- End .mobil-menu-overlay -->
 
-<!-- 모바일 화면시 왼쪽 사이드 -->
+<!-- 모바일 메뉴 -->
 <div class="mobile-menu-container">
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
@@ -416,8 +361,7 @@
                         <li><a href="category-sidebar-left.html">Left Sidebar</a></li>
                         <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
                         <li><a href="#">List Types</a></li>
-                        <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll<span
-                                class="tip tip-new">New</span></a></li>
+                        <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
                         <li><a href="category.html">3 Columns Products</a></li>
                     </ul>
                 </li>
@@ -432,37 +376,39 @@
                         </li>
                     </ul>
                 </li>
-                <li><a th:href="@{/news/news}">뉴스</a></li>
-                <li><a th:href="@{/board/boardList}">커뮤니티</a></li>
+                <li><a th:href="@{/news/list}">뉴스</a></li>
+                <li><a th:href="@{/board/list}">커뮤니티</a></li>
             </ul>
 
             <ul class="mobile-menu">
-                <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
-                <!--  로그인 돼있을 시 -->
-                <li><a th:href="@{/auth/wishlist}">관심상품</a></li>
-                <!--  로그인 돼있을 시 -->
-                <!--  로그인 안 돼있을 시 -->
-                <li><a th:href="@{/auth/signIn}" class="login-link">로그인</a></li>
-                <!--  로그인 안 돼있을 시 -->
-                <!--  로그인 돼있을 시 -->
-                <li><a th:href="@{#}">로그아웃</a></li>
-                <!--  로그인 돼있을 시 -->
+
+                <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
+
+                <!-- 로그인 안 된 상태 -->
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">로그인</a>
+                </li>
+                <!-- 로그인 된 상태 -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/auth/logout}">로그아웃</a>
+                </li>
+                <!-- 로그인 된 상태일 때만 관심상품 -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/notification/wishlist}">관심상품</a>
+                </li>
             </ul>
         </nav>
-        <!-- End .mobile-nav -->
 
+        <!-- 모바일 검색 -->
         <form class="search-wrapper mb-2" action="#">
             <input type="text" class="form-control mb-0" placeholder="Search..." required/>
             <button class="btn icon-search text-white bg-transparent p-0" type="submit"></button>
         </form>
-
-
     </div>
-    <!-- End .mobile-menu-wrapper -->
 </div>
 <!-- End .mobile-menu-container -->
 
-<!-- 모바일 화면시 아래 sticky -->
+<!-- 모바일 하단 고정 바 -->
 <div class="sticky-navbar">
     <div class="sticky-info">
         <a th:href="@{/main}">
@@ -470,40 +416,112 @@
         </a>
     </div>
     <div class="sticky-info">
-        <a th:href="@{/product/category}" class="">
+        <a th:href="@{/product/category}">
             <i class="icon-bars"></i>카테고리
         </a>
     </div>
-    <div class="sticky-info">
-        <!--  로그인 돼있을 시 -->
-        <a th:href="@{/auth/wishlist}" class="">
+    <!-- 관심상품(로그인 시만) -->
+    <div class="sticky-info" sec:authorize="isAuthenticated()">
+        <a th:href="@{/notification/wishlist}">
             <i class="icon-wishlist-2"></i>관심상품
         </a>
-        <!--  로그인 돼있을 시 -->
     </div>
+    <!-- 마이페이지/로그인 -->
     <div class="sticky-info">
-        <a th:href="@{/auth/signIn}" class="">
-            <i class="icon-user-2"></i>마이 페이지
+        <!-- 로그인 안 됨 -> 로그인 페이지 -->
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
+            <i class="icon-user-2"></i>로그인
+        </a>
+        <!-- 로그인 됨 -> 마이페이지 -->
+        <a sec:authorize="isAuthenticated()" th:href="@{/auth/profile}">
+            <i class="icon-user-2"></i>마이페이지
         </a>
     </div>
 </div>
+<!-- 삭제 확인 모달 -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">게시글 삭제</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>게시글을 삭제하려면 비밀번호를 입력하세요.</p>
+                <input type="password" name="password" id="deletePassword" class="form-control" placeholder="비밀번호 입력" required>
+                <div id="deleteErrorMessage" class="text-danger mt-2"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-danger" onclick="deleteBoard()">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
+<!-- 댓글 삭제 확인 모달 -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCommentModalLabel">댓글 삭제</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>댓글을 삭제하려면 비밀번호를 입력하세요.</p>
+                <input type="password" id="deleteCommentPassword" class="form-control" placeholder="비밀번호 입력" required>
+                <div id="deleteCommentErrorMessage" class="text-danger mt-2"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-danger" onclick="deleteComment()">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<!-- Plugins JS File -->
+<!-- 페이지별 추가 스크립트 -->
+<div layout:fragment="scripts"></div>
+
+<!-- 로그인한 사용자일 경우에만 토큰 갱신 스크립트 삽입 -->
+<!-- 토큰갱신용 스크립트(근영) -->
+<div sec:authorize="isAuthenticated()">
+    <script>
+        // 28분마다 /refresh 엔드포인트 호출
+        setInterval(function() {
+            fetch('/refresh', {
+                method: 'POST',
+                credentials: 'include'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('토큰 갱신 실패:', response.status);
+                    } else {
+                        console.log('토큰 갱신 성공');
+                    }
+                })
+                .catch(error => console.error('토큰 갱신 오류:', error));
+        }, 28 * 60 * 1000);
+    </script>
+</div>
+
+<!-- Main JS File -->
 <script th:src="@{/assets/js/jquery.min.js}"></script>
 <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/assets/js/optional/isotope.pkgd.min.js}"></script>
 <script th:src="@{/assets/js/plugins.min.js}"></script>
 <script th:src="@{/assets/js/jquery.appear.min.js}"></script>
-
-<div layout:fragment="scripts">
-    <!-- 개별 페이지에서 추가 스크립트 삽입 가능 -->
-</div>
-
-<!-- Main JS File -->
 <script th:src="@{/assets/js/main.min.js}"></script>
-</body>
+<script th:src="@{/assets/js/mainView/mainView.js}"></script>
 
+<a id="scroll-top" href="#top" title="Top" role="button">
+    <i class="icon-angle-up"></i>
+</a>
+
+</body>
 
 </html>

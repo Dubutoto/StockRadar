@@ -12,20 +12,18 @@ public class RefreshTokenRedisService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    // 저장
-    public void saveRefreshToken(String memberId, String refreshToken, long validityMillis) {
-        String key = "RT:" + memberId;
-        redisTemplate.opsForValue().set(key, refreshToken, Duration.ofMillis(validityMillis));
+    public void saveRefreshToken(String sessionId, String refreshToken, long validityMillis) {
+        System.out.println("🔹 Redis에 RefreshToken 저장: SESSION_ID=" + sessionId + ", Token=" + refreshToken);
+        redisTemplate.opsForValue().set("SESSION:" + sessionId, refreshToken, Duration.ofMillis(validityMillis));
     }
 
-    // 조회
-    public String getRefreshToken(String memberId) {
-        return redisTemplate.opsForValue().get("RT:" + memberId);
+    public String getRefreshToken(String sessionId) {
+        return redisTemplate.opsForValue().get("SESSION:" + sessionId);
     }
 
-    // 삭제, 로그아웃 용
-    public void deleteRefreshToken(String memberId) {
-        redisTemplate.delete("RT:" + memberId);
+    public void deleteRefreshToken(String sessionId) {
+        redisTemplate.delete("SESSION:" + sessionId);
     }
 }
+
 

@@ -44,3 +44,4 @@ out/
 logs/
 .log
 src/main/java/org/example/stockradar/config/SecurityConfig.java
+crawlingServer/venv/lib

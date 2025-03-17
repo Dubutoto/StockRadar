@@ -1,24 +1,22 @@
 package org.example.stockradar.feature.board.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+/**
+ * @author Hyun7en
+ */
 
 @Entity
-@Data
+@Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class BoardContent {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
     private Long contentId;
-
 
     @Column( nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -27,4 +25,16 @@ public class BoardContent {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
     private Board board;
+
+    //도메인 메서드로 insert 로직 제공
+    public void linkBoard(Board board) {
+        this.board = board;
+    }
+
+    // 도메인 메서드로 update 로직 제공
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+
 }

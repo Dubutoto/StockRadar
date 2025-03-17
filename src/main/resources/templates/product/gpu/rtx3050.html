@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <script type="text/javascript" th:src="@{/assets/js/product/rxt3050.js}" defer></script>
+<!--    <script type="text/javascript" th:src="${@environment.getProperty('cloud.aws.cloudfrontpath')+'/assets/js/product/rxt3050.js'}" defer></script>-->
+
+
+</head>
+<div class="container" layout:fragment="content">
+    <main class="main">
+        <!-- 이미지와 설명 섹션 - 가로 배치 -->
+        <section class="product-header d-flex">
+            <div class="image-container">
+                <img src="/assets/images/product/rtx3050.jpeg" alt="NVIDIA RTX 5090">
+<!--                <img th:src="${@environment.getProperty('cloud.aws.s3path') + '/product/rtx3050.jpeg'}" alt="NVIDIA RTX 3050">-->
+<!--                <img th:src="${@environment.getProperty('cloud.aws.cloudfrontpath') + '/product/rtx3050.jpeg'}" alt="NVIDIA RTX 3050">-->
+
+            </div>
+            <div class="description-container ml-3">
+                <h1>NVIDIA RTX 5090</h1>
+                <p>STOCK & PRICING TRACKER</p>
+                <p>Get Notified about the RTX 5090 release date and drops!</p>
+                <ul>
+                    <li>Starting at $1,999</li>
+                    <li>Release Date: January 30th</li>
+                </ul>
+                <p>We're tracking availability for NVIDIA RTX 5090 at 110 store listings.</p>
+            </div>
+        </section>
+
+        <section class="alert-settings">
+            <div class="track-stock">
+                <span>Track stock in other countries:</span>
+                <span><i class="icon-globe"></i> 🇺🇸 🇬🇧 🇩🇪</span>
+            </div>
+            <div class="alert-types">
+                <span>Alert Types:</span>
+                <span><i class="icon-envelope"></i> Email</span>
+                <span><i class="icon-bell"></i> Discord</span>
+            </div>
+            <div class="buttons">
+                <button type="button" class="btn btn-dark btn-lg btn-ellipse">UNTRACK ALL</button>
+                <button type="button" class="btn btn-primary btn-lg btn-ellipse">TRACK ALL</button>
+                <button type="button" class="btn btn-light btn-lg btn-ellipse"><i class="icon-settings"></i> Settings</button>
+            </div>
+
+            <div class="d-flex justify-content-end mb-3">
+                <div class="refresh-info ml-auto">
+                    새로고침
+                </div>
+            </div>
+        </section>
+
+
+        <section class="product-list">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Last Price</th>
+                    <th>Alert Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- JavaScript가 여기에 동적으로 행을 추가합니다 -->
+<!--                    <td>-->
+<!--                        <button type="button" class="btn btn-md btn-primary btn-ellipse">-->
+<!--                            <i class="icon-bell"></i> Track-->
+<!--                        </button>-->
+<!--                    </td>-->
+                </tr>
+                </tbody>
+
+            </table>
+        </section>
+
+    </main>
+</div>
+</html>

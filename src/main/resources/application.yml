@@ -1,5 +1,5 @@
 server:
-  port: 8080  # 모든 환경에서 공통 포트
+  port: 8099  # 모든 환경에서 공통 포트
   servlet:
     encoding:
       charset: UTF-8
@@ -46,6 +46,33 @@ spring:
       host: localhost
       port: 6379
 
+  # kafka #######################################################
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"  # 모든 패키지를 신뢰할 경우
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: santa1.0system@gmail.com
+    password: tlfn gzls fqhk ivsf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
 management:
   health:
     elasticsearch:
@@ -58,6 +85,7 @@ logging:
     root: INFO
     org.springframework: INFO
     org.springframework.web: DEBUG
+    org.example.stockradar: DEBUG
     org.thymeleaf: INFO
     org.springframework.boot.web.servlet: ERROR
     org.hibernate.SQL: DEBUG
@@ -81,3 +109,24 @@ logging:
     output:
       ansi:
         enabled: ALWAYS
+# s3
+cloud:
+  aws:
+    credentials:
+      access-key: ${}
+      secret-key: ${}
+
+    s3:
+      bucket: stockradars3
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3path: "https://stockradars3.s3.ap-northeast-2.amazonaws.com"
+    cloudfrontpath: "https://dxhufg9x2pwyh.cloudfront.net"
+
+discord:
+  bot:
+    token: ""
+
+

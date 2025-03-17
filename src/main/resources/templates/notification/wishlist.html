@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<link rel="stylesheet" th:href="@{/assets/css/style.min.css}">
+
+<head>
+    <th:block layout:fragment="head">
+        <link rel="stylesheet" th:href="@{/assets/css/style.min.css}">
+    </th:block>
+    <script type="text/javascript" th:src="@{/assets/js/notification/readInterestProduct.js}" defer></script>
+</head>
+
+<div class="container mt-4" layout:fragment="content">
+    <main class="main">
+        <div class="page-header">
+            <div class="container d-flex flex-column align-items-center">
+                <h1>관심상품</h1>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="wishlist-title">
+                <h2 class="p-2">내 관심상품 리스트</h2>
+            </div>
+            <div class="wishlist-table-container">
+                <table class="table table-wishlist mb-0">
+                    <thead>
+                    <tr>
+<!--                        <th class="thumbnail-col"></th>-->
+                        <th class="product-col">카테고리</th>
+                        <th class="price-col">상품명</th>
+                        <th class="status-col">재고 상태</th>
+                        <th class="status-col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <!-- 반복문으로 wishlist db에서 가져옴  -->
+
+                    </tbody>
+                </table>
+            </div><!-- End .cart-table-container -->
+        </div><!-- End .container -->
+
+        <!-- 페이지네이션 컨트롤을 위한 컨테이너 -->
+        <div id="paginationContainer"></div>
+    </main><!-- End .main -->
+</div>
+</html>

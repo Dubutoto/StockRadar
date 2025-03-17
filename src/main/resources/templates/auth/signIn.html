@@ -14,69 +14,41 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
 
-                <!-- 로그인 폼 -->
-                <form th:action="@{/auth/login}" method="post">
-
-                    <!-- 이메일 -->
-                    <label for="login-email">
-                        이메일 <span class="required">*</span>
-                    </label>
-                    <input type="email" class="form-input form-wide mb-2"
-                           id="login-email" name="memberId" required/>
-
-                    <!-- 비밀번호 -->
-                    <label for="login-password">
-                        비밀번호 <span class="required">*</span>
-                    </label>
-                    <input type="password" class="form-input form-wide mb-2"
-                           id="login-password" name="memberPw" required/>
-
-                    <!-- 체크박스 + 링크들 -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="remember-me"/>
-                            <label class="custom-control-label" for="remember-me">
-                                로그인 상태 유지
-                            </label>
-                        </div>
-                        <div>
-                            <a th:href="@{/auth/idInquiry}" class="text-dark ml-2">아이디 찾기</a>
-                            <a th:href="@{/auth/pwInquiry}" class="text-dark ml-2">비밀번호 찾기</a>
-                            <a th:href="@{/auth/signUp}" class="text-dark ml-2">회원가입</a>
-                        </div>
-                    </div>
-
-                    <!-- 로그인 버튼 -->
-                    <button type="submit" class="btn btn-dark btn-md w-100 mb-4">
-                        로그인
-                    </button>
-                </form>
-
-                <!-- 소셜 로그인 섹션 -->
-                <div class="text-center mt-4">
-                    <!-- 먼저 버튼들 -->
-                    <div class="btn-group" role="group" aria-label="Social login buttons">
-                        <a href="/oauth2/authorization/google" class="btn btn-outline-secondary">
-                            Google
-                        </a>
-                        <a href="/oauth2/authorization/naver" class="btn btn-outline-success">
-                            Naver
-                        </a>
-                        <a href="/oauth2/authorization/discord" class="btn btn-outline-info">
-                            Discord
-                        </a>
-                    </div>
-
-                    <!-- 그 아래 문구 -->
-                    <p class="mb-2 font-weight-bold mt-2">
-                        소셜 계정으로 로그인
-                    </p>
+                <div th:if="${errorMessage}" class="alert alert-danger text-center">
+                    <p th:text="${errorMessage}"></p>
                 </div>
 
-                <!-- End .social-login -->
+                <form id="loginForm" th:action="@{/auth/login}" method="post">
+                    <label for="login-email">이메일 <span class="required">*</span></label>
+                    <input type="email" class="form-input form-wide mb-2" id="login-email" name="memberId" required/>
 
+                    <label for="login-password">비밀번호 <span class="required">*</span></label>
+                    <input type="password" class="form-input form-wide mb-2" id="login-password" name="memberPw" required/>
+
+                    <button type="submit" class="btn btn-dark btn-md w-100 mb-4">로그인</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <div class="btn-group" role="group">
+                        <a href="/oauth2/authorization/google" class="btn btn-outline-secondary">Google</a>
+                        <a href="/oauth2/authorization/naver" class="btn btn-outline-success">Naver</a>
+                        <a href="/oauth2/authorization/discord" class="btn btn-outline-info">Discord</a>
+                    </div>
+                    <p class="mb-2 font-weight-bold mt-2">소셜 계정으로 로그인</p>
+                </div>
             </div>
         </div>
     </main>
 </div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.cookie.includes("ACCESS_TOKEN")) {
+            startRefreshTimer();
+        }
+    });
+</script>
+
 </html>

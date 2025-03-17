@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -32,37 +33,31 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // 2) 모든 소셜(Naver/Discord)에서 "memberId"를 넣어두었으므로
         String memberId = (String) attributes.get("memberId");
         if (memberId == null) {
-            // 만약 없다면 에러 처리
             response.sendRedirect("/login?error=NoMemberId");
             return;
         }
 
         // 3) JWT 생성
         String accessToken = jwtTokenProvider.generateAccessToken(memberId);
-        String refreshToken = jwtTokenProvider.generateRefreshToken(memberId);
+        String refreshToken = jwtTokenProvider.generateRefreshToken();
+        String sessionId = UUID.randomUUID().toString(); // 세션 ID 생성
 
-        // 4) Redis에 RefreshToken 저장
-        refreshTokenRedisService.saveRefreshToken(
-                memberId,
-                refreshToken,
-                jwtTokenProvider.getRefreshTokenValidity()
-        );
+        // 4) Redis에 RefreshToken 저장 (SESSION_ID 기반)
+        refreshTokenRedisService.saveRefreshToken(sessionId, refreshToken, jwtTokenProvider.getRefreshTokenValidity());
 
-        // 5) 쿠키 설정
+        // 5) RefreshToken을 쿠키에서 제거하고, 대신 SESSION_ID를 쿠키에 저장
         Cookie accessCookie = new Cookie("ACCESS_TOKEN", accessToken);
         accessCookie.setHttpOnly(true);
         accessCookie.setPath("/");
 
-        Cookie refreshCookie = new Cookie("REFRESH_TOKEN", refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setPath("/");
+        Cookie sessionCookie = new Cookie("SESSION_ID", sessionId);
+        sessionCookie.setHttpOnly(true);
+        sessionCookie.setPath("/");
 
         response.addCookie(accessCookie);
-        response.addCookie(refreshCookie);
+        response.addCookie(sessionCookie);
 
         // 6) 메인 페이지로 리다이렉트
         response.sendRedirect("/main");
     }
 }
-
-

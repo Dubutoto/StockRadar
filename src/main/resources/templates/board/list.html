@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6"
+      layout:decorate="~{layout}">
+<div class="container mt-4" layout:fragment="content">
+    <main class="main">
+        <!-- 게시판 목록 헤더 -->
+        <div class="board-header">
+            <h1>게시판</h1>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <!-- 검색 폼 (왼쪽, 폭 제한) -->
+            <div class="col-md-4">
+                <form th:action="@{/board/search}" method="get">
+                    <div class="input-group input-group-lg">
+                        <input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-secondary">검색</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 새 글 작성 버튼 (오른쪽) -->
+            <div class="col-auto ml-auto">
+                <a sec:authorize="isAuthenticated()" th:href="@{/board/write}" class="btn btn-primary btn-lg">
+                    새 글 작성
+                </a>
+            </div>
+        </div>
+
+        <!-- 게시글 목록 -->
+        <div class="board-list">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>작성자</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                    <th>조회</th>
+                    <th>댓글</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board : ${boardList}">
+                    <td th:text="${board.boardId}">1</td>
+                    <td th:text="${board.userName}">작성자</td>
+                    <td>
+                        <a th:href="@{/board/detail(boardId=${board.boardId})}" th:text="${board.boardTitle}">게시글 제목</a>
+                    </td>
+                    <td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm:ss')}">작성일</td>
+                    <td th:text="${board.viewCount}"></td>
+                    <td th:text="${board.commentCount}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination-container">
+            <ul class="pagination justify-content-center">
+                <li th:if="${boardList.hasPrevious()}" class="page-item">
+                    <a th:href="@{'/board/list?page=' + ${boardList.number - 1}}" class="page-link">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, boardList.totalPages - 1)}"
+                    th:classappend="${boardList.number == i} ? 'active'">
+                    <a th:href="@{'/board/list?page=' + ${i}}" th:text="${i + 1}" class="page-link">1</a>
+                </li>
+                <li th:if="${boardList.hasNext()}" class="page-item">
+                    <a th:href="@{'/board/list?page=' + ${boardList.number + 1}}" class="page-link">다음</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+</html>
