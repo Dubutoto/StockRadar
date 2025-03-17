@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class ViewController {
 
+
+    // 관심 상품 페이지로 이동
     @GetMapping("notification/wishlist")
     public String wishlist() {
         return "notification/wishlist";

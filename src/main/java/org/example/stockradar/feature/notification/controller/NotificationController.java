@@ -1,6 +1,7 @@
 package org.example.stockradar.feature.notification.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.board.dto.CommentResponseDto;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Hyun7en
  */
 
+@Slf4j
 @RestController
 @RequestMapping("notification")
 @RequiredArgsConstructor
@@ -30,7 +32,8 @@ public class NotificationController {
     private final NotificationDispatcherService notificationDispatcherService;
     private final IntertestProductService intertestProductService;
 
-    /**
+
+    /*
      * 관심 상품 등록 + 알림 전송
      * 예시: 사용자가 관심 상품을 등록하면 해당 정보를 저장하고,
      * 등록 완료 후 알림 이벤트를 생성하여 선택된 채널로 알림을 발송합니다.
@@ -38,7 +41,7 @@ public class NotificationController {
     @PostMapping("register")
     public ResponseEntity<String> registerInterestProduct(@RequestBody InterestProductRequestDto request, Authentication authentication) {
 
-        System.out.println("Registering interest product: " + request);
+        log.info("Registering interest product");
 
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -55,15 +58,16 @@ public class NotificationController {
         return ResponseEntity.ok("관심 상품 등록 및 기본 알림 설정 완료");
     }
 
-    /**
+    /*
      * 관심 상품 조회
      * 예시: 특정 회원의 관심 상품 목록을 조회합니다.
      */
     @GetMapping("read")
     public ResponseEntity<Page<InterestProductResponseDto>> getInterestProducts(Authentication authentication, @RequestParam(defaultValue = "0") int page) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            System.out.println("페이지를 불러올 수 없음");
+            log.info("Do NOT read interest products");
         }
+
         // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
         String memberId = String.valueOf(authentication.getName());
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
@@ -72,7 +76,7 @@ public class NotificationController {
         return ResponseEntity.ok(interestProductPage);
     }
 
-    /**
+    /*
      * 관심 상품 삭제 + 알림 삭제
      * 예시: 관심 상품 삭제 시 해당 관심 상품과 관련된 알림도 함께 삭제합니다.
      */

@@ -1,6 +1,7 @@
 package org.example.stockradar.feature.notification.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class DiscordService {
 
@@ -20,10 +22,15 @@ public class DiscordService {
      * @param messageContent 전송할 메시지 내용
      */
     public void sendDirectMessage(String userId, String messageContent) {
-        jda.retrieveUserById(userId).queue(user ->
-                user.openPrivateChannel().queue(privateChannel ->
-                        privateChannel.sendMessage(messageContent).queue()
-                )
+        jda.retrieveUserById(userId).queue(
+                user -> user.openPrivateChannel().queue(
+                        privateChannel -> privateChannel.sendMessage(messageContent).queue(
+                                success -> log.info("Discord DM 전송 성공: {}", userId),
+                                error -> log.error("Discord DM 전송 실패: {} - {}", userId, error.getMessage())
+                        ),
+                        error -> log.error("Discord 개인 채널 열기 실패: {} - {}", userId, error.getMessage())
+                ),
+                error -> log.error("Discord 사용자 조회 실패: {} - {}", userId, error.getMessage())
         );
     }
 }
