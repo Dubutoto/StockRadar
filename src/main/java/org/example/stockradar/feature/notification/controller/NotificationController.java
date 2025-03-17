@@ -95,14 +95,4 @@ public class NotificationController {
         return ResponseEntity.ok("관심 상품 및 관련 알림 삭제 완료");
     }
 
-    /**
-     * 알림 전송 (수동 트리거)
-     * 예시: 특정 NotificationEvent 정보를 받아 알림을 전송합니다.
-     */
-//    @PostMapping("/dispatch")
-//    public ResponseEntity<String> dispatchNotification(@RequestBody NotificationEvent event) {
-//        notificationDispatcherService.dispatchNotification(event);
-//        return ResponseEntity.ok("알림 전송 완료");
-//    }
-
 }
