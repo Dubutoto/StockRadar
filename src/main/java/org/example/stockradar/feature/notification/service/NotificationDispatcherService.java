@@ -13,6 +13,7 @@ import org.example.stockradar.feature.notification.entity.NotificationChannel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class NotificationDispatcherService {
     @Value("classpath:templates/email-template/email-template1.html")
     private Resource emailTemplate;
 
+    @Transactional(rollbackFor = Exception.class)
     public void registerInterestProductAndDispatchNotification(InterestProductRequestDto request, String memberId) {
         // 현재 로그인한 회원 정보 조회
         Member member = memberRepository.findByMemberId(memberId);

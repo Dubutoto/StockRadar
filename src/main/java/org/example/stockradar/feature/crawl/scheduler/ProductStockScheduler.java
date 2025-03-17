@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
+import org.example.stockradar.feature.notification.dto.NotificationEvent;
+import org.example.stockradar.feature.notification.service.KafkaNotificationProducer;
 import org.example.stockradar.feature.product.dto.ProductCacheDto;
 
 import org.example.stockradar.global.exception.ErrorCode;
@@ -28,6 +30,7 @@ public class ProductStockScheduler {
     private final ProductRepository productRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final KafkaNotificationProducer kafkaNotificationProducer;
 
     // 정적 데이터와 재고 상태를 위한 별도의 캐시 키 프리픽스
     private static final String STATIC_DATA_CACHE_PREFIX = "product:static:";
@@ -143,7 +146,10 @@ public class ProductStockScheduler {
                 try {
                     if (product.getProductId() != null && product.getStockStatus() != null) {
                         String stockCacheKey = createStockStatusCacheKey(product.getProductId());
-                        Integer availability = product.getStockStatus().getAvailability();
+
+                        // 재고 상태 변경 감지 및 알림 전송, 최신 재고 상태를 반환받음
+                        Integer availability = checkAndSendStockChangeNotification(product, stockCacheKey);
+
                         Long price = product.getStockStatus().getPrice() != null ?
                                 product.getStockStatus().getPrice().getPrice() : null;
 
@@ -175,4 +181,44 @@ public class ProductStockScheduler {
             log.info("상품 재고 상태 갱신 스케줄러 종료: {}", LocalDateTime.now().format(formatter));
         }
     }
+
+    /**
+     * 주어진 제품의 재고 상태를 캐시와 비교하여 변경이 있을 경우 알림 이벤트를 생성 및 전송합니다.
+     * @author Hyun7en
+     * @param product 대상 제품
+     * @param stockCacheKey 재고 상태 캐시 키
+     * @return 현재 재고 상태 (0: 재고 없음, 1: 재고 있음)
+     */
+    private Integer checkAndSendStockChangeNotification(Product product, String stockCacheKey) {
+        // Redis 캐시에서 이전 재고 상태 조회
+        Object cachedObj = redisTemplate.opsForValue().get(stockCacheKey);
+        Integer oldAvailability = null;
+        if (cachedObj instanceof ProductCacheDto) {
+            oldAvailability = ((ProductCacheDto) cachedObj).getAvailability();
+        }
+
+        // 현재 재고 상태 (0: 재고 없음, 1: 재고 있음)
+        Integer newAvailability = product.getStockStatus().getAvailability();
+
+        // 재고 상태가 변경되었거나 캐시가 없는 경우 알림 전송
+        if (oldAvailability == null || !oldAvailability.equals(newAvailability)) {
+            String oldStatus = (oldAvailability != null && oldAvailability == 1) ? "재고 있음" : "재고 없음";
+            String newStatus = (newAvailability != null && newAvailability == 1) ? "재고 있음" : "재고 없음";
+
+            log.info("제품 ID {} 재고 상태 변경 감지: {} -> {}", product.getProductId(), oldStatus, newStatus);
+
+            // 알림 이벤트 생성 (실제 환경에서는 구독자 정보 등 동적으로 처리)
+            NotificationEvent event = NotificationEvent.builder()
+                    .interestProductId(product.getProductId())
+                    .emailAddress("user@example.com") // 실제 사용자 이메일로 대체
+                    .messageContent("상품 [" + product.getProductName() + "]의 재고 상태가 '"
+                            + oldStatus + "'에서 '" + newStatus + "'(으)로 변경되었습니다.")
+                    .build();
+
+            // Kafka를 통해 알림 이벤트 전송
+            kafkaNotificationProducer.sendNotification(event);
+        }
+        return newAvailability;
+    }
+
 }
