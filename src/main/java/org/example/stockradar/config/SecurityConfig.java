@@ -57,7 +57,6 @@ public class SecurityConfig {
                                 "/main/check","/common/**", "comment/read",
                                 "/monitoring/**","/refresh","auth/refresh"
 
-
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

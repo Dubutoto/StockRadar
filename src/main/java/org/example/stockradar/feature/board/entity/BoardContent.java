@@ -3,6 +3,10 @@ package org.example.stockradar.feature.board.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * @author Hyun7en
+ */
+
 @Entity
 @Getter
 @Builder

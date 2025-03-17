@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const buttonCell = document.createElement('td');
             buttonCell.innerHTML = `
                 <button type="button" class="btn btn-md btn-primary btn-ellipse" 
-                        onclick="trackProduct('${product.productName}')">
+                        onclick="trackProduct(${product.productId})">
                     <i class="icon-bell"></i> Track
                 </button>
             `;
@@ -131,13 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
             refreshInfo.textContent = `마지막 업데이트: ${timeString}`;
         }
     }
-
-    // 제품 추적 기능 (버튼 클릭 시 호출)
-    window.trackProduct = function (productName) {
-        console.log(`제품 추적 시작: ${productName}`);
-        alert(`${productName} 제품 재고 알림을 설정했습니다.`);
-        // 여기에 추적 기능 구현 (서버에 요청 등)
-    };
 
     // 페이지 로드 시 제품 정보 가져오기
     fetchRtx3060TiProducts();

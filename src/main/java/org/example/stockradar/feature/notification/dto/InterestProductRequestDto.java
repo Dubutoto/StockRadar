@@ -1,4 +1,4 @@
-package org.example.stockradar.feature.board.dto;
+package org.example.stockradar.feature.notification.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
  * @author Hyun7en
  */
 
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class CommentDeleteRequestDto {
-    private Long commentId;
-    private String password;
+public class InterestProductRequestDto {
+
+    private Long productId;
+
 }
