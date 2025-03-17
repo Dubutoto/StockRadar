@@ -8,22 +8,19 @@ import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
-public class RefreshTokenRedisService {
+public class TokenRedisService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
     public void saveRefreshToken(String sessionId, String refreshToken, long validityMillis) {
-        System.out.println("🔹 Redis에 RefreshToken 저장: SESSION_ID=" + sessionId + ", Token=" + refreshToken);
-        redisTemplate.opsForValue().set("SESSION:" + sessionId, refreshToken, Duration.ofMillis(validityMillis));
+        redisTemplate.opsForValue().set("REFRESH:" + sessionId, refreshToken, Duration.ofMillis(validityMillis));
     }
 
     public String getRefreshToken(String sessionId) {
-        return redisTemplate.opsForValue().get("SESSION:" + sessionId);
+        return redisTemplate.opsForValue().get("REFRESH:" + sessionId);
     }
 
     public void deleteRefreshToken(String sessionId) {
-        redisTemplate.delete("SESSION:" + sessionId);
+        redisTemplate.delete("REFRESH:" + sessionId);
     }
 }
-
-

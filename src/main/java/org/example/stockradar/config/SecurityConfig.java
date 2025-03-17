@@ -54,8 +54,8 @@ public class SecurityConfig {
                                 "/customerInquiry/**", "/board/**",
                                 "/assets/**", "/main", "/", "/auth/idInquiry", "/idInquiry",
                                 "/password/**","/product/**",
-                                "/main/check","/common/**", "comment/read", "notification/**",
-                                "/monitoring/**"
+                                "/main/check","/common/**", "comment/read",
+                                "/monitoring/**","/refresh","auth/refresh"
 
                         ).permitAll()
                         .anyRequest().authenticated()
