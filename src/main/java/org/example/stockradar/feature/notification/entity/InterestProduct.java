@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
  * @author Hyun7en
  */
 
+//관심 상품
 @Entity
 @Getter
 @Builder
