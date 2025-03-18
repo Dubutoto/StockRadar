@@ -22,8 +22,13 @@ import java.util.List;
 public class CustomerInquiryProcessingController {
     private final CustomerInquiryProcessingService service;
 
-
     @GetMapping("customerInquiryprocessing")
+    public String getCustomerInquiryProcessing() {
+        return "customerInquiryprocessing/customerInquiryprocessing";
+    }
+
+
+    @GetMapping("api/customerInquiryprocessing")
     public String customerInquiryProcessing(Authentication authentication, Model model) {
 
         //인증 여부 확인

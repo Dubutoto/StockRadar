@@ -50,6 +50,10 @@ public class CustomerInquiry {
     @ToString.Exclude // 순환 참조 방지
     private CustomerInquiryProcessiong customerInquiryProcessiong;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inquiry_category_id")
+    @ToString.Exclude // 순환 참조 방지
+    private InquiryCategory inquiryCategoryId;
 
 
     @PrePersist
