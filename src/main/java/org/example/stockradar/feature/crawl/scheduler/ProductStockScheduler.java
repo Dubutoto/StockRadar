@@ -148,7 +148,7 @@ public class ProductStockScheduler {
                         String stockCacheKey = createStockStatusCacheKey(product.getProductId());
 
                         // 재고 상태 변경 감지 및 알림 전송, 최신 재고 상태를 반환받음
-                        Integer availability = checkAndSendStockChangeNotification(product, stockCacheKey);
+                        Integer availability = checkAndSendStockChangeNotification(product);
 
                         Long price = product.getStockStatus().getPrice() != null ?
                                 product.getStockStatus().getPrice().getPrice() : null;
@@ -183,31 +183,30 @@ public class ProductStockScheduler {
     }
 
     /**
-     * 주어진 제품의 재고 상태를 캐시와 비교하여 변경이 있을 경우 알림 이벤트를 생성 및 전송합니다.
-     * @author Hyun7en
+     * 주어진 제품의 DB에 저장된 마지막 알림 전송 상태와 현재 재고 상태를 비교하여,
+     * 변경된 경우 알림 이벤트를 생성 및 전송하고, DB의 lastNotifiedAvailability를 업데이트합니다.
      * @param product 대상 제품
-     * @param stockCacheKey 재고 상태 캐시 키
      * @return 현재 재고 상태 (0: 재고 없음, 1: 재고 있음)
      */
-    private Integer checkAndSendStockChangeNotification(Product product, String stockCacheKey) {
-        // Redis 캐시에서 이전 재고 상태 조회
-        Object cachedObj = redisTemplate.opsForValue().get(stockCacheKey);
-        Integer oldAvailability = null;
-        if (cachedObj instanceof ProductCacheDto) {
-            oldAvailability = ((ProductCacheDto) cachedObj).getAvailability();
-        }
+    private Integer checkAndSendStockChangeNotification(Product product) {
+        // DB에 저장된 마지막 알림 전송 시의 재고 상태
+        Integer oldAvailability = product.getStockStatus().getLastNotifiedAvailability();
 
-        // 현재 재고 상태 (0: 재고 없음, 1: 재고 있음)
+        // DB의 현재 재고 상태 (예: 0: 재고 없음, 1: 재고 있음)
         Integer newAvailability = product.getStockStatus().getAvailability();
 
-        // 재고 상태가 변경되었거나 캐시가 없는 경우 알림 전송
-        if (oldAvailability == null || !oldAvailability.equals(newAvailability)) {
-            String oldStatus = (oldAvailability != null && oldAvailability == 1) ? "재고 있음" : "재고 없음";
-            String newStatus = (newAvailability != null && newAvailability == 1) ? "재고 있음" : "재고 없음";
-
+        // 최초 알림 전송 전(초기 로딩)인 경우, 알림 전송 없이 상태만 업데이트
+        if (oldAvailability == null) {
+            product.getStockStatus().setLastNotifiedAvailability(newAvailability);
+            productRepository.save(product);
+            log.info("제품 ID {} 최초 알림 상태 설정: {}", product.getProductId(), newAvailability);
+        }
+        // 이전 알림 상태와 현재 상태가 다르면 알림 전송
+        else if (!oldAvailability.equals(newAvailability)) {
+            String oldStatus = (oldAvailability == 1) ? "재고 있음" : "재고 없음";
+            String newStatus = (newAvailability == 1) ? "재고 있음" : "재고 없음";
             log.info("제품 ID {} 재고 상태 변경 감지: {} -> {}", product.getProductId(), oldStatus, newStatus);
 
-            // 알림 이벤트 생성 (실제 환경에서는 구독자 정보 등 동적으로 처리)
             NotificationEvent event = NotificationEvent.builder()
                     .interestProductId(product.getProductId())
                     .emailAddress("user@example.com") // 실제 사용자 이메일로 대체
@@ -217,8 +216,14 @@ public class ProductStockScheduler {
 
             // Kafka를 통해 알림 이벤트 전송
             kafkaNotificationProducer.sendNotification(event);
+
+            // 마지막 알림 전송 상태 업데이트
+            product.getStockStatus().setLastNotifiedAvailability(newAvailability);
+            productRepository.save(product);
         }
+
         return newAvailability;
     }
+
 
 }

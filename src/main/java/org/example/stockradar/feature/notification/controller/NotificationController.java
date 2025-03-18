@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.board.dto.CommentResponseDto;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
+import org.example.stockradar.feature.notification.dto.NotificationSettingsDto;
 import org.example.stockradar.feature.notification.service.IntertestProductService;
 import org.example.stockradar.feature.notification.service.NotificationDispatcherService;
 import org.example.stockradar.feature.notification.service.NotificationService;
@@ -94,5 +95,26 @@ public class NotificationController {
         notificationService.deleteNotificationsByInterestProductId(interestProductId,memberId);
         return ResponseEntity.ok("관심 상품 및 관련 알림 삭제 완료");
     }
+
+    /**
+     * 사용자 알림 채널 설정
+     * 예시: 사용자가 재고 변경을 수신 받을 알림 채널을 설정합니다.
+     */
+    @PostMapping("/saveSettings")
+    public ResponseEntity<String> updateSettings(@RequestBody NotificationSettingsDto settingsDto) {
+
+        notificationService.updateSettings(settingsDto);
+        return ResponseEntity.ok("알림 설정이 업데이트되었습니다.");
+    }
+
+    /**
+     * 사용자 알림 채널 불러오기
+     * 예시: 사용자가 설정한 알림 채널을 화면에 고정시키기 위해 사용합니다.
+     */
+//    @GetMapping("/readSettings")
+//    public ResponseEntity<String> readSettings(Authentication authentication) {
+//
+//        return ResponseEntity.ok("알림 설정이 업데이트되었습니다.");
+//    }
 
 }
