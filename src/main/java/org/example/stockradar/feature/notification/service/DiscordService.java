@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
  * @author Hyun7en
  */
 
+//디스코드 채널로 발송
 @Service
 @Slf4j
 @RequiredArgsConstructor

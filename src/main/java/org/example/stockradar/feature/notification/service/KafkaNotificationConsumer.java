@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
  * @author Hyun7en
  */
 
+//kafka 알림 event consumer
 @Service
 @RequiredArgsConstructor
 @Slf4j

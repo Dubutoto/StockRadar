@@ -2,11 +2,10 @@ package org.example.stockradar.feature.notification.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.stockradar.feature.board.dto.CommentResponseDto;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
 import org.example.stockradar.feature.notification.dto.NotificationSettingsDto;
-import org.example.stockradar.feature.notification.service.IntertestProductService;
+import org.example.stockradar.feature.notification.service.InterestProductService;
 import org.example.stockradar.feature.notification.service.NotificationDispatcherService;
 import org.example.stockradar.feature.notification.service.NotificationService;
 import org.springframework.data.domain.Page;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +29,7 @@ public class NotificationController {
 
     private final NotificationService notificationService;
     private final NotificationDispatcherService notificationDispatcherService;
-    private final IntertestProductService intertestProductService;
+    private final InterestProductService interestProductService;
 
 
     /*
@@ -72,7 +70,7 @@ public class NotificationController {
         // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
         String memberId = String.valueOf(authentication.getName());
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
-        Page<InterestProductResponseDto> interestProductPage = intertestProductService.getInterestProductsByMemberId(memberId,pageable);
+        Page<InterestProductResponseDto> interestProductPage = interestProductService.getInterestProductsByMemberId(memberId,pageable);
 
         return ResponseEntity.ok(interestProductPage);
     }
@@ -90,7 +88,7 @@ public class NotificationController {
         }
         String memberId = String.valueOf(authentication.getName());
 
-        Long interestProductId = intertestProductService.deleteInterestProduct(request.getProductId(), memberId);
+        Long interestProductId = interestProductService.deleteInterestProduct(request.getProductId(), memberId);
         // 필요에 따라, 관심 상품과 연관된 알림도 삭제 처리
         notificationService.deleteNotificationsByInterestProductId(interestProductId,memberId);
         return ResponseEntity.ok("관심 상품 및 관련 알림 삭제 완료");

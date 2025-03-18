@@ -24,6 +24,7 @@ import java.util.List;
  * @author Hyun7en
  */
 
+//사용자 알림 채널 설정에 따른 알림 발송 처리
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -33,7 +34,7 @@ public class NotificationDispatcherService {
     private final EmailService emailService;
     private final DiscordService discordService;
     private final WebPushService webPushService;
-    private final IntertestProductService intertestProductService;
+    private final InterestProductService intertestProductService;
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
     private final KafkaNotificationProducer kafkaNotificationProducer;

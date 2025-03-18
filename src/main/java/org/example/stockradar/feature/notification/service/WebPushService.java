@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
  * @author Hyun7en
  */
 
+//웹 푸시 채널로 발송
 @Service
 @Slf4j
 public class WebPushService {

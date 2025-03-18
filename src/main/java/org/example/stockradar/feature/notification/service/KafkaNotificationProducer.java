@@ -9,6 +9,7 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
+//kafka 알림 event producer
 @Service
 @RequiredArgsConstructor
 @Slf4j

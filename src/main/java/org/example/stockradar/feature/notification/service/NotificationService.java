@@ -7,6 +7,7 @@ import org.example.stockradar.feature.notification.repository.MemberNotification
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+//알림 관련 로직 service
 @Service
 @RequiredArgsConstructor
 @Slf4j

@@ -13,15 +13,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * @author Hyun7en
  */
 
+//관심 상품 관련 로직 service
 @Service
 @RequiredArgsConstructor
-public class IntertestProductService {
+public class InterestProductService {
 
     private final ProductRepository productRepository;
     private final InterestProductRepository interestProductRepository;
