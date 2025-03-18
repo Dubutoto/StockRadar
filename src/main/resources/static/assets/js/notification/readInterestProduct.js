@@ -129,7 +129,32 @@ function deleteInterestProduct(productId) {
         });
 }
 
+function saveSettings(){
+    const email = document.getElementById("emailNotification").checked;
+    const sms = document.getElementById("smsNotification").checked;
+    const discord = document.getElementById("discordNotification").checked;
+
+    // Axios POST 요청으로 설정 전송
+    axios.post('/notification/settings', {
+        emailNotification: email,
+        smsNotification: sms,
+        discordNotification: discord
+    })
+        .then(response => {
+            console.log("Settings saved successfully", response.data);
+            // 성공 메시지 표시 등 추가 처리 가능
+        })
+        .catch(error => {
+            console.error("Error saving settings", error);
+        });
+}
+
+function readSettings(){
+
+}
+
 // 페이지 로딩 후 함수 호출
 document.addEventListener('DOMContentLoaded', function() {
     readInterestProduct();
+    readSettings();
 });
