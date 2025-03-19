@@ -2,9 +2,11 @@ package org.example.stockradar.feature.notification.repository;
 
 import org.example.stockradar.feature.notification.entity.NotificationSetting;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
-import java.util.Optional;
+
+/**
+ * @author Hyun7en
+ */
 
 public interface NotificationSettingRepository extends JpaRepository<NotificationSetting, Long> {
 

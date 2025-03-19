@@ -15,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Hyun7en
+ */
+
 //알림 관련 로직 service
 @Service
 @RequiredArgsConstructor
