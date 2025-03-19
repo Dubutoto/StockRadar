@@ -99,9 +99,17 @@ public class NotificationController {
      * 예시: 사용자가 재고 변경을 수신 받을 알림 채널을 설정합니다.
      */
     @PostMapping("/saveSettings")
-    public ResponseEntity<String> updateSettings(@RequestBody NotificationSettingsDto settingsDto) {
+    public ResponseEntity<String> updateSettings(@RequestBody NotificationSettingsDto settingsDto, Authentication authentication) {
+        log.info("settingDTo{}", settingsDto);
 
-        notificationService.updateSettings(settingsDto);
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("로그인 해주세요.");
+        }
+
+        String memberId = String.valueOf(authentication.getName());
+
+        notificationService.updateSettings(memberId,settingsDto);
         return ResponseEntity.ok("알림 설정이 업데이트되었습니다.");
     }
 
