@@ -33,10 +33,6 @@ public class InterestProduct {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    // 웹 푸시는 기본적으로 활성화 (재고 입고 시 기본 알림)
-    @Builder.Default
-    private boolean webPushNotification = true;
-
     // 생성 시각 (audit 용)
     private LocalDateTime createdAt;
 

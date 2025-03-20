@@ -46,52 +46,6 @@ public class NotificationDispatcherService {
     @Value("classpath:templates/email-template/email-template1.html")
     private Resource emailTemplate;
 
-    @Transactional(rollbackFor = Exception.class)
-    public void registerInterestProductAndDispatchNotification(InterestProductRequestDto request, String memberId) {
-        // 현재 로그인한 회원 정보 조회
-        Member member = memberRepository.findByMemberId(memberId);
-        log.info("memberdddddddddddddddddddddddddddddddddddddd", member.getMemberId());
-        // 관심 상품 등록
-        Long interestProductId = interestProductService.registerInterestProduct(request, member);
-
-        // 제품 정보를 조회 (관심 상품 등록 시 사용한 productId 사용)
-        Product product = productRepository.findProductWithStockStatusById(request.getProductId());
-        String productName = product.getProductName();
-        String productUrl = product.getProductUrl();
-
-        // HTML 템플릿 로드 및 데이터 치환: 제품 이름과 URL 치환
-        String htmlContent = loadHtmlTemplate(productName, productUrl);
-
-        // 사용자의 알림 설정을 조회하여 채널 리스트 구성
-        List<NotificationSetting> settings = notificationSettingRepository.findByMember_MemberId(memberId);
-        List<NotificationChannel> channels = new ArrayList<>();
-        if (settings == null || settings.isEmpty()) {
-            // 알림 설정이 없으면 기본 EMAIL 채널 사용
-            channels.add(NotificationChannel.EMAIL);
-        } else {
-            for (NotificationSetting setting : settings) {
-                if (setting.isEnabled()) {
-                    channels.add(setting.getChannel());
-                }
-            }
-            // 활성화된 채널이 하나도 없으면 기본 EMAIL 채널 사용
-            if (channels.isEmpty()) {
-                channels.add(NotificationChannel.EMAIL);
-            }
-        }
-
-        // NotificationEvent 생성 (동적 채널 설정 포함)
-        NotificationEvent event = NotificationEvent.builder()
-                .interestProductId(interestProductId)
-                .emailAddress(member.getMemberId()) // 이메일 주소로 memberId 사용
-                .messageContent(htmlContent)
-                .channels(channels)
-                .build();
-
-        // Kafka 프로듀서를 통해 이벤트 발행 (비동기 처리)
-        kafkaNotificationProducer.sendNotification(event);
-    }
-
     private String loadHtmlTemplate(String productName, String productUrl) {
         try {
             String template = StreamUtils.copyToString(emailTemplate.getInputStream(), StandardCharsets.UTF_8);

@@ -2,6 +2,8 @@ package org.example.stockradar.feature.notification.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.stockradar.feature.auth.entity.Member;
+import org.example.stockradar.feature.auth.repository.MemberRepository;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
 import org.example.stockradar.feature.notification.dto.NotificationSettingsDto;
@@ -28,9 +30,8 @@ import org.springframework.web.bind.annotation.*;
 public class NotificationController {
 
     private final NotificationService notificationService;
-    private final NotificationDispatcherService notificationDispatcherService;
     private final InterestProductService interestProductService;
-
+    private final MemberRepository memberRepository;
 
     /*
      * 관심 상품 등록 + 알림 전송
@@ -40,23 +41,19 @@ public class NotificationController {
     @PostMapping("/register")
     public ResponseEntity<String> registerInterestProduct(@RequestBody InterestProductRequestDto request, Authentication authentication) {
 
-        log.info("Registering interest product");
-
         if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("로그인 해주세요.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 해주세요.");
         }
 
-        // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
-        String memberId = String.valueOf(authentication.getName());
+        String memberId = authentication.getName();
 
-        log.info("memberId: {}", memberId);
-
-        // 관심상품 등록 및 알림 설정 처리 (서비스 계층에 위임)
-        notificationDispatcherService.registerInterestProductAndDispatchNotification(request, memberId);
-
-        // 성공 시 문자열 메시지 반환
-        return ResponseEntity.ok("관심 상품 등록 및 기본 알림 설정 완료");
+        // 현재 로그인한 회원 정보 조회
+        Member member = memberRepository.findByMemberId(memberId);
+        // 관심 상품 등록 (동기 처리)
+        Long interestProductId = interestProductService.registerInterestProduct(request, member);
+        // 관심 상품 등록 후 알림 전송 (비동기 처리)
+        notificationService.dispatchNotificationForInterestProduct(interestProductId, request, memberId);
+        return ResponseEntity.ok("관심 상품 등록 및 알림 전송 요청 완료");
     }
 
     /*

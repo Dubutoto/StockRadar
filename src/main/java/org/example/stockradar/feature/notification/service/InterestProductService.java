@@ -42,7 +42,6 @@ public class InterestProductService {
         InterestProduct interestProduct = InterestProduct.builder()
                 .member(member)
                 .product(product)
-                .webPushNotification(true)
                 .build();
 
         // 관심 상품 저장
