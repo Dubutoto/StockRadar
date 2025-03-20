@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <script type="text/javascript" th:src="@{/assets/js/customerInquiryprocessing/customerInquiryprocessing.js}" defer></script>
+    <!--    <script type="text/javascript" th:src="${@environment.getProperty('cloud.aws.cloudfrontpath')+'/assets/js/product/rxt3050.js'}" defer></script>-->
 
-</body>
+
+</head>
+<div class="container" layout:fragment="content">
+    <main class="main">
+
+
+        <div class="board-header" align="center">
+            <h1>고객문의 처리</h1>
+        </div>
+
+
+
+
+        <section class="inquiry-list">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>카테고리</th>
+                    <th>작성자</th>
+                    <th>등록시간</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- JavaScript가 여기에 동적으로 행을 추가합니다 -->
+                <!--                    <td>-->
+                <!--                        <button type="button" class="btn btn-md btn-primary btn-ellipse">-->
+                <!--                            <i class="icon-bell"></i> Track-->
+                <!--                        </button>-->
+                <!--                    </td>-->
+                </tr>
+                </tbody>
+
+            </table>
+        </section>
+
+    </main>
+</div>
 </html>
