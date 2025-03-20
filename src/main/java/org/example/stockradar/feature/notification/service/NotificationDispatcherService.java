@@ -36,8 +36,8 @@ public class NotificationDispatcherService {
             return;
         }
 
-        // 각 채널별 알림 전송
-        for (NotificationChannel channel : channels) {
+        // 각 채널별 알림 전송 작업을 병렬 처리
+        channels.parallelStream().forEach(channel -> {
             try {
                 switch (channel) {
                     case SMS:
@@ -75,6 +75,7 @@ public class NotificationDispatcherService {
             } catch (Exception e) {
                 log.error("{} 채널 전송 실패: {}", channel, e.getMessage());
             }
-        }
+        });
     }
+
 }

@@ -14,16 +14,16 @@
     <div class="content">
         <div th:if="${notificationType == 'stockChange'}">
             안녕하세요,<br/>
-            귀하가 관심 등록한 상품의 재고 상태가 변경되었으니 확인 바랍니다.<br/><br/>
+            귀하가 관심 등록한 상품의 재고 상태가 변경되었으니 확인 바랍니다.<br/>
             등록된 상품 이름: <span th:text="${productName}"></span><br/>
-            등록된 상품 URL: th:text="${interestProductUrl}"></a><br/>
-            현재 재고 상태: <span th:text="${stockStatus}"></span><br/><br/>
+            등록된 상품 URL: <a th:href="${interestProductUrl}" th:text="${interestProductUrl}"></a><br/>
+            현재 재고 상태: <span th:text="${stockStatus}"></span><br/>
             감사합니다.
         </div>
         <div th:if="${notificationType != 'stockChange'}">
-            안녕하세요, 귀하의 관심 상품 등록이 성공적으로 완료되었습니다.<br/><br/>
+            안녕하세요, 귀하의 관심 상품 등록이 성공적으로 완료되었습니다.<br/>
             등록된 상품 이름: <span th:text="${productName}"></span><br/>
-            등록된 상품 URL: th:text="${interestProductUrl}"></a>
+            등록된 상품 URL: <a th:href="${interestProductUrl}" th:text="${interestProductUrl}"></a>
         </div>
     </div>
     <div class="footer">본 메일은 발신 전용입니다.</div>

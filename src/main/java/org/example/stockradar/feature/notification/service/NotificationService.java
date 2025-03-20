@@ -55,7 +55,7 @@ public class NotificationService {
         NotificationEvent event = NotificationEvent.builder()
                 .interestProductId(interestProductId)
                 .emailAddress(member.getMemberId())   // memberId가 실제 이메일 주소라고 가정
-                .phoneNumber(null)                     // 필요시 추가 정보 할당
+                .phoneNumber(member.getMemberPhone())                     // 필요시 추가 정보 할당
                 .discordUserId(null)                   // 필요시 추가 정보 할당
                 .messageContent(messageContent)
                 .channels(channels)
