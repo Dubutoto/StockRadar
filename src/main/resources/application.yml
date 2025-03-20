@@ -43,7 +43,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: ec2-3-36-71-38.ap-northeast-2.compute.amazonaws.com
       port: 6379
 
   # kafka #######################################################
@@ -63,7 +63,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: santa1.0system@gmail.com
-    password: tlfn gzls fqhk ivsf
+    password: qjzc mlib vslc aorb
     properties:
       mail:
         smtp:

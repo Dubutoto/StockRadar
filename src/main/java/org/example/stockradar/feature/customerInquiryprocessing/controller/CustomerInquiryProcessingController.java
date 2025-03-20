@@ -1,99 +1,137 @@
 package org.example.stockradar.feature.customerInquiryprocessing.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.stockradar.feature.CustomerInquiry.dto.CustomerInquiryResponseDto;
+import org.example.stockradar.feature.auth.service.CustomUserDetailsService;
 import org.example.stockradar.feature.customerInquiryprocessing.dto.CustomerInquiryProcessingRequestDto;
 import org.example.stockradar.feature.customerInquiryprocessing.dto.CustomerInquiryProcessingResponseDto;
 import org.example.stockradar.feature.customerInquiryprocessing.service.CustomerInquiryProcessingService;
 import org.example.stockradar.global.exception.CustomException;
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.AuthException;
+import org.example.stockradar.global.exception.specific.CustomerInquiryException;
+import org.example.stockradar.global.exception.specific.CustomerInquiryProcessiongException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("customerInquiryprocessing")
 @RequiredArgsConstructor
 public class CustomerInquiryProcessingController {
     private final CustomerInquiryProcessingService service;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @GetMapping("customerInquiryprocessing")
     public String getCustomerInquiryProcessing() {
         return "customerInquiryprocessing/customerInquiryprocessing";
     }
 
-
     @GetMapping("api/customerInquiryprocessing")
-    public String customerInquiryProcessing(Authentication authentication, Model model) {
+    public ResponseEntity<?> getApiCustomerInquiryProcessing() {
+        log.info("고객문의처리요청");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        //인증 여부 확인
-        if (authentication == null) {
+        if (auth == null || !auth.isAuthenticated()) {
             AuthException.throwAuthException(ErrorCode.UNAUTHORIZED);
-            return null;
         }
 
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+        String memberId = auth.getName();
+        String role = customUserDetailsService.getMemberRole(memberId);
 
-        //어드민인지 검증 예외처리
-        if (!isAdmin) {
+        if (!"ADMIN" .equals(role)) {
             AuthException.throwAuthException(ErrorCode.FORBIDDEN);
-            return null;
         }
 
-        // 상태가 0인 고객문의 목록 조회
-        List<CustomerInquiryProcessingResponseDto> inquiries = service.searchStatus();
-
-        // 모델에 데이터 추가
-        model.addAttribute("inquiries", inquiries);
-        model.addAttribute("inquiryCount", inquiries.size());
-
-        return "customerInquiryprocessing/customerInquiryprocessing";
+        try {
+            List<CustomerInquiryProcessingResponseDto> responses = service.getInqueryList();
+            log.info("고객문의 {} 개 조회 완료", responses.size());
+            return ResponseEntity.ok(responses);
+        } catch (Exception e) {
+            log.error("고객문의 조회 중 오류 발생: {}", e.getMessage());
+            CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
+            return null; // 이 코드는 실행되지 않지만 컴파일을 위해 필요합니다
+        }
     }
 
+    @GetMapping("detail/{inquiryId}")
+    public String getCustomerInquiryDetail() {
 
-    @PutMapping("processionCompleted/{inquiryId}")
-    public String processionCompleted(
-            @PathVariable Long inquiryId,
-            @RequestBody CustomerInquiryProcessingRequestDto requestDto,
-            Authentication authentication,
-            Model model) {
+        // 고정된 템플릿 경로 반환
+        return "customerInquiryprocessing/detail";
+    }
 
-        // 인증여부 확인
-        if (authentication == null) {
+    @GetMapping("api/detail/{inquiryId}")
+    public ResponseEntity<?> getApiCustomerInquiryDetail(@PathVariable Long inquiryId) {
+        log.info("고객문의 상세 정보 API 요청: {}", inquiryId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()) {
             AuthException.throwAuthException(ErrorCode.UNAUTHORIZED);
-            return null;
         }
 
-        // 어드민 확인
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+        String memberId = auth.getName();
+        String role = customUserDetailsService.getMemberRole(memberId);
 
-        if (!isAdmin) {
+        if (!"ADMIN" .equals(role)) {
             AuthException.throwAuthException(ErrorCode.FORBIDDEN);
-            return null;
         }
 
-        // 문의 처리 완료
-        service.processionCompleted(requestDto, inquiryId);
+        try {
+            CustomerInquiryProcessingResponseDto response = service.getInquiryById(inquiryId);
+            log.info("고객문의 상세 정보 조회 완료: {}", inquiryId);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("고객문의 상세 조회 중 오류 발생: {}", e.getMessage());
+            CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
+            return null; // 이 코드는 실행되지 않지만 컴파일을 위해 필요합니다
+        }
+    }
 
-        // 처리 완료 후 최신 문의 목록 다시 조회
-        List<CustomerInquiryProcessingResponseDto> inquiries = service.searchStatus();
+    @PostMapping("process")
+    public String processCustomerInquiry(
+            @RequestParam("inquiryId") Long inquiryId,
+            @RequestParam("processingTitle") String processingTitle,
+            @RequestParam("processingContent") String processingContent) {
 
-        // 모델에 데이터 추가
-        model.addAttribute("inquiries", inquiries);
-        model.addAttribute("inquiryCount", inquiries.size());
-        model.addAttribute("message", "문의 처리가 완료되었습니다.");
+        log.info("고객문의 처리 요청: inquiryId={}, title={}", inquiryId, processingTitle);
 
-        // 동일한 페이지로 리턴
-        return "customerInquiryprocessing/customerInquiryprocessing";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) {
+            AuthException.throwAuthException(ErrorCode.UNAUTHORIZED);
+        }
+
+        String adminId = auth.getName();
+        String role = customUserDetailsService.getMemberRole(adminId);
+
+        if (!"ADMIN".equals(role)) {
+            AuthException.throwAuthException(ErrorCode.FORBIDDEN);
+        }
+
+        try {
+            // 문의 처리 서비스 호출
+            CustomerInquiryProcessingRequestDto requestDto = CustomerInquiryProcessingRequestDto.builder()
+                    .processingTitle(processingTitle)
+                    .processingContent(processingContent)
+                    .build();
+
+            service.processInquiry(inquiryId, requestDto);
+
+            // 성공 메시지와 함께 목록 페이지로 리다이렉트
+            return "redirect:/customerInquiryprocessing/customerInquiryprocessing?success=true";
+        } catch (Exception e) {
+            log.error("고객문의 처리 중 오류 발생: {}", e.getMessage());
+//            CustomerInquiryProcessiongException.throwCustomException(ErrorCode.INQUIRY_PROCESSING_FAILED);
+            return null; // 이 코드는 실행되지 않지만 컴파일을 위해 필요합니다
+        }
     }
 
 

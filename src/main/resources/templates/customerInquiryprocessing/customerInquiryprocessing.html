@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <script type="text/javascript" th:src="@{/assets/js/product/rxt4060Ti.js}" defer></script>
+    <script type="text/javascript" th:src="@{/assets/js/customerInquiryprocessing/customerInquiryprocessing.js}" defer></script>
     <!--    <script type="text/javascript" th:src="${@environment.getProperty('cloud.aws.cloudfrontpath')+'/assets/js/product/rxt3050.js'}" defer></script>-->
 
 
@@ -18,14 +18,14 @@
 
 
 
-        <section class="product-list">
+        <section class="inquiry-list">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Last Price</th>
-                    <th>Alert Status</th>
+                    <th>제목</th>
+                    <th>카테고리</th>
+                    <th>작성자</th>
+                    <th>등록시간</th>
                 </tr>
                 </thead>
                 <tbody>
