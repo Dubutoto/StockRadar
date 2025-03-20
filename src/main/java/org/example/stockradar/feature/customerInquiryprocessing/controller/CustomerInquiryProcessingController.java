@@ -37,7 +37,7 @@ public class CustomerInquiryProcessingController {
 
     @GetMapping("api/customerInquiryprocessing")
     public ResponseEntity<?> getApiCustomerInquiryProcessing() {
-        log.info("고객문의처리요청");
+//        log.info("고객문의처리요청");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth == null || !auth.isAuthenticated()) {
@@ -53,10 +53,10 @@ public class CustomerInquiryProcessingController {
 
         try {
             List<CustomerInquiryProcessingResponseDto> responses = service.getInqueryList();
-            log.info("고객문의 {} 개 조회 완료", responses.size());
+//            log.info("고객문의 {} 개 조회 완료", responses.size());
             return ResponseEntity.ok(responses);
         } catch (Exception e) {
-            log.error("고객문의 조회 중 오류 발생: {}", e.getMessage());
+//            log.error("고객문의 조회 중 오류 발생: {}", e.getMessage());
             CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
             return null; // 이 코드는 실행되지 않지만 컴파일을 위해 필요합니다
         }
@@ -71,7 +71,7 @@ public class CustomerInquiryProcessingController {
 
     @GetMapping("api/detail/{inquiryId}")
     public ResponseEntity<?> getApiCustomerInquiryDetail(@PathVariable Long inquiryId) {
-        log.info("고객문의 상세 정보 API 요청: {}", inquiryId);
+//        log.info("고객문의 상세 정보 API 요청: {}", inquiryId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth == null || !auth.isAuthenticated()) {
@@ -87,10 +87,10 @@ public class CustomerInquiryProcessingController {
 
         try {
             CustomerInquiryProcessingResponseDto response = service.getInquiryById(inquiryId);
-            log.info("고객문의 상세 정보 조회 완료: {}", inquiryId);
+//            log.info("고객문의 상세 정보 조회 완료: {}", inquiryId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            log.error("고객문의 상세 조회 중 오류 발생: {}", e.getMessage());
+//            log.error("고객문의 상세 조회 중 오류 발생: {}", e.getMessage());
             CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
             return null; // 이 코드는 실행되지 않지만 컴파일을 위해 필요합니다
         }
@@ -102,7 +102,7 @@ public class CustomerInquiryProcessingController {
             @RequestParam("processingTitle") String processingTitle,
             @RequestParam("processingContent") String processingContent) {
 
-        log.info("고객문의 처리 요청: inquiryId={}, title={}", inquiryId, processingTitle);
+//        log.info("고객문의 처리 요청: inquiryId={}, title={}", inquiryId, processingTitle);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {
@@ -128,8 +128,8 @@ public class CustomerInquiryProcessingController {
             // 성공 메시지와 함께 목록 페이지로 리다이렉트
             return "redirect:/customerInquiryprocessing/customerInquiryprocessing?success=true";
         } catch (Exception e) {
-            log.error("고객문의 처리 중 오류 발생: {}", e.getMessage());
-//            CustomerInquiryProcessiongException.throwCustomException(ErrorCode.INQUIRY_PROCESSING_FAILED);
+//            log.error("고객문의 처리 중 오류 발생: {}", e.getMessage());
+            CustomerInquiryProcessiongException.throwCustomException(ErrorCode.INQUIRY_PROCESSING_FAILED);
             return null; // 이 코드는 실행되지 않지만 컴파일을 위해 필요합니다
         }
     }

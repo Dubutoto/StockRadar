@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // 응답 본문을 JSON으로 파싱
         const data = await response.json();
-        console.log('서버 응답:', data); // 디버깅용 로그 추가
+        // console.log('서버 응답:', data); // 디버깅용 로그 추가
 
         // 응답 상태 코드에 따른 처리
         if (response.ok) {
             // 인증 성공 (200 OK)
-            console.log('인증 성공:', data.message);
+            // console.log('인증 성공:', data.message);
         } else {
             // 인증 실패 (4xx 오류)
             console.error('인증 실패:', data.message);
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
     } catch (error) {
-        console.error('서버 연결 오류:', error);
+        // console.error('서버 연결 오류:', error);
         alert('서버 연결 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
         window.location.href = '/login';
     }
@@ -87,7 +87,7 @@ async function submitInquiry(email, title, category, content) {
             }
         }
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         alert('서버 연결 중 오류가 발생했습니다.');
         window.location.href = '/login';
     }

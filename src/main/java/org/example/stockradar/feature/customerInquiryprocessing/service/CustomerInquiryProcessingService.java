@@ -57,7 +57,7 @@ public class CustomerInquiryProcessingService {
                             .build())
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("고객 문의 목록 조회 중 오류 발생: {}", e.getMessage());
+//            log.error("고객 문의 목록 조회 중 오류 발생: {}", e.getMessage());
             CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
             return Collections.emptyList(); // 컴파일을 위해 필요합니다
         }
@@ -69,7 +69,7 @@ public class CustomerInquiryProcessingService {
             Optional<CustomerInquiry> inquiryOptional = customerInquiryRepository.findById(inquiryId);
 
             if (inquiryOptional.isEmpty()) {
-                log.error("문의 ID {}에 해당하는 문의를 찾을 수 없습니다", inquiryId);
+//                log.error("문의 ID {}에 해당하는 문의를 찾을 수 없습니다", inquiryId);
                 CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
             }
 
@@ -91,7 +91,7 @@ public class CustomerInquiryProcessingService {
 
 
         } catch (Exception e) {
-            log.error("고객 문의 상세 조회 중 오류 발생: {}", e.getMessage());
+//            log.error("고객 문의 상세 조회 중 오류 발생: {}", e.getMessage());
             CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
             return null; // 컴파일을 위해 필요하지만 실행되지 않음
         }
@@ -104,7 +104,7 @@ public class CustomerInquiryProcessingService {
             Optional<CustomerInquiry> inquiryOptional = customerInquiryRepository.findById(inquiryId);
 
             if (inquiryOptional.isEmpty()) {
-                log.error("문의 ID {}에 해당하는 문의를 찾을 수 없습니다", inquiryId);
+//                log.error("문의 ID {}에 해당하는 문의를 찾을 수 없습니다", inquiryId);
                 CustomerInquiryException.throwCustomException(ErrorCode.INQUIRY_NOT_FOUND);
             }
 
@@ -112,7 +112,7 @@ public class CustomerInquiryProcessingService {
 
             // 처리 상태가 아닌 경우에만 처리
             if (inquiry.getInquiryStatus() != 0) { // 0 = 미처리 상태라고 가정
-                log.warn("이미 처리된 문의입니다: {}", inquiryId);
+//                log.warn("이미 처리된 문의입니다: {}", inquiryId);
                 // 이미 처리된 경우 로그만 남기고 계속 진행
             }
 
@@ -138,11 +138,11 @@ public class CustomerInquiryProcessingService {
                     requestDto.getProcessingContent()
             );
 
-            log.info("고객문의 처리 및 이메일 전송 완료: inquiryId={}, email={}", inquiryId, memberEmail);
+//            log.info("고객문의 처리 및 이메일 전송 완료: inquiryId={}, email={}", inquiryId, memberEmail);
 
 
         } catch (Exception e) {
-            log.error("고객문의 처리 중 오류 발생: {}", e.getMessage(), e);
+//            log.error("고객문의 처리 중 오류 발생: {}", e.getMessage(), e);
             throw new RuntimeException("고객문의 처리 중 오류가 발생했습니다: " + e.getMessage(), e);
         }
     }
