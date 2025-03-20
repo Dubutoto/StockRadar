@@ -48,7 +48,7 @@ public class NotificationController {
         }
 
         // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
-        String memberId = String.valueOf(authentication.getName());
+        String memberId = authentication.getName();
 
         // 관심상품 등록 및 알림 설정 처리 (서비스 계층에 위임)
         notificationDispatcherService.registerInterestProductAndDispatchNotification(request, memberId);
@@ -68,7 +68,7 @@ public class NotificationController {
         }
 
         // 인증된 사용자 ID 가져오기 (예: JWT의 subject를 사용하여 memberId 반환)
-        String memberId = String.valueOf(authentication.getName());
+        String memberId = authentication.getName();
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
         Page<InterestProductResponseDto> interestProductPage = interestProductService.getInterestProductsByMemberId(memberId,pageable);
 
@@ -86,7 +86,7 @@ public class NotificationController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("로그인 해주세요.");
         }
-        String memberId = String.valueOf(authentication.getName());
+        String memberId = authentication.getName();
 
         Long interestProductId = interestProductService.deleteInterestProduct(request.getProductId(), memberId);
         // 필요에 따라, 관심 상품과 연관된 알림도 삭제 처리
@@ -107,7 +107,7 @@ public class NotificationController {
                     .body("로그인 해주세요.");
         }
 
-        String memberId = String.valueOf(authentication.getName());
+        String memberId = authentication.getName();
 
         notificationService.updateSettings(memberId,settingsDto);
         return ResponseEntity.ok("알림 설정이 업데이트되었습니다.");
@@ -117,10 +117,22 @@ public class NotificationController {
      * 사용자 알림 채널 불러오기
      * 예시: 사용자가 설정한 알림 채널을 화면에 고정시키기 위해 사용합니다.
      */
-//    @GetMapping("/readSettings")
-//    public ResponseEntity<String> readSettings(Authentication authentication) {
-//
-//        return ResponseEntity.ok("알림 설정이 업데이트되었습니다.");
-//    }
+    @GetMapping("/readSettings")
+    public ResponseEntity<?> readSettings(Authentication authentication) {
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("로그인 해주세요.");
+        }
+
+        String memberId = authentication.getName();
+        NotificationSettingsDto settings = notificationService.getNotificationSettings(memberId);
+
+        log.info("settings{}", settings);
+
+
+        return ResponseEntity.ok(settings);
+    }
+
 
 }
