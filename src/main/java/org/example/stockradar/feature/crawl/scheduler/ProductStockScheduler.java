@@ -71,18 +71,15 @@ public class ProductStockScheduler {
     public void cacheProductStaticData() {
         // 이미 실행 중인지 확인
         if (!isStaticCachingRunning.compareAndSet(false, true)) {
-            log.warn("정적 데이터 캐싱 작업이 이미 실행 중입니다. 이번 실행은 건너뜁니다.");
             return;
         }
 
-        log.info("상품 정적 데이터 캐싱 스케줄러 시작: {}", LocalDateTime.now().format(formatter));
 
         try {
             // 모든 제품의 정보 조회
             List<Product> products = productRepository.findAllWithStockStatusAndPrice();
 
             if (products == null || products.isEmpty()) {
-                log.warn("캐싱할 제품 정보가 없습니다.");
                 return;
             }
 
@@ -106,20 +103,15 @@ public class ProductStockScheduler {
                         redisTemplate.opsForValue().set(cacheKey, staticDataDto, Duration.ofDays(7));
                         cachedCount++;
 
-                        log.debug("제품 ID {} 정적 데이터 캐싱 완료: {}", product.getProductId(), product.getProductName());
                     }
                 } catch (Exception e) {
-                    log.error("상품 정적 데이터 처리 중 오류 발생: {}, 오류: {}", product.getProductName(), e.getMessage());
                 }
             }
 
-            log.info("정적 데이터 캐싱 완료: 총 {} 개 제품 중 {} 개 캐싱됨", products.size(), cachedCount);
 
         } catch (Exception e) {
-            log.error("정적 데이터 캐싱 중 예외 발생: {}", e.getMessage(), e);
         } finally {
             isStaticCachingRunning.set(false);
-            log.info("상품 정적 데이터 캐싱 종료: {}", LocalDateTime.now().format(formatter));
         }
     }
 
@@ -128,19 +120,16 @@ public class ProductStockScheduler {
     public void cacheProductStockStatus() {
         // 이미 실행 중인지 확인
         if (!isRunning.compareAndSet(false, true)) {
-            log.warn("이전 스케줄러 작업이 아직 실행 중입니다. 이번 실행은 건너뜁니다.");
             CrawlException.throwCustomException(ErrorCode.CONCURRENT_SCHEDULER_CONFLICT);
             return;
         }
 
-        log.info("상품 재고 상태 갱신 스케줄러 시작: {}", LocalDateTime.now().format(formatter));
 
         try {
             // 모든 제품의 재고 상태를 조회
             List<Product> products = productRepository.findAllWithStockStatusAndPrice();
 
             if (products == null || products.isEmpty()) {
-                log.warn("갱신할 제품 정보가 없습니다.");
                 CrawlException.throwCustomException(ErrorCode.DATA_FETCH_TIMEOUT);
             }
 
@@ -168,21 +157,16 @@ public class ProductStockScheduler {
                         redisTemplate.opsForValue().set(stockCacheKey, stockStatusDto, Duration.ofMinutes(6));
                         updatedCount++;
 
-                        log.debug("제품 ID {} 재고 상태 갱신 완료: {}", product.getProductId(), availability);
                     }
                 } catch (Exception e) {
-                    log.error("상품 재고 상태 처리 중 오류 발생: {}, 오류: {}", product.getProductName(), e.getMessage());
                 }
             }
 
-            log.info("재고 상태 갱신 완료: 총 {} 개 제품 중 {} 개 갱신됨", products.size(), updatedCount);
 
         } catch (Exception e) {
-            log.error("스케줄러 실행 중 예외 발생: {}", e.getMessage(), e);
             CrawlException.throwCustomException(ErrorCode.SCHEDULER_EXECUTION_FAILED);
         } finally {
             isRunning.set(false);
-            log.info("상품 재고 상태 갱신 스케줄러 종료: {}", LocalDateTime.now().format(formatter));
         }
     }
 
