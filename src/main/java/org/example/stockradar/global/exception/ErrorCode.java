@@ -36,7 +36,8 @@ public enum ErrorCode {
     DATA_CONVERSION_ERROR(500, "ERR-015", "데이터 변환 오류", "데이터 DTO변환중 오류가 발생했습니다."),
     SCHEDULER_EXECUTION_FAILED(500, "ERR-101", "스케줄러 실행 실패", "스케줄러 작업 실행 중 오류가 발생했습니다."),
     DATA_FETCH_TIMEOUT(500, "ERR-102", "데이터 조회 시간 초과", "데이터 조회 중 시간 초과가 발생했습니다."),
-    CONCURRENT_SCHEDULER_CONFLICT(500, "ERR-103", "스케줄러 충돌", "이전 스케줄러 작업이 아직 실행 중입니다.");
+    CONCURRENT_SCHEDULER_CONFLICT(500, "ERR-103", "스케줄러 충돌", "이전 스케줄러 작업이 아직 실행 중입니다."),
+    INQUIRY_PROCESSING_FAILED(500, "ERR-104", "문의 처리 실패", "고객 문의 처리 중 오류가 발생했습니다.");
 
 
     private final int httpStatus;          // HTTP 상태 코드
