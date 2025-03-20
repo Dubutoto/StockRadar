@@ -5,24 +5,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
-import org.example.stockradar.feature.notification.dto.NotificationEvent;
 import org.example.stockradar.feature.notification.entity.InterestProduct;
 import org.example.stockradar.feature.notification.repository.InterestProductRepository;
-import org.example.stockradar.feature.notification.service.KafkaNotificationProducer;
 import org.example.stockradar.feature.notification.service.NotificationService;
 import org.example.stockradar.feature.product.dto.ProductCacheDto;
-
 import org.example.stockradar.global.exception.ErrorCode;
 import org.example.stockradar.global.exception.specific.CrawlException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
@@ -194,18 +189,24 @@ public class ProductStockScheduler {
             String newStatus = (newAvailability == 1) ? "재고 있음" : "재고 없음";
             log.info("제품 ID {} 재고 상태 변경 감지: {} -> {}", product.getProductId(), oldStatus, newStatus);
 
-            String messageContent = "상품 [" + product.getProductName() + "]의 재고 상태가 '"
-                    + oldStatus + "'에서 '" + newStatus + "'(으)로 변경되었습니다.";
-
-            // 해당 제품에 관심을 등록한 모든 사용자에게 알림 발송
+            // 해당 제품에 관심을 등록한 모든 사용자에게 unified 알림 전송 처리
             List<InterestProduct> interestProducts = interestProductRepository.findByProduct_ProductId(product.getProductId());
             if (interestProducts != null && !interestProducts.isEmpty()) {
                 for (InterestProduct interestProduct : interestProducts) {
                     // 각 관심 상품 등록 정보에서 회원의 식별정보(이메일)를 가져옴
                     String memberId = interestProduct.getMember().getMemberId();
                     Long interestProductId = interestProduct.getId();
-                    // 사용자 알림 설정을 반영하여 이벤트 전송 (NotificationService 내부에서 활성 채널을 조회)
-                    notificationService.sendNotificationEvent(memberId, interestProductId, messageContent);
+                    // unified sendNotificationEvent 호출
+                    // messageContent는 내부에서 채널별로 생성되므로 빈 문자열로 전달합니다.
+                    notificationService.sendNotificationEvent(
+                            memberId,
+                            interestProductId,
+                            "",           // messageContent: 내부에서 생성하도록 빈 값 전달
+                            newStatus,    // 재고 상태를 텍스트("재고 있음"/"재고 없음")로 전달
+                            "stockChange",
+                            product.getProductName(),
+                            product.getProductUrl()
+                    );
                 }
             } else {
                 log.info("제품 ID {} 에 대해 관심 상품 등록된 사용자가 없습니다.", product.getProductId());
@@ -218,5 +219,6 @@ public class ProductStockScheduler {
 
         return newAvailability;
     }
+
 
 }

@@ -8,7 +8,6 @@ import org.example.stockradar.feature.notification.dto.InterestProductRequestDto
 import org.example.stockradar.feature.notification.dto.InterestProductResponseDto;
 import org.example.stockradar.feature.notification.dto.NotificationSettingsDto;
 import org.example.stockradar.feature.notification.service.InterestProductService;
-import org.example.stockradar.feature.notification.service.NotificationDispatcherService;
 import org.example.stockradar.feature.notification.service.NotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

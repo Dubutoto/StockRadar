@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.auth.entity.Member;
 import org.example.stockradar.feature.auth.repository.MemberRepository;
-import org.example.stockradar.feature.auth.service.CoolsmsService;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
@@ -17,9 +16,7 @@ import org.example.stockradar.feature.notification.repository.NotificationSettin
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StreamUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +30,6 @@ public class NotificationService {
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
     private final KafkaNotificationProducer kafkaNotificationProducer;
-    private final EmailService emailService;
-    private final CoolsmsService coolsmsService;
 
     /**
      * 관심 상품 등록 후 알림 전송을 비동기적으로 처리합니다.
@@ -52,8 +47,8 @@ public class NotificationService {
         String productName = product.getProductName();
         String productUrl = product.getProductUrl();
 
-        // 관심 상품 등록 완료 알림을 위한 이메일 템플릿 생성 (registration 타입)
-        String htmlContent = emailService.generateEmailContent("registration", productName, productUrl, "");
+        // 기존에는 이메일 템플릿을 미리 생성했지만, 이제 unified 알림 전송 로직에서 처리하도록 이벤트에 필요한 정보만 담습니다.
+        String messageContent = ""; // Dispatcher에서 각 채널에 맞게 메시지 생성 처리
 
         List<NotificationChannel> channels = getActiveChannels(memberId);
 
@@ -61,10 +56,10 @@ public class NotificationService {
                 .interestProductId(interestProductId)
                 .emailAddress(member.getMemberId())   // memberId가 실제 이메일 주소라고 가정
                 .phoneNumber(null)                     // 필요시 추가 정보 할당
-                .discordUserId(null)               // 필요시 추가 정보 할당
-                .messageContent(htmlContent)           // 기본 메시지 내용(템플릿 활용)
+                .discordUserId(null)                   // 필요시 추가 정보 할당
+                .messageContent(messageContent)
                 .channels(channels)
-                // 추가 정보 설정
+                // 알림 전송에 필요한 세부 정보 전달
                 .notificationType("registration")
                 .productName(productName)
                 .productUrl(productUrl)
@@ -81,7 +76,11 @@ public class NotificationService {
      *
      * @param memberId         회원 식별자 (예: 이메일)
      * @param interestProductId 관심 상품 ID
-     * @param messageContent   재고 상태 변경 알림 메시지 내용
+     * @param messageContent   재고 상태 변경 알림 메시지 내용 (기존 코드 사용 시)
+     * @param stockStatus      현재 재고 상태 (예: '재고 있음', '재고 없음')
+     * @param notificationType 알림 유형 (예: "stockChange")
+     * @param productName      상품 이름
+     * @param productUrl       상품 URL
      */
     @Transactional(rollbackFor = Exception.class)
     public void sendNotificationEvent(String memberId, Long interestProductId, String messageContent, String stockStatus, String notificationType, String productName, String productUrl) {
@@ -90,9 +89,8 @@ public class NotificationService {
         NotificationEvent event = NotificationEvent.builder()
                 .interestProductId(interestProductId)
                 .emailAddress(memberId)
-                .messageContent(messageContent)
+                .messageContent(messageContent) // 메시지 콘텐츠를 직접 전달할 수도 있지만, unified 로직에서 재생성 가능하도록 기본값으로 비워둘 수도 있습니다.
                 .channels(channels)
-                // 추가 정보 설정
                 .notificationType(notificationType)
                 .productName(productName)
                 .productUrl(productUrl)
