@@ -47,7 +47,7 @@ public class DiscordService {
      * @param userId         디스코드 사용자 ID
      * @param messageContent 전송할 메시지 내용
      */
-    private void sendDirectMessage(String userId, String messageContent) {
+    public void sendDirectMessage(String userId, String messageContent) {
         jda.retrieveUserById(userId).queue(
                 user -> user.openPrivateChannel().queue(
                         privateChannel -> privateChannel.sendMessage(messageContent).queue(

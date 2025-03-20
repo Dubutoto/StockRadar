@@ -22,5 +22,10 @@ public class NotificationEvent {
     private String phoneNumber;                 // SMS 전송용 전화번호
     private String emailAddress;                // 이메일 전송용 주소
     private String discordWebhookUrl;           // 디스코드 Webhook URL
-    private String messageContent;              // 공통 메시지 내용
+    private String messageContent;              // 기본 메시지 내용
+    // 추가 정보
+    private String productName;                 // 상품 이름
+    private String productUrl;                  // 상품 URL
+    private String stockStatus;                 // 재고 상태 (재고 변경 알림 시 사용)
+    private String notificationType;            // 알림 유형 ("registration", "stockChange" 등)
 }

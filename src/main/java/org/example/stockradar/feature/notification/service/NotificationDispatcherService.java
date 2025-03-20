@@ -2,25 +2,10 @@ package org.example.stockradar.feature.notification.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.stockradar.feature.auth.entity.Member;
-import org.example.stockradar.feature.auth.repository.MemberRepository;
 import org.example.stockradar.feature.auth.service.CoolsmsService;
-import org.example.stockradar.feature.crawl.entity.Product;
-import org.example.stockradar.feature.crawl.repository.ProductRepository;
-import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.NotificationEvent;
 import org.example.stockradar.feature.notification.entity.NotificationChannel;
-import org.example.stockradar.feature.notification.entity.NotificationSetting;
-import org.example.stockradar.feature.notification.repository.NotificationSettingRepository;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StreamUtils;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
