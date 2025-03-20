@@ -135,7 +135,7 @@ function saveSettings(){
     const discord = document.getElementById("discordNotification").checked;
 
     // Axios POST 요청으로 설정 전송
-    axios.post('/notification/settings', {
+    axios.post('/notification/saveSettings', {
         emailNotification: email,
         smsNotification: sms,
         discordNotification: discord
@@ -150,8 +150,21 @@ function saveSettings(){
 }
 
 function readSettings(){
-
+    axios.get('/notification/readSettings')
+        .then(response => {
+            console.log("알림 설정 데이터:", response.data);
+            // 백엔드에서 반환하는 데이터 형식에 따라 아래 코드를 수정하세요.
+            // 예: { emailNotification: true, smsNotification: false, discordNotification: true }
+            const settings = response.data;
+            document.getElementById("emailNotification").checked = settings.emailNotification;
+            document.getElementById("smsNotification").checked = settings.smsNotification;
+            document.getElementById("discordNotification").checked = settings.discordNotification;
+        })
+        .catch(error => {
+            console.error("알림 설정 조회 에러:", error);
+        });
 }
+
 
 // 페이지 로딩 후 함수 호출
 document.addEventListener('DOMContentLoaded', function() {

@@ -6,7 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.notification.dto.NotificationEvent;
+import org.example.stockradar.feature.notification.entity.InterestProduct;
+import org.example.stockradar.feature.notification.repository.InterestProductRepository;
 import org.example.stockradar.feature.notification.service.KafkaNotificationProducer;
+import org.example.stockradar.feature.notification.service.NotificationService;
 import org.example.stockradar.feature.product.dto.ProductCacheDto;
 
 import org.example.stockradar.global.exception.ErrorCode;
@@ -30,7 +33,8 @@ public class ProductStockScheduler {
     private final ProductRepository productRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final KafkaNotificationProducer kafkaNotificationProducer;
+    private final InterestProductRepository interestProductRepository;
+    private final NotificationService notificationService;
 
     // 정적 데이터와 재고 상태를 위한 별도의 캐시 키 프리픽스
     private static final String STATIC_DATA_CACHE_PREFIX = "product:static:";
@@ -191,7 +195,6 @@ public class ProductStockScheduler {
     private Integer checkAndSendStockChangeNotification(Product product) {
         // DB에 저장된 마지막 알림 전송 시의 재고 상태
         Integer oldAvailability = product.getStockStatus().getLastNotifiedAvailability();
-
         // DB의 현재 재고 상태 (예: 0: 재고 없음, 1: 재고 있음)
         Integer newAvailability = product.getStockStatus().getAvailability();
 
@@ -207,15 +210,22 @@ public class ProductStockScheduler {
             String newStatus = (newAvailability == 1) ? "재고 있음" : "재고 없음";
             log.info("제품 ID {} 재고 상태 변경 감지: {} -> {}", product.getProductId(), oldStatus, newStatus);
 
-            NotificationEvent event = NotificationEvent.builder()
-                    .interestProductId(product.getProductId())
-                    .emailAddress("user@example.com") // 실제 사용자 이메일로 대체
-                    .messageContent("상품 [" + product.getProductName() + "]의 재고 상태가 '"
-                            + oldStatus + "'에서 '" + newStatus + "'(으)로 변경되었습니다.")
-                    .build();
+            String messageContent = "상품 [" + product.getProductName() + "]의 재고 상태가 '"
+                    + oldStatus + "'에서 '" + newStatus + "'(으)로 변경되었습니다.";
 
-            // Kafka를 통해 알림 이벤트 전송
-            kafkaNotificationProducer.sendNotification(event);
+            // 해당 제품에 관심을 등록한 모든 사용자에게 알림 발송
+            List<InterestProduct> interestProducts = interestProductRepository.findByProduct_ProductId(product.getProductId());
+            if (interestProducts != null && !interestProducts.isEmpty()) {
+                for (InterestProduct interestProduct : interestProducts) {
+                    // 각 관심 상품 등록 정보에서 회원의 식별정보(이메일)를 가져옴
+                    String memberId = interestProduct.getMember().getMemberId();
+                    Long interestProductId = interestProduct.getId();
+                    // 사용자 알림 설정을 반영하여 이벤트 전송 (NotificationService 내부에서 활성 채널을 조회)
+                    notificationService.sendNotificationEvent(memberId, interestProductId, messageContent);
+                }
+            } else {
+                log.info("제품 ID {} 에 대해 관심 상품 등록된 사용자가 없습니다.", product.getProductId());
+            }
 
             // 마지막 알림 전송 상태 업데이트
             product.getStockStatus().setLastNotifiedAvailability(newAvailability);
@@ -224,6 +234,5 @@ public class ProductStockScheduler {
 
         return newAvailability;
     }
-
 
 }

@@ -130,7 +130,6 @@ public class NotificationController {
 
         log.info("settings{}", settings);
 
-
         return ResponseEntity.ok(settings);
     }
 

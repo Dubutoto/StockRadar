@@ -86,6 +86,44 @@ public class NotificationService {
     }
 
     /**
+     * 회원의 알림 설정을 조회하여 NotificationSettingsDto로 반환합니다.
+     * 회원의 설정이 없는 경우 기본값(false)으로 처리합니다.
+     *
+     * @param memberId 회원 식별에 사용되는 값 (실제 운영에서는 이메일 주소 등)
+     * @return NotificationSettingsDto
+     */
+    @Transactional(readOnly = true)
+    public NotificationSettingsDto getNotificationSettings(String memberId) {
+        List<NotificationSetting> settings = notificationSettingRepository.findByMember_MemberId(memberId);
+
+        boolean emailNotification = false;
+        boolean smsNotification = false;
+        boolean discordNotification = false;
+
+        if (settings != null && !settings.isEmpty()) {
+            for (NotificationSetting setting : settings) {
+                if (setting.getChannel() == NotificationChannel.EMAIL) {
+                    emailNotification = setting.isEnabled();
+                } else if (setting.getChannel() == NotificationChannel.SMS) {
+                    smsNotification = setting.isEnabled();
+                } else if (setting.getChannel() == NotificationChannel.DISCORD) {
+                    discordNotification = setting.isEnabled();
+                }
+                // WEB_PUSH 등 추가 채널이 있을 경우, 이곳에 처리 로직 추가 가능
+            }
+        }
+
+        NotificationSettingsDto dto = NotificationSettingsDto.builder()
+                .emailNotification(emailNotification)
+                .smsNotification(smsNotification)
+                .discordNotification(discordNotification)
+                .build();
+
+        log.info("회원 {}의 알림 설정 조회 결과: {}", memberId, dto);
+        return dto;
+    }
+
+    /**
      * DB에 저장된 사용자 알림 설정을 기반으로, 해당 회원에 대해 활성화된 채널을 조회하고,
      * 알림 이벤트를 생성하여 Kafka를 통해 전송합니다.
      *

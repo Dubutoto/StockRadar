@@ -10,6 +10,8 @@ import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.notification.dto.InterestProductRequestDto;
 import org.example.stockradar.feature.notification.dto.NotificationEvent;
 import org.example.stockradar.feature.notification.entity.NotificationChannel;
+import org.example.stockradar.feature.notification.entity.NotificationSetting;
+import org.example.stockradar.feature.notification.repository.NotificationSettingRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,10 +37,11 @@ public class NotificationDispatcherService {
     private final EmailService emailService;
     private final DiscordService discordService;
     private final WebPushService webPushService;
-    private final InterestProductService intertestProductService;
+    private final InterestProductService interestProductService;
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
     private final KafkaNotificationProducer kafkaNotificationProducer;
+    private final NotificationSettingRepository notificationSettingRepository;
 
     @Value("classpath:templates/email-template/email-template1.html")
     private Resource emailTemplate;
@@ -47,7 +51,7 @@ public class NotificationDispatcherService {
         // 현재 로그인한 회원 정보 조회
         Member member = memberRepository.findByMemberId(memberId);
         // 관심 상품 등록
-        Long interestProductId = intertestProductService.registerInterestProduct(request, member);
+        Long interestProductId = interestProductService.registerInterestProduct(request, member);
 
         // 제품 정보를 조회 (관심 상품 등록 시 사용한 productId 사용)
         Product product = productRepository.findProductWithStockStatusById(request.getProductId());
@@ -57,11 +61,30 @@ public class NotificationDispatcherService {
         // HTML 템플릿 로드 및 데이터 치환: 제품 이름과 URL 치환
         String htmlContent = loadHtmlTemplate(productName, productUrl);
 
-        // NotificationEvent 생성 (기본적으로 이메일 채널로 전송)
+        // 사용자의 알림 설정을 조회하여 채널 리스트 구성
+        List<NotificationSetting> settings = notificationSettingRepository.findByMember_MemberId(memberId);
+        List<NotificationChannel> channels = new ArrayList<>();
+        if (settings == null || settings.isEmpty()) {
+            // 알림 설정이 없으면 기본 EMAIL 채널 사용
+            channels.add(NotificationChannel.EMAIL);
+        } else {
+            for (NotificationSetting setting : settings) {
+                if (setting.isEnabled()) {
+                    channels.add(setting.getChannel());
+                }
+            }
+            // 활성화된 채널이 하나도 없으면 기본 EMAIL 채널 사용
+            if (channels.isEmpty()) {
+                channels.add(NotificationChannel.EMAIL);
+            }
+        }
+
+        // NotificationEvent 생성 (동적 채널 설정 포함)
         NotificationEvent event = NotificationEvent.builder()
                 .interestProductId(interestProductId)
-                .emailAddress(member.getMemberId()) // 이메일 주소 예시로 memberId 사용
+                .emailAddress(member.getMemberId()) // 이메일 주소로 memberId 사용
                 .messageContent(htmlContent)
+                .channels(channels)
                 .build();
 
         // Kafka 프로듀서를 통해 이벤트 발행 (비동기 처리)
