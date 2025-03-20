@@ -50,6 +50,7 @@ public class NotificationDispatcherService {
     public void registerInterestProductAndDispatchNotification(InterestProductRequestDto request, String memberId) {
         // 현재 로그인한 회원 정보 조회
         Member member = memberRepository.findByMemberId(memberId);
+        log.info("memberdddddddddddddddddddddddddddddddddddddd", member.getMemberId());
         // 관심 상품 등록
         Long interestProductId = interestProductService.registerInterestProduct(request, member);
 
