@@ -45,23 +45,30 @@ public class NotificationService {
      * @param memberId          현재 로그인한 회원의 식별자 (이메일 주소로 사용)
      */
     @Async
-    @Transactional(readOnly = true)
+    @Transactional(rollbackFor = Exception.class)
     public void dispatchNotificationForInterestProduct(Long interestProductId, InterestProductRequestDto request, String memberId) {
         Member member = memberRepository.findByMemberId(memberId);
         Product product = productRepository.findProductWithStockStatusById(request.getProductId());
         String productName = product.getProductName();
         String productUrl = product.getProductUrl();
 
-        List<NotificationChannel> channels = getActiveChannels(memberId);
+        // 관심 상품 등록 완료 알림을 위한 이메일 템플릿 생성 (registration 타입)
+        String htmlContent = emailService.generateEmailContent("registration", productName, productUrl, "");
 
-        //위에 채널에 따라
-        //coolsmsService나 emailService에 보내주고
+        List<NotificationChannel> channels = getActiveChannels(memberId);
 
         NotificationEvent event = NotificationEvent.builder()
                 .interestProductId(interestProductId)
-                .emailAddress(member.getMemberId())  // memberId가 실제 이메일 주소라고 가정
-                .messageContent(htmlContent)
+                .emailAddress(member.getMemberId())   // memberId가 실제 이메일 주소라고 가정
+                .phoneNumber(null)                     // 필요시 추가 정보 할당
+                .discordUserId(null)               // 필요시 추가 정보 할당
+                .messageContent(htmlContent)           // 기본 메시지 내용(템플릿 활용)
                 .channels(channels)
+                // 추가 정보 설정
+                .notificationType("registration")
+                .productName(productName)
+                .productUrl(productUrl)
+                .stockStatus("")                       // 등록 알림에서는 재고 상태가 없으므로 빈 문자열
                 .build();
 
         kafkaNotificationProducer.sendNotification(event);
@@ -76,8 +83,8 @@ public class NotificationService {
      * @param interestProductId 관심 상품 ID
      * @param messageContent   재고 상태 변경 알림 메시지 내용
      */
-    @Transactional(readOnly = true)
-    public void sendNotificationEvent(String memberId, Long interestProductId, String messageContent) {
+    @Transactional(rollbackFor = Exception.class)
+    public void sendNotificationEvent(String memberId, Long interestProductId, String messageContent, String stockStatus, String notificationType, String productName, String productUrl) {
         List<NotificationChannel> channels = getActiveChannels(memberId);
 
         NotificationEvent event = NotificationEvent.builder()
@@ -85,6 +92,11 @@ public class NotificationService {
                 .emailAddress(memberId)
                 .messageContent(messageContent)
                 .channels(channels)
+                // 추가 정보 설정
+                .notificationType(notificationType)
+                .productName(productName)
+                .productUrl(productUrl)
+                .stockStatus(stockStatus)
                 .build();
 
         kafkaNotificationProducer.sendNotification(event);
@@ -137,7 +149,7 @@ public class NotificationService {
      * @param memberId    회원 식별자
      * @param settingsDto 알림 설정 DTO
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateSettings(String memberId, NotificationSettingsDto settingsDto) {
         List<NotificationSetting> existingSettings = notificationSettingRepository.findByMember_MemberId(memberId);
         if (existingSettings != null && !existingSettings.isEmpty()) {

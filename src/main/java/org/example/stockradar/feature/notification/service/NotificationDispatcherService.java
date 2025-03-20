@@ -8,11 +8,6 @@ import org.example.stockradar.feature.notification.entity.NotificationChannel;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-/**
- * @author Hyun7en
- */
-
-//사용자 알림 채널 설정에 따른 알림 발송 처리
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -25,25 +20,50 @@ public class NotificationDispatcherService {
 
     public void dispatchNotification(NotificationEvent event) {
         List<NotificationChannel> channels = event.getChannels();
+
+        // 채널 설정이 없으면 기본 채널(이메일)로 발송
         if (channels == null || channels.isEmpty()) {
             try {
-                emailService.sendHtmlEmail(event.getEmailAddress(), "알림", event.getMessageContent());
+                emailService.sendEmailNotification(
+                        event.getEmailAddress(),
+                        event.getNotificationType(),
+                        event.getProductName(),
+                        event.getProductUrl(),
+                        event.getStockStatus());
             } catch (Exception e) {
                 log.error("기본 채널(이메일) 전송 실패: {}", e.getMessage());
             }
             return;
         }
+
+        // 각 채널별 알림 전송
         for (NotificationChannel channel : channels) {
             try {
                 switch (channel) {
                     case SMS:
-                        coolSMSService.sendSms(event.getPhoneNumber(), event.getMessageContent());
+                        coolSMSService.sendSmsNotification(
+                                event.getNotificationType(),
+                                event.getPhoneNumber(),
+                                event.getProductName(),
+                                event.getProductUrl(),
+                                event.getStockStatus());
                         break;
                     case EMAIL:
-                        emailService.sendHtmlEmail(event.getEmailAddress(), "알림", event.getMessageContent());
+                        emailService.sendEmailNotification(
+                                event.getEmailAddress(),
+                                event.getNotificationType(),
+                                event.getProductName(),
+                                event.getProductUrl(),
+                                event.getStockStatus());
                         break;
                     case DISCORD:
-                        discordService.sendDirectMessage(event.getDiscordWebhookUrl(), event.getMessageContent());
+                        // unified Discord 전송: 내부에서 알림 유형에 따른 분기를 처리
+                        discordService.sendDirectMessageNotification(
+                                event.getNotificationType(),
+                                event.getDiscordUserId(),
+                                event.getProductName(),
+                                event.getProductUrl(),
+                                event.getStockStatus());
                         break;
                     case WEB_PUSH:
                         webPushService.sendWebPush(event.getInterestProductId(), event.getMessageContent());

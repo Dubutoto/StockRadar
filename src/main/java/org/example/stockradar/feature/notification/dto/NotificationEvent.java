@@ -21,7 +21,7 @@ public class NotificationEvent {
     private List<NotificationChannel> channels; // 선택된 채널 목록
     private String phoneNumber;                 // SMS 전송용 전화번호
     private String emailAddress;                // 이메일 전송용 주소
-    private String discordWebhookUrl;           // 디스코드 Webhook URL
+    private String discordUserId;               // 디스코드 DM 전송용 사용자 ID
     private String messageContent;              // 기본 메시지 내용
     // 추가 정보
     private String productName;                 // 상품 이름

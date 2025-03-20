@@ -13,6 +13,23 @@ public class DiscordService {
     private final JDA jda;
 
     /**
+     * 알림 유형에 따라 Discord 메시지를 생성하고 전송합니다.
+     *
+     * @param notificationType 알림 유형 ("stockChange" 또는 "registration")
+     * @param userId           디스코드 사용자 ID
+     * @param productName      상품 이름
+     * @param productUrl       상품 URL
+     * @param stockStatus      재고 상태 (stockChange인 경우 사용, registration이면 빈 문자열)
+     */
+    public void sendDirectMessageNotification(String notificationType, String userId, String productName, String productUrl, String stockStatus) {
+        if ("stockChange".equalsIgnoreCase(notificationType)) {
+            sendStockChangeAlert(userId, productName, productUrl, stockStatus);
+        } else {
+            sendRegistrationAlert(userId, productName, productUrl);
+        }
+    }
+
+    /**
      * 관심 상품 등록 완료 DM 알림을 전송합니다.
      *
      * @param userId      디스코드 사용자 ID
@@ -20,8 +37,7 @@ public class DiscordService {
      * @param productUrl  등록된 상품 URL
      */
     public void sendRegistrationAlert(String userId, String productName, String productUrl) {
-        String messageContent = String.format(
-                "관심 상품 등록 완료\n상품: %s\n상품 URL: %s",
+        String messageContent = String.format("**관심 상품 등록 완료**\n상품: **%s**\nURL: <%s>",
                 productName, productUrl);
         sendDirectMessage(userId, messageContent);
     }
@@ -35,8 +51,7 @@ public class DiscordService {
      * @param stockStatus 현재 재고 상태 (예: '재고 있음', '재고 없음')
      */
     public void sendStockChangeAlert(String userId, String productName, String productUrl, String stockStatus) {
-        String messageContent = String.format(
-                "재고 상태 변경 알림\n상품: %s\n상품 URL: %s\n현재 재고 상태: %s",
+        String messageContent = String.format("**재고 상태 변경 알림**\n상품: **%s**\nURL: <%s>\n현재 재고: **%s**",
                 productName, productUrl, stockStatus);
         sendDirectMessage(userId, messageContent);
     }
@@ -59,5 +74,4 @@ public class DiscordService {
                 error -> log.error("Discord 사용자 조회 실패: {} - {}", userId, error.getMessage())
         );
     }
-
 }

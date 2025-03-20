@@ -57,4 +57,18 @@ public class EmailService {
             log.error("HTML 이메일 전송 실패: {}", e.getMessage());
         }
     }
+
+    /**
+     * 알림 유형에 따라 이메일 콘텐츠를 생성하고 전송합니다.
+     *
+     * @param to                수신자 이메일 주소
+     * @param notificationType  알림 유형 ("stockChange" 또는 "registration")
+     * @param productName       제품 이름
+     * @param interestProductUrl 등록된 상품 URL
+     * @param stockStatus       재고 상태 (재고 변경 알림인 경우 사용, 등록 알림일 경우 빈 문자열)
+     */
+    public void sendEmailNotification(String to, String notificationType, String productName, String interestProductUrl, String stockStatus) {
+        String htmlContent = generateEmailContent(notificationType, productName, interestProductUrl, stockStatus);
+        sendHtmlEmail(to, "알림", htmlContent);
+    }
 }
