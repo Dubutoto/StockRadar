@@ -37,27 +37,6 @@ public class NotificationDispatcherService {
     private final EmailService emailService;
     private final DiscordService discordService;
     private final WebPushService webPushService;
-    private final InterestProductService interestProductService;
-    private final MemberRepository memberRepository;
-    private final ProductRepository productRepository;
-    private final KafkaNotificationProducer kafkaNotificationProducer;
-    private final NotificationSettingRepository notificationSettingRepository;
-
-    @Value("classpath:templates/email-template/email-template1.html")
-    private Resource emailTemplate;
-
-    private String loadHtmlTemplate(String productName, String productUrl) {
-        try {
-            String template = StreamUtils.copyToString(emailTemplate.getInputStream(), StandardCharsets.UTF_8);
-            // 템플릿의 플레이스홀더를 실제 값으로 치환
-            template = template.replace("{{productName}}", productName);
-            template = template.replace("{{interestProductUrl}}", productUrl);
-            return template;
-        } catch (IOException e) {
-            log.error("HTML 템플릿 로드 실패", e);
-            return "";
-        }
-    }
 
     public void dispatchNotification(NotificationEvent event) {
         List<NotificationChannel> channels = event.getChannels();

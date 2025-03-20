@@ -3,15 +3,11 @@ package org.example.stockradar.feature.notification.service;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 @Service
 @RequiredArgsConstructor
@@ -19,28 +15,26 @@ import java.nio.charset.StandardCharsets;
 public class EmailService {
 
     private final JavaMailSender mailSender;
-
-    // 이메일 템플릿 리소스를 application.properties 또는 application.yml에서 주입받음
-    @Value("classpath:templates/email-template/email-template1.html")
-    private Resource emailTemplate;
+    private final SpringTemplateEngine templateEngine; // Thymeleaf Template Engine
 
     /**
-     * HTML 템플릿 파일을 로드하고, 제품 정보로 플레이스홀더를 치환합니다.
+     * Thymeleaf 템플릿 엔진을 사용하여 이메일 콘텐츠를 생성합니다.
      *
-     * @param productName 제품 이름
-     * @param productUrl  제품 URL
-     * @return 치환 완료된 HTML 콘텐츠
+     * @param notificationType 알림 유형 ("stockChange" 또는 "registration" 등)
+     * @param productName      제품 이름
+     * @param interestProductUrl 등록된 상품 URL
+     * @param stockStatus      재고 상태 (재고 변경 알림인 경우 사용, 등록 알림일 경우 빈 문자열)
+     * @return 최종 이메일 본문 (HTML)
      */
-    public String loadHtmlTemplate(String productName, String productUrl) {
-        try {
-            String template = StreamUtils.copyToString(emailTemplate.getInputStream(), StandardCharsets.UTF_8);
-            template = template.replace("{{productName}}", productName);
-            template = template.replace("{{interestProductUrl}}", productUrl);
-            return template;
-        } catch (IOException e) {
-            log.error("HTML 템플릿 로드 실패", e);
-            return "";
-        }
+    public String generateEmailContent(String notificationType, String productName, String interestProductUrl, String stockStatus) {
+        Context context = new Context();
+        // 템플릿 내에서 조건부 처리를 위해 notificationType 변수를 사용합니다.
+        context.setVariable("notificationType", notificationType);
+        context.setVariable("productName", productName);
+        context.setVariable("interestProductUrl", interestProductUrl);
+        context.setVariable("stockStatus", stockStatus);
+        // 템플릿 파일 이름은 resources/templates/email-template.html 을 기준으로 합니다.
+        return templateEngine.process("email-template/email-template", context);
     }
 
     /**

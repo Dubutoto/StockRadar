@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        .container { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+        .header { font-size: 24px; color: #333; margin-bottom: 10px; }
+        .content { font-size: 16px; color: #555; }
+        .footer { font-size: 12px; color: #999; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 조건에 따라 헤더 내용 변경 -->
+    <div class="header" th:text="${notificationType == 'stockChange' ? '관심 상품 재고 상태 변경 알림' : '관심 상품 등록 완료'}"></div>
+    <div class="content">
+        <div th:if="${notificationType == 'stockChange'}">
+            안녕하세요,<br/>
+            귀하가 관심 등록한 상품의 재고 상태가 변경되었으니 확인 바랍니다.<br/><br/>
+            등록된 상품 이름: <span th:text="${productName}"></span><br/>
+            등록된 상품 URL: th:text="${interestProductUrl}"></a><br/>
+            현재 재고 상태: <span th:text="${stockStatus}"></span><br/><br/>
+            감사합니다.
+        </div>
+        <div th:if="${notificationType != 'stockChange'}">
+            안녕하세요, 귀하의 관심 상품 등록이 성공적으로 완료되었습니다.<br/><br/>
+            등록된 상품 이름: <span th:text="${productName}"></span><br/>
+            등록된 상품 URL: th:text="${interestProductUrl}"></a>
+        </div>
+    </div>
+    <div class="footer">본 메일은 발신 전용입니다.</div>
+</div>
+</body>
+</html>
