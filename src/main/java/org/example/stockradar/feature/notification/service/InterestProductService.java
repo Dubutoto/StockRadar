@@ -13,15 +13,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * @author Hyun7en
  */
 
+//관심 상품 관련 로직 service
 @Service
 @RequiredArgsConstructor
-public class IntertestProductService {
+public class InterestProductService {
 
     private final ProductRepository productRepository;
     private final InterestProductRepository interestProductRepository;
@@ -39,11 +38,10 @@ public class IntertestProductService {
             throw new IllegalStateException("이미 관심 상품으로 등록되어 있습니다.");
         }
 
-        // InterestProduct 엔터티 생성 (웹 푸시 알림은 기본 활성화)
+        // InterestProduct 엔터티 생성
         InterestProduct interestProduct = InterestProduct.builder()
                 .member(member)
                 .product(product)
-                .webPushNotification(true)
                 .build();
 
         // 관심 상품 저장
@@ -66,10 +64,7 @@ public class IntertestProductService {
                         .build());
     }
 
-
-
     //관심상품 삭제
-
     @Transactional(rollbackFor = Exception.class)
     public Long deleteInterestProduct(Long productId, String memberId) {
         InterestProduct interestProduct = interestProductRepository

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
  * @author Hyun7en
  */
 
+//회원별 알림
 @Entity
 @Getter
 @Builder
