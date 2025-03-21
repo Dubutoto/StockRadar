@@ -1,10 +1,9 @@
 package org.example.stockradar.global.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 
 public class CustomException extends RuntimeException {

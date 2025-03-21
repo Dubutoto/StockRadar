@@ -105,6 +105,7 @@ public class ProductStockScheduler {
 
 
         } catch (Exception e) {
+
         } finally {
             isStaticCachingRunning.set(false);
         }

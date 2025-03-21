@@ -31,7 +31,7 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
-      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+      dialect: org.hibernate.dialect.MySQL8Dialect
 
   datasource:
     hikari:
@@ -58,7 +58,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"  # 모든 패키지를 신뢰할 경우
-
+  # SMTP 배포시 필요 X
   mail:
     host: smtp.gmail.com
     port: 587
@@ -109,18 +109,3 @@ logging:
     output:
       ansi:
         enabled: ALWAYS
-# s3
-cloud:
-  aws:
-    credentials:
-      access-key: ${}
-      secret-key: ${}
-
-    s3:
-      bucket: stockradars3
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    s3path: "https://stockradars3.s3.ap-northeast-2.amazonaws.com"
-    cloudfrontpath: "https://dxhufg9x2pwyh.cloudfront.net"

@@ -57,19 +57,3 @@ spring:
 
 jwt:
   secret: "nJqBg/I14BcNecIsAsdWXwQa4E6fC20rXpHxb0EcHlE="
-
-
-elasticsearch:
-  host: localhost:9200
-  username: #fill out
-  password: #fill out
-
-cloud:
-  aws:
-    s3:
-      bucket: #fill out
-    stack.auto: false
-    region.static: ap-northeast-2
-    credentials:
-      accessKey: # fill out
-      secretKey: # fill out
