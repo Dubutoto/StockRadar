@@ -34,7 +34,7 @@ jobs:
 
       - name: Set artifact
         run: |
-          artifact=$(ls ./build/libs | tr -d '\n')
+          artifact=$(ls ./build/libs/*.jar | grep -v "plain" | head -n 1 | tr -d '\n')
           echo "artifact=$artifact" >> $GITHUB_ENV
 
       - name: Beanstalk Deploy
