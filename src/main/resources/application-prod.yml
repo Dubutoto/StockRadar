@@ -139,20 +139,6 @@ logging:
       file-name-pattern: "StockRadar.%d{yyyy-MM-dd}.%i.log"
       max-history: 60
 
-cloud:
-  aws:
-    credentials:
-      access-key: ${AWS_ACCESS_KEY_ID}
-      secret-key: ${AWS_SECRET_ACCESS_KEY}
-    s3:
-      bucket: ${AWS_S3_BUCKET}
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    s3path: "https://${AWS_S3_BUCKET}.s3.ap-northeast-2.amazonaws.com"
-    cloudfrontpath: "https://${AWS_CLOUDFRONT_DISTRIBUTION}.cloudfront.net"
-
 jwt:
   secret: ${JWT_SECRET}
 
