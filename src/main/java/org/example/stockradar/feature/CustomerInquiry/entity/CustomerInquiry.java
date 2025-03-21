@@ -23,7 +23,7 @@ public class CustomerInquiry {
     private Long inquiryId;
 
     @Column(nullable = false)
-    private String inquiryCategory;
+    private Integer inquiryCategory;
 
     @Column(nullable = false)
     private String inquiryTitle;

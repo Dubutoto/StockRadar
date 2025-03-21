@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'war'
     id 'org.springframework.boot' version '3.4.2'
     id 'io.spring.dependency-management' version '1.1.7'
 }
@@ -54,6 +53,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     //MySQL
+    implementation 'mysql:mysql-connector-java:8.0.33'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     //Crawling
@@ -66,8 +66,12 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.apache.kafka:kafka-streams' // Kafka Streams 라이브러리
 
+    //retry
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -91,3 +95,5 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+

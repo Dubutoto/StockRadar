@@ -107,10 +107,10 @@ async def main():
     # DB 커넥션 풀 생성 (aiomysql)
     logger.info("MySQL 연결 풀 생성 중...")
     pool = await aiomysql.create_pool(
-        host="localhost",
+        host="awseb-e-pfhtnzi3xs-stack-awsebrdsdatabase-pleuplanophh.ctuk8kgwo8qf.ap-northeast-2.rds.amazonaws.com",
         port=3306,
         user="root",
-        password="1234",
+        password="dubutoto11",
         db="stockradar",
         autocommit=True,
         minsize=1,

@@ -175,11 +175,11 @@ public ResponseEntity<?> getRtx4060Ti() {
         List<ProductResponseDto> rtx4060TiProducts = rtx4060TiAllCacheServiceV3CompletableFuture.getRtx4060TiInfo();
 
         if (rtx4060TiProducts.isEmpty()) {
-            log.warn("RTX 4060Ti 제품을 찾을 수 없습니다.");
+//            log.warn("RTX 4060Ti 제품을 찾을 수 없습니다.");
             ProductException.throwCustomException(ErrorCode.PRODUCT_NOT_FOUND);
         }
 
-        log.info("RTX 4060Ti 제품 {} 개를 찾았습니다.", rtx4060TiProducts.size());
+//        log.info("RTX 4060Ti 제품 {} 개를 찾았습니다.", rtx4060TiProducts.size());
 
         // 성공 응답 DTO 생성
         ProductResponseDto responseDto = ProductResponseDto.builder()
@@ -190,7 +190,7 @@ public ResponseEntity<?> getRtx4060Ti() {
 
         return ResponseEntity.ok(responseDto);
     } catch (Exception e) {
-        log.error("RTX 4060Ti 제품 조회 중 오류 발생: {}", e.getMessage(), e);
+//        log.error("RTX 4060Ti 제품 조회 중 오류 발생: {}", e.getMessage(), e);
         ProductException.throwCustomException(ErrorCode.PRODUCT_NOT_FOUND);
     }
     return null;

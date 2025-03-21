@@ -14,10 +14,13 @@ import java.time.LocalDateTime;
 public class CustomerInquiryProcessingResponseDto {
     private Long inquiryId;
     private String inquiryTitle;
-    private String inquiryCategory;
+    private Integer inquiryCategory;
     private String inquiryContent;
     private Integer inquiryStatus;
     private LocalDateTime createdAt;
     private String memberEmail; // 문의 작성자 이름
+    private String redirectUrl;
+    private String message;
+    private  Integer status;
 
 }

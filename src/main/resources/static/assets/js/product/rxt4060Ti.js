@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 제품 추적 기능 (버튼 클릭 시 호출)
     window.trackProduct = function (productName) {
-        console.log(`제품 추적 시작: ${productName}`);
+        // console.log(`제품 추적 시작: ${productName}`);
         alert(`${productName} 제품 재고 알림을 설정했습니다.`);
         // 여기에 추적 기능 구현 (서버에 요청 등)
     };

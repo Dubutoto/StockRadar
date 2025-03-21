@@ -2,6 +2,7 @@ package org.example.stockradar.feature.product.rtx4060Ti.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.stockradar.feature.auth.service.RedisSmtpService;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.product.dto.ProductCacheDto;
 import org.example.stockradar.feature.product.dto.ProductResponseDto;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +22,15 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
 
     private final ProductRepository productRepository;
     private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisSmtpService redisSmtpService;
+
+    // 싱글 스레드 Executor 생성 - Redis 연결 확인 전용
+    private static final Executor REDIS_CHECK_EXECUTOR =
+            Executors.newSingleThreadExecutor(r -> {
+                Thread thread = new Thread(r, "redis-connection-check-thread");
+                thread.setDaemon(true);
+                return thread;
+            });
 
     // 정적 데이터와 재고 상태를 위한 별도의 캐시 키 프리픽스
     private static final String STATIC_DATA_CACHE_PREFIX = "product:static:";
@@ -38,36 +47,64 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
     }
 
     /**
-     * RTX 4060 Ti 제품 정보 조회
-     * 1. 캐시에서 비동기로 조회
-     * 2. 캐시 미스 시 DB에서 조회 후 캐시에 비동기로 저장
+     * RTX 4060 Ti 제품 정보 조회 - 개선된 버전
+     * Redis 연결 확인 대기 없이 즉시 DB 결과 반환
      */
     public List<ProductResponseDto> getRtx4060TiInfo() {
         try {
-            // 1. DB에서 직접 DTO로 매핑하여 RTX 4060 Ti 제품 정보 조회
+            // 1. Redis 연결 확인을 싱글 스레드 Executor에서 비동기로 실행
+            CompletableFuture<Boolean> redisAvailableFuture = CompletableFuture.supplyAsync(
+                    () -> redisSmtpService.checkRedisConnection(),
+                    REDIS_CHECK_EXECUTOR  // 싱글 스레드 Executor 사용
+            );
+
+            // 2. DB에서 제품 정보 조회
             List<ProductResponseDto> products = productRepository.findKeywordProductDtos(
-                    "rtx 4060ti",
-                    "rtx 4060 ti",
-                    "rtx4060ti",
-                    "4060ti",
-                    "4060 ti");
+                    "rtx 4060ti", "rtx 4060 ti", "rtx4060ti", "4060ti", "4060 ti");
 
             if (products.isEmpty()) {
-                log.warn("RTX 4060 Ti 제품을 찾을 수 없습니다.");
+//                log.warn("RTX 4060 Ti 제품을 찾을 수 없습니다.");
                 return Collections.emptyList();
             }
 
-            log.info("DB에서 RTX 4060 Ti 제품 {}개 조회 완료", products.size());
+            // 3. Redis 연결 상태 즉시 확인 (대기하지 않음)
+            boolean redisAvailable = redisAvailableFuture.getNow(false);
 
-            // 2. 제품 ID 목록
+            // 4. Redis 가용 여부와 관계없이 일단 DB 결과 반환
+            if (!redisAvailable) {
+//                log.info("Redis 연결 확인 대기 없이 DB 결과를 즉시 반환합니다.");
+
+                // 선택적: Redis 연결 확인 작업을 백그라운드에서 계속 실행
+                redisAvailableFuture.thenAccept(available -> {
+                    if (available) {
+//                        log.info("백그라운드 Redis 연결 확인 완료: 사용 가능");
+                        // 여기서 제품 데이터를 캐시에 비동기로 저장 가능
+                        try {
+                            for (ProductResponseDto product : products) {
+                                cacheProductData(product);
+                            }
+//                            log.info("제품 데이터 캐싱 완료");
+                        } catch (Exception e) {
+//                            log.error("백그라운드 캐싱 중 오류: {}", e.getMessage());
+                        }
+                    } else {
+//                        log.warn("백그라운드 Redis 연결 확인 완료: 사용 불가");
+                    }
+                });
+
+                return products;
+            }
+
+            // Redis가 즉시 사용 가능한 경우 (드문 케이스)
+//            log.info("Redis 즉시 사용 가능: 캐시 조회 및 업데이트 시작");
+
+            // 제품 ID 목록 추출
             List<Long> productIds = products.stream()
                     .map(ProductResponseDto::getProductId)
                     .collect(Collectors.toList());
 
-            // 3. 캐시에서 데이터 조회 - CompletableFuture 활용한 비동기 처리
-            Map<Long, CompletableFuture<ProductResponseDto>> futureMap = new HashMap<>();
-
             // 각 제품 ID에 대해 비동기로 캐시 조회 요청
+            Map<Long, CompletableFuture<ProductResponseDto>> futureMap = new HashMap<>();
             for (Long productId : productIds) {
                 futureMap.put(productId, CompletableFuture.supplyAsync(() ->
                         getProductFromCache(productId)));
@@ -89,15 +126,15 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
                         cacheMissIds.add(productId);
                     }
                 } catch (InterruptedException | ExecutionException e) {
-                    log.error("캐시 조회 결과 처리 중 오류: {}", e.getMessage());
+//                    log.error("캐시 조회 결과 처리 중 오류: {}", e.getMessage());
                     cacheMissIds.add(productId); // 오류 발생 시 캐시 미스로 처리
                 }
             }
 
-            log.info("캐시 조회 결과: {}개 중 {}개 히트, {}개 미스",
-                    productIds.size(), resultMap.size(), cacheMissIds.size());
+//           log.info("캐시 조회 결과: {}개 중 {}개 히트, {}개 미스",
+//                    productIds.size(), resultMap.size(), cacheMissIds.size());
 
-            // 4. 캐시 미스가 있는 경우 DB 결과에서 가져와서 캐시에 저장 (비동기 처리)
+            // 캐시 미스가 있는 경우 DB 결과에서 가져와서 캐시에 저장 (비동기 처리)
             if (!cacheMissIds.isEmpty()) {
                 List<CompletableFuture<Void>> cachingFutures = new ArrayList<>();
 
@@ -118,14 +155,10 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
                     }
                 }
 
-                // 선택적: 모든 캐싱 작업이 완료될 때까지 대기
-                // 주석 처리하면 캐싱은 백그라운드에서 계속 진행되고 응답은 즉시 반환됨
-                // CompletableFuture.allOf(cachingFutures.toArray(new CompletableFuture[0])).join();
-
-                log.info("캐시 미스 처리: {}개 항목에 대한 비동기 캐싱 작업 시작", cachingFutures.size());
+//                log.info("캐시 미스 처리: {}개 항목에 대한 비동기 캐싱 작업 시작", cachingFutures.size());
             }
 
-            // 5. 결과 리스트 반환 (ID 순서 유지)
+            // 결과 리스트 반환 (ID 순서 유지)
             List<ProductResponseDto> result = new ArrayList<>();
             for (Long productId : productIds) {
                 ProductResponseDto product = resultMap.get(productId);
@@ -135,13 +168,11 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
             }
 
             return result;
-
         } catch (Exception e) {
-            log.error("RTX 4060 Ti 제품 정보 조회 중 오류 발생: {}", e.getMessage(), e);
+//            log.error("RTX 4060 Ti 제품 정보 조회 중 오류 발생: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
     }
-
 
     /**
      * 캐시에서 제품 정보를 조회하는 메서드
@@ -182,7 +213,7 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
 
             return builder.build();
         } catch (Exception e) {
-            log.error("캐시에서 제품 ID {} 정보 조회 중 오류 발생: {}", productId, e.getMessage());
+//            log.error("캐시에서 제품 ID {} 정보 조회 중 오류 발생: {}", productId, e.getMessage());
             return null;
         }
     }
@@ -223,13 +254,12 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
                         .lastUpdated(lastUpdated)
                         .build();
             } catch (Exception e) {
-                log.error("캐시 데이터 변환 중 오류: {}", e.getMessage());
+//                log.error("캐시 데이터 변환 중 오류: {}", e.getMessage());
                 return null;
             }
         }
         return null;
     }
-
 
     /**
      * 제품 정보를 캐시에 저장하는 메서드
@@ -266,9 +296,9 @@ public class Rtx4060TiAllCacheServiceV3CompletableFuture {
                     Duration.ofMinutes(6)
             );
 
-            log.debug("제품 ID {} 캐싱 완료: 정적 데이터(7일), 재고 상태(6분)", productId);
+//            log.debug("제품 ID {} 캐싱 완료: 정적 데이터(7일), 재고 상태(6분)", productId);
         } catch (Exception e) {
-            log.error("제품 정보 캐싱 중 오류 발생: {}", e.getMessage());
+//            log.error("제품 정보 캐싱 중 오류 발생: {}", e.getMessage());
         }
     }
 }
