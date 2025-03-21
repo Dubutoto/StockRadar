@@ -99,17 +99,17 @@ public class ProductStockScheduler {
                         redisTemplate.opsForValue().set(cacheKey, staticDataDto, Duration.ofDays(7));
                         cachedCount++;
 
-                        log.debug("제품 ID {} 정적 데이터 캐싱 완료: {}", product.getProductId(), product.getProductName());
+                        // log.debug("제품 ID {} 정적 데이터 캐싱 완료: {}", product.getProductId(), product.getProductName());
                     }
                 } catch (Exception e) {
-                    log.error("상품 정적 데이터 처리 중 오류 발생: {}, 오류: {}", product.getProductName(), e.getMessage());
+                    // log.error("상품 정적 데이터 처리 중 오류 발생: {}, 오류: {}", product.getProductName(), e.getMessage());
                 }
             }
 
-            log.info("정적 데이터 캐싱 완료: 총 {} 개 제품 중 {} 개 캐싱됨", products.size(), cachedCount);
+            // log.info("정적 데이터 캐싱 완료: 총 {} 개 제품 중 {} 개 캐싱됨", products.size(), cachedCount);
 
         } catch (Exception e) {
-            log.error("정적 데이터 캐싱 중 예외 발생: {}", e.getMessage(), e);
+            // log.error("정적 데이터 캐싱 중 예외 발생: {}", e.getMessage(), e);
         } finally {
             isStaticCachingRunning.set(false);
             log.info("상품 정적 데이터 캐싱 종료: {}", LocalDateTime.now().format(formatter));
@@ -158,7 +158,7 @@ public class ProductStockScheduler {
                         redisTemplate.opsForValue().set(stockCacheKey, stockStatusDto, Duration.ofMinutes(6));
                         updatedCount++;
 
-                        log.debug("제품 ID {} 재고 상태 갱신 완료: {}", product.getProductId(), availability);
+                        // log.debug("제품 ID {} 재고 상태 갱신 완료: {}", product.getProductId(), availability);
                     }
                 } catch (Exception e) {
                     log.error("상품 재고 상태 처리 중 오류 발생: {}, 오류: {}", product.getProductName(), e.getMessage());
