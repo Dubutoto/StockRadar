@@ -163,7 +163,7 @@ public class AuthController {
 
         //SESSION_ID 도 쿠키에 저장
         response.addHeader("Set-Cookie", "SESSION_ID=" + sessionId + "; HttpOnly; Path=/");
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     @ResponseBody
