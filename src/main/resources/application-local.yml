@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/stockradar?&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: Dubutoto22!
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update
@@ -57,13 +57,3 @@ spring:
 
 jwt:
   secret: "nJqBg/I14BcNecIsAsdWXwQa4E6fC20rXpHxb0EcHlE="
-
-cloud:
-  aws:
-    s3:
-      bucket: #fill out
-    stack.auto: false
-    region.static: ap-northeast-2
-    credentials:
-      accessKey: # fill out
-      secretKey: # fill out

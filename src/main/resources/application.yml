@@ -43,7 +43,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: ec2-15-164-213-250.ap-northeast-2.compute.amazonaws.com
       port: 6379
 
   # kafka #######################################################
@@ -58,7 +58,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"  # 모든 패키지를 신뢰할 경우
-
+  # SMTP 배포시 필요 X
   mail:
     host: smtp.gmail.com
     port: 587
@@ -109,24 +109,3 @@ logging:
     output:
       ansi:
         enabled: ALWAYS
-# s3
-cloud:
-  aws:
-    credentials:
-      access-key: ${}
-      secret-key: ${}
-
-    s3:
-      bucket: stockradars3
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    s3path: "https://stockradars3.s3.ap-northeast-2.amazonaws.com"
-    cloudfrontpath: "https://dxhufg9x2pwyh.cloudfront.net"
-
-discord:
-  bot:
-    token: ""
-
-

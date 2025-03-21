@@ -137,7 +137,7 @@ logging:
   logback:
     rollingpolicy:
       file-name-pattern: "StockRadar.%d{yyyy-MM-dd}.%i.log"
-      max-history: 60
+      max-history: 10
 
 jwt:
   secret: ${JWT_SECRET}
