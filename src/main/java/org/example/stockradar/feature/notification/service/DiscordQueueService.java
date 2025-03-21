@@ -26,9 +26,9 @@ public class DiscordQueueService {
     private final int WORKER_COUNT = 5;
 
     @PostConstruct
-    public void startDiscordWorkers() {
+     public void startDiscordWorkers() {
         for (int i = 0; i < WORKER_COUNT; i++) {
-            Thread worker = new Thread(() -> {
+           Thread worker = new Thread(() -> {
                 while (true) {
                     try {
                         NotificationEvent event = discordQueue.take();
