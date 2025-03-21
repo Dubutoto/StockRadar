@@ -1,5 +1,5 @@
 server:
-  port: 8099  # 모든 환경에서 공통 포트
+  port: 5000  # 배포 5000 개발 8099
   servlet:
     encoding:
       charset: UTF-8
@@ -17,7 +17,7 @@ spring:
     cache: false
 
   profiles:
-    active: local
+    active: prod
 
   sql:
     init:
