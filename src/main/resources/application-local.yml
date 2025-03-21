@@ -55,5 +55,21 @@ spring:
             user-info-uri: https://discord.com/api/users/@me
             user-name-attribute: id
 
+  # kafka #######################################################
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"  # 모든 패키지를 신뢰할 경우
+
+
+
+
 jwt:
   secret: "nJqBg/I14BcNecIsAsdWXwQa4E6fC20rXpHxb0EcHlE="
