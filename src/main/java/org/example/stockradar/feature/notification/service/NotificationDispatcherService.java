@@ -2,10 +2,10 @@ package org.example.stockradar.feature.notification.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.stockradar.feature.auth.service.CoolsmsService;
 import org.example.stockradar.feature.notification.dto.NotificationEvent;
 import org.example.stockradar.feature.notification.entity.NotificationChannel;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -13,57 +13,33 @@ import java.util.List;
 @Slf4j
 public class NotificationDispatcherService {
 
-    private final CoolsmsService coolSMSService;
-    private final EmailService emailService;
-    private final DiscordService discordService;
+    private final EmailQueueService emailQueueService;
+    private final SmsQueueService smsQueueService;
+    private final DiscordQueueService discordQueueService;
     private final WebPushService webPushService;
+
 
     public void dispatchNotification(NotificationEvent event) {
         List<NotificationChannel> channels = event.getChannels();
 
-        // 채널 설정이 없으면 기본 채널(이메일)로 발송
+        // 채널 설정이 없으면 기본 EMAIL 채널로 처리
         if (channels == null || channels.isEmpty()) {
-            try {
-                emailService.sendEmailNotification(
-                        event.getEmailAddress(),
-                        event.getNotificationType(),
-                        event.getProductName(),
-                        event.getProductUrl(),
-                        event.getStockStatus());
-            } catch (Exception e) {
-                log.error("기본 채널(이메일) 전송 실패: {}", e.getMessage());
-            }
+            emailQueueService.enqueue(event);
             return;
         }
 
-        // 각 채널별 알림 전송 작업을 병렬 처리
+        // 각 채널별 알림 전송 처리 (모두 큐를 통해 비동기 처리)
         channels.parallelStream().forEach(channel -> {
             try {
                 switch (channel) {
                     case SMS:
-                        coolSMSService.sendSmsNotification(
-                                event.getNotificationType(),
-                                event.getPhoneNumber(),
-                                event.getProductName(),
-                                event.getProductUrl(),
-                                event.getStockStatus());
+                        smsQueueService.enqueue(event);
                         break;
                     case EMAIL:
-                        emailService.sendEmailNotification(
-                                event.getEmailAddress(),
-                                event.getNotificationType(),
-                                event.getProductName(),
-                                event.getProductUrl(),
-                                event.getStockStatus());
+                        emailQueueService.enqueue(event);
                         break;
                     case DISCORD:
-                        // unified Discord 전송: 내부에서 알림 유형에 따른 분기를 처리
-                        discordService.sendDirectMessageNotification(
-                                event.getNotificationType(),
-                                event.getDiscordUserId(),
-                                event.getProductName(),
-                                event.getProductUrl(),
-                                event.getStockStatus());
+                        discordQueueService.enqueue(event);
                         break;
                     case WEB_PUSH:
                         webPushService.sendWebPush(event.getInterestProductId(), event.getMessageContent());
@@ -77,5 +53,4 @@ public class NotificationDispatcherService {
             }
         });
     }
-
 }

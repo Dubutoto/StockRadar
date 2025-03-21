@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Hyun7en
+ */
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
