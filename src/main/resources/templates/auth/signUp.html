@@ -26,31 +26,49 @@
                     <label for="memberId">
                         이메일 <span class="required">*</span>
                     </label>
-                    <input type="email" class="form-input form-wide" id="memberId"
-                           name="memberId" th:value="${memberId}" required />
+                    <input type="email"
+                           class="form-input form-wide"
+                           id="memberId"
+                           name="memberId"
+                           th:value="${memberId}"
+                           required />
 
                     <!-- 비밀번호 -->
                     <label for="memberPw">
                         비밀번호 <span class="required">*</span>
                     </label>
-                    <input type="password" class="form-input form-wide" id="memberPw"
-                           name="memberPw" th:value="${memberPw}" required />
+                    <input type="password"
+                           class="form-input form-wide"
+                           id="memberPw"
+                           name="memberPw"
+                           th:value="${memberPw}"
+                           required />
 
                     <!-- 이름 -->
                     <label for="userName">
                         이름 <span class="required">*</span>
                     </label>
-                    <input type="text" class="form-input form-wide" id="userName"
-                           name="userName" th:value="${userName}" required />
+                    <input type="text"
+                           class="form-input form-wide"
+                           id="userName"
+                           name="userName"
+                           th:value="${userName}"
+                           required />
 
                     <!-- 휴대폰 번호 -->
                     <label for="memberPhone">
                         휴대폰 번호 <span class="required">*</span>
                     </label>
-                    <input type="text" class="form-input form-wide" id="memberPhone"
-                           name="memberPhone" th:value="${memberPhone}" required />
+                    <input type="text"
+                           class="form-input form-wide"
+                           id="memberPhone"
+                           name="memberPhone"
+                           th:value="${memberPhone}"
+                           required />
 
-                    <button type="submit" class="btn btn-primary btn-md w-100 mr-0" style="margin-top: 10px;">
+                    <button type="submit"
+                            class="btn btn-primary btn-md w-100 mr-0"
+                            style="margin-top: 10px;">
                         인증번호 전송
                     </button>
                 </form>
@@ -66,12 +84,18 @@
                     <label for="verifyCode">
                         인증번호
                     </label>
-                    <input type="text" id="verifyCode" name="verifyCode"
+                    <input type="text"
+                           id="verifyCode"
+                           name="verifyCode"
                            class="form-input form-wide"
                            th:value="${verifyCode}"
-                           th:attr="disabled=${phoneVerified} ? 'disabled' : null" />
+                           th:disabled="${phoneVerified}"
+                           th:style="${phoneVerified} ? 'background-color: #eee; color: #999;' : ''" />
 
-                    <button type="submit" class="btn btn-success w-100" style="margin-top: 10px;">
+                    <button type="submit"
+                            class="btn btn-success w-100"
+                            style="margin-top: 10px;"
+                            th:disabled="${phoneVerified}">
                         인증번호 확인
                     </button>
                 </form>
@@ -82,9 +106,10 @@
                     <input type="hidden" name="memberPw" th:value="${memberPw}" />
                     <input type="hidden" name="userName" th:value="${userName}" />
                     <input type="hidden" name="memberPhone" th:value="${memberPhone}" />
-                    <!-- 인증 완료 후에만 가입 가능 -->
 
-                    <button type="submit" class="btn btn-dark w-100">
+                    <!-- 인증 완료 후에만 가입 가능 (추가 검증 로직은 서버 측에서 처리) -->
+                    <button type="submit"
+                            class="btn btn-dark w-100">
                         회원가입
                     </button>
                 </form>
