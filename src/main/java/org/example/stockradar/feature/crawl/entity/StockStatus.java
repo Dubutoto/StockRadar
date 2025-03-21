@@ -19,6 +19,10 @@ public class StockStatus {
     @Column(name = "availability", nullable = false)
     private Integer availability;
 
+    // 마지막으로 알림 전송한 재고 상태 (0: 재고 없음, 1: 재고 있음)
+    @Column(name = "last_notified_availability")
+    private Integer lastNotifiedAvailability;
+
     @Column(name = "last_updated", nullable = false)
     private LocalDateTime lastUpdated;
 

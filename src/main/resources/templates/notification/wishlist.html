@@ -10,6 +10,7 @@
         <link rel="stylesheet" th:href="@{/assets/css/style.min.css}">
     </th:block>
     <script type="text/javascript" th:src="@{/assets/js/notification/readInterestProduct.js}" defer></script>
+    <link rel="stylesheet" th:href="@{/assets/css/notification/toggle.css}">
 </head>
 
 <div class="container mt-4" layout:fragment="content">
@@ -19,6 +20,42 @@
                 <h1>관심상품</h1>
             </div>
         </div>
+
+        <!-- 알림 설정 섹션 -->
+        <div class="container" style="margin: 20px;">
+            <h2>재고 추적 알림 설정</h2>
+            <div class="toggle-container">
+                <!-- 이메일 알림은 기본 체크된 상태 -->
+                <div class="toggle-block">
+                    <span class="toggle-label">이메일 알림</span>
+                    <label class="switch">
+                        <input type="checkbox" id="emailNotification">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- SMS 알림은 기본 미체크 -->
+                <div class="toggle-block">
+                    <span class="toggle-label">SMS 알림</span>
+                    <label class="switch">
+                        <input type="checkbox" id="smsNotification">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- Discord 알림은 기본 미체크 -->
+                <div class="toggle-block">
+                    <span class="toggle-label">Discord 알림</span>
+                    <label class="switch">
+                        <input type="checkbox" id="discordNotification">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <!-- 저장 버튼 -->
+            <div style="margin-top: 20px;">
+                <button id="saveSettings" onclick="saveSettings()">설정 저장</button>
+            </div>
+        </div>
+        <!-- 알림 설정 섹션 끝 -->
 
         <div class="container">
             <div class="wishlist-title">

@@ -28,13 +28,13 @@ public class CustomerInquiryController {
     @GetMapping("customerInquiry")
     public String customerInquiryPage(Authentication authentication, Model model) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            logger.warn("인증 실패.");
+//            logger.warn("인증 실패.");
             return "redirect:/login";
         }
 
         // 인증된 사용자 ID 가져오기
         String memberId = authentication.getName();
-        logger.info("Authenticated user ID: {}", memberId);
+//        logger.info("Authenticated user ID: {}", memberId);
         model.addAttribute("memberId", memberId);
         // customerInquiry.html 뷰 템플릿을 반환
         return "/customerInquiry/customerInquiry";
@@ -45,13 +45,13 @@ public class CustomerInquiryController {
     public ResponseEntity<?> customerInquiry(Authentication authentication, Model model) {
         try {
             if (authentication == null || !authentication.isAuthenticated()) {
-                logger.warn("인증 실패.");
+//                logger.warn("인증 실패.");
                 AuthException.throwAuthException(ErrorCode.UNAUTHORIZED);
             }
 
             // 인증된 사용자 ID 가져오기
             String memberId = authentication.getName();
-            logger.info("Authenticated user ID: {}", memberId);
+//            logger.info("Authenticated user ID: {}", memberId);
             model.addAttribute("memberId", memberId);
 
             // 인증 성공 시 응답 - CustomerInquiryResponseDto 객체 사용
@@ -72,7 +72,7 @@ public class CustomerInquiryController {
                     .redirectUrl("/login")
                     .build();
 
-            logger.error("인증 예외 발생: {}, 힌트: {}", e.getErrorMessage(), e.getHint());
+//            logger.error("인증 예외 발생: {}, 힌트: {}", e.getErrorMessage(), e.getHint());
 
             return ResponseEntity
                     .status(e.getHttpStatus())

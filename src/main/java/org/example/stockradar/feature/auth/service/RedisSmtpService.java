@@ -44,7 +44,7 @@ public class RedisSmtpService {
             } catch (Exception e) {
                 lastException = e;
                 retryCount++;
-                log.warn("Redis 서버 연결 실패 (시도 {}/{}): {}", retryCount, MAX_RETRY_COUNT, e.getMessage());
+//                log.warn("Redis 서버 연결 실패 (시도 {}/{}): {}", retryCount, MAX_RETRY_COUNT, e.getMessage());
 
                 // 재시도 전 잠시 대기
                 try {
@@ -82,9 +82,9 @@ public class RedisSmtpService {
             smtpMailService.sendMail(ADMIN_EMAIL, subject, body);
             redisAlertSent = true;
             lastAlertTime = LocalDateTime.now();
-            log.info("Redis 서버 다운 알림 이메일 발송 완료: {}", ADMIN_EMAIL);
+//            log.info("Redis 서버 다운 알림 이메일 발송 완료: {}", ADMIN_EMAIL);
         } catch (Exception e) {
-            log.error("Redis 서버 다운 알림 이메일 발송 실패: {}", e.getMessage(), e);
+//            log.error("Redis 서버 다운 알림 이메일 발송 실패: {}", e.getMessage(), e);
         }
     }
 

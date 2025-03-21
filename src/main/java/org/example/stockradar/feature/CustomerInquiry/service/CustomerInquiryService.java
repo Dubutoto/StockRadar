@@ -26,12 +26,12 @@ public class CustomerInquiryService {
 
         // 회원이 없는 경우 예외 처리
         if (member == null) {
-           throw new CustomException(
-                   ErrorCode.UNAUTHORIZED.getErrorCode(),
-                   ErrorCode.UNAUTHORIZED.getErrorMessage(),
-                   ErrorCode.UNAUTHORIZED.getDescription(),
-                   ErrorCode.UNAUTHORIZED.getHttpStatus()
-           );
+            throw new CustomException(
+                    ErrorCode.UNAUTHORIZED.getErrorCode(),
+                    ErrorCode.UNAUTHORIZED.getErrorMessage(),
+                    ErrorCode.UNAUTHORIZED.getDescription(),
+                    ErrorCode.UNAUTHORIZED.getHttpStatus()
+            );
         }
         try {
             CustomerInquiry inquiry = CustomerInquiry.builder()
