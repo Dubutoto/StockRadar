@@ -43,7 +43,7 @@ spring:
 
   data:
     redis:
-      host: ec2-3-36-71-38.ap-northeast-2.compute.amazonaws.com
+      host: ec2-15-164-213-250.ap-northeast-2.compute.amazonaws.com
       port: 6379
 
   # kafka #######################################################
@@ -124,5 +124,3 @@ cloud:
       auto: false
     s3path: "https://stockradars3.s3.ap-northeast-2.amazonaws.com"
     cloudfrontpath: "https://dxhufg9x2pwyh.cloudfront.net"
-
-

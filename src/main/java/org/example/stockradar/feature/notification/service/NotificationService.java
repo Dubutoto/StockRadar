@@ -33,7 +33,7 @@ public class NotificationService {
 
     /**
      * 관심 상품 등록 후 알림 전송을 비동기적으로 처리합니다.
-     * (등록 알림: 기본적으로 알림 설정이 없으면 EMAIL로 발송)
+     * (등록 알림: EMAIL로만 발송 sms는 비용적 부담이 있으므로)
      *
      * @param interestProductId 등록된 관심 상품의 ID
      * @param request           관심 상품 등록 요청 DTO (상품 ID 등 포함)
@@ -47,17 +47,15 @@ public class NotificationService {
         String productName = product.getProductName();
         String productUrl = product.getProductUrl();
 
-        // 기존에는 이메일 템플릿을 미리 생성했지만, 이제 unified 알림 전송 로직에서 처리하도록 이벤트에 필요한 정보만 담습니다.
-        String messageContent = ""; // Dispatcher에서 각 채널에 맞게 메시지 생성 처리
-
-        List<NotificationChannel> channels = getActiveChannels(memberId);
+        // EMAIL만 포함된 채널 리스트 생성
+        List<NotificationChannel> channels = List.of(NotificationChannel.EMAIL);
 
         NotificationEvent event = NotificationEvent.builder()
                 .interestProductId(interestProductId)
                 .emailAddress(member.getMemberId())   // memberId가 실제 이메일 주소라고 가정
-                .phoneNumber(member.getMemberPhone())                     // 필요시 추가 정보 할당
-                .discordUserId(null)                   // 필요시 추가 정보 할당
-                .messageContent(messageContent)
+//                .phoneNumber(null)                     // 필요시 추가 정보 할당
+//                .discordUserId(null)                   // 필요시 추가 정보 할당
+                .messageContent("")
                 .channels(channels)
                 // 알림 전송에 필요한 세부 정보 전달
                 .notificationType("registration")
