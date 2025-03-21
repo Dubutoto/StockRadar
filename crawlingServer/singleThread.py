@@ -1,24 +1,33 @@
-# multiThreads.py (Single-thread version)
-
 import schedule
 import time
-import random
 import requests
 import mysql.connector
+import mysql.connector.pooling  # 커넥션 풀 사용
 
-from crawler import get_amazon_data, get_ssg_data, get_11st_data
 from url_config import URL_TASKS
+from crawler import get_amazon_data, get_ssg_data, get_11st_data
 
-db = mysql.connector.connect(
-    host="awseb-e-pfhtnzi3xs-stack-awsebrdsdatabase-pleuplanophh.ctuk8kgwo8qf.ap-northeast-2.rds.amazonaws.com",
-    user="root",
-    password="dubutoto11",
-    database="stockradar"
+# === 커넥션 풀 생성 ===
+dbconfig = {
+    "host": "localhost",
+    "user": "root",
+    "password": "Dubutoto22!",
+    "database": "stockradar"
+}
+
+pool = mysql.connector.pooling.MySQLConnectionPool(
+    pool_name="mypool",
+    pool_size=5,
+    pool_reset_session=True,
+    **dbconfig
 )
-db.autocommit = True
 
 def save_to_db(category_name, store_name, product_name, product_url, in_stock, price):
-    cursor = db.cursor()
+    """
+    커넥션 풀에서 conn을 하나 가져와서 DB 작업 후 반환
+    """
+    conn = pool.get_connection()
+    cursor = conn.cursor()
 
     # 1) category
     select_cat_sql = "SELECT category_id FROM category WHERE category_name = %s"
@@ -89,11 +98,11 @@ def save_to_db(category_name, store_name, product_name, product_url, in_stock, p
         stock_id = cursor.lastrowid
 
     # 5) price
+    price_int = int(price)
+
     select_price_sql = "SELECT price_id FROM price WHERE stock_id = %s"
     cursor.execute(select_price_sql, (stock_id,))
     price_row = cursor.fetchone()
-
-    price_int = int(price)
 
     if price_row:
         price_id = price_row[0]
@@ -110,30 +119,40 @@ def save_to_db(category_name, store_name, product_name, product_url, in_stock, p
         """
         cursor.execute(insert_price_sql, (price_int, stock_id))
 
+    conn.commit()
     cursor.close()
+    conn.close()
+
+def crawl_one(task):
+    """
+    단일 URL 크롤링 + DB 저장 (단일 스레드)
+    """
+    category_name = task["categoryName"]
+    store_name = task["storeName"]
+    product_url = task["url"]
+
+    with requests.Session() as session:
+        if store_name == "Amazon":
+            product_name, in_stock, price = get_amazon_data(session, product_url)
+        elif store_name == "SSG":
+            product_name, in_stock, price = get_ssg_data(session, product_url)
+        elif store_name == "11ST":
+            product_name, in_stock, price = get_11st_data(session, product_url)
+        else:
+            product_name, in_stock, price = ("Unknown Product", False, 0)
+
+    print(f"[{store_name}] 크롤링 결과 -> {product_name}, 재고: {in_stock}, 가격: {price}")
+    save_to_db(category_name, store_name, product_name, product_url, in_stock, price)
+
+    return (product_url, product_name, in_stock, price)
 
 def job():
     print("\n=== job() 함수 실행 (단일 스레드) ===")
     start_time = time.perf_counter()
 
-    # 1) 단일 스레드: URL_TASKS를 순차로 처리
-    with requests.Session() as session:
-        for task in URL_TASKS:
-            category_name = task["categoryName"]
-            store_name = task["storeName"]
-            product_url = task["url"]
-
-            if store_name == "Amazon":
-                product_name, in_stock, price = get_amazon_data(session, product_url)
-            elif store_name == "SSG":
-                product_name, in_stock, price = get_ssg_data(session, product_url)
-            elif store_name == "11ST":
-                product_name, in_stock, price = get_11st_data(session, product_url)
-            else:
-                product_name, in_stock, price = ("Unknown Product", False, 0)
-
-            print(f"[{store_name}] 크롤링 결과 -> {product_name}, 재고: {in_stock}, 가격: {price}")
-            save_to_db(category_name, store_name, product_name, product_url, in_stock, price)
+    # 단순 순차 실행
+    for task in URL_TASKS:
+        crawl_one(task)
 
     end_time = time.perf_counter()
     elapsed = end_time - start_time
@@ -142,7 +161,8 @@ def job():
 if __name__ == "__main__":
     print("Requests + BeautifulSoup + New Entity 크롤링 서버 (단일 스레드) 시작!")
     job()
-    schedule.every(5).minutes.do(job)
+    # 스케줄링 예시
+    schedule.every(10).minutes.do(job)
 
     while True:
         schedule.run_pending()
