@@ -134,7 +134,7 @@ public class BoardController {
         Page<BoardResponseDto> boardList = boardService.searchBoards(keyword, pageable);
         model.addAttribute("boardList", boardList); // "board"로 통일
         model.addAttribute("keyword", keyword);
-        return "/board/list";
+        return "board/list";
     }
 
 }
