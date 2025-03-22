@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const buttonCell = document.createElement('td');
             buttonCell.innerHTML = `
                 <button type="button" class="btn btn-md btn-primary btn-ellipse" 
-                        onclick="trackProduct('${product.productName}')">
+                         onclick="trackProduct(${product.productId})">
                     <i class="icon-bell"></i> Track
                 </button>
             `;
