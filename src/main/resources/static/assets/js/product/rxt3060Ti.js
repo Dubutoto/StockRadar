@@ -48,6 +48,78 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 테이블 내용 초기화
         tableBody.innerHTML = '';
+        const productCountElement = document.getElementById('product-count');
+        if (productCountElement) {
+            productCountElement.textContent = products.length;
+        }
+
+        // 0원 초과의 최저가 찾기 - 환율 적용 (1 USD = 1450 KRW)
+        const EXCHANGE_RATE = 1450;
+        let lowestPriceInKRW = Number.MAX_SAFE_INTEGER;
+        let lowestPriceProduct = null;
+
+        products.forEach(product => {
+            const price = Number(product.price);
+            let priceInKRW;
+
+            // 가격이 0보다 크면 계산에 포함
+            if (price > 0) {
+                // 달러 단위(10000 미만)이면 환율 적용하여 원화로 변환
+                if (price < 10000) {
+                    priceInKRW = price * EXCHANGE_RATE;
+                } else {
+                    priceInKRW = price; // 이미 원화
+                }
+
+                // 변환된 원화 기준으로 최저가 비교
+                if (priceInKRW < lowestPriceInKRW) {
+                    lowestPriceInKRW = priceInKRW;
+                    lowestPriceProduct = product;
+                }
+            }
+        });
+
+// 최저가 정보를 표시
+        const lowestPriceContainer = document.querySelector('.lowest.price');
+        if (lowestPriceContainer) {
+            if (lowestPriceProduct) {
+                // 원래 화폐 단위 가격 표시 (달러 또는 원화)
+                const originalPrice = Number(lowestPriceProduct.price);
+                let formattedPrice, convertedPrice;
+
+                if (originalPrice < 10000) {
+                    // 달러 가격 포맷팅
+                    formattedPrice = '$' + originalPrice.toLocaleString('en-US');
+                    // 변환된 원화 가격도 표시
+                    convertedPrice = '₩' + Math.round(originalPrice * EXCHANGE_RATE).toLocaleString('ko-KR');
+                } else {
+                    // 원화 가격 포맷팅
+                    formattedPrice = '₩' + originalPrice.toLocaleString('ko-KR');
+                    convertedPrice = ''; // 이미 원화이므로 변환 가격 표시 불필요
+                }
+
+                // 최저가 상품명에 링크 추가
+                const productNameWithLink = lowestPriceProduct.productUrl ?
+                    `<a href="${lowestPriceProduct.productUrl}" target="_blank" style="color: #007bff; text-decoration: none;">
+                ${lowestPriceProduct.productName}
+            </a>` :
+                    lowestPriceProduct.productName;
+
+                lowestPriceContainer.innerHTML = `
+            <div class="lowest-price-info">
+                <h4>현재 최저가</h4>
+                <h2><div class="price-value">
+                    <strong>${formattedPrice}</strong>
+                    ${convertedPrice ? `<small>(${convertedPrice})</small>` : ''}
+                    <span class="product-name">(${productNameWithLink})</span>
+                </div>
+                </h2>
+            </div>
+        `;
+            } else {
+                lowestPriceContainer.innerHTML = '<div class="no-price-info">유효한 가격 정보가 없습니다.</div>';
+            }
+        }
 
         // 각 제품에 대한 행 추가
         products.forEach(product => {
@@ -72,23 +144,27 @@ document.addEventListener('DOMContentLoaded', function () {
             // 재고 상태 셀
             const statusCell = document.createElement('td');
             const isInStock = product.availability > 0;
-            statusCell.textContent = isInStock ? 'In Stock' : 'Out of Stock';
-            statusCell.style.color = isInStock ? 'green' : 'red';
+            statusCell.innerHTML = `<strong style="color: ${isInStock ? 'green' : 'red'}">
+                ${isInStock ? 'In Stock' : 'Out of Stock'}
+            </strong>`;
             row.appendChild(statusCell);
 
             // 가격 셀
             const priceCell = document.createElement('td');
-            const price = product.price;
+            const price = Number(product.price);
             let formattedPrice;
 
-            if (price < 10000) {
-                formattedPrice = '$' + price;
+            if (price <= 0) {
+                formattedPrice = '<span class="text-muted">가격 정보 없음</span>';
+            } else if (price < 10000) {
+                formattedPrice = '$' + price.toLocaleString('en-US');
             } else {
-                formattedPrice = '₩' + price;
+                formattedPrice = '₩' + price.toLocaleString('ko-KR');
             }
 
             priceCell.innerHTML = `<strong>${formattedPrice}</strong>`;
             row.appendChild(priceCell);
+
 
             // 알림 버튼 셀
             const buttonCell = document.createElement('td');
