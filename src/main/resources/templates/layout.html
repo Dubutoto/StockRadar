@@ -194,9 +194,6 @@
                 <nav class="main-nav w-100">
                     <ul class="menu">
                         <li class="active"><a th:href="@{/main}">Home</a></li>
-                        <li>
-                            <a href="category.html">카테고리</a>
-                        </li>
                         <li> <a th:href="@{/product/productCategory}">상품</a></li>
 <!--                        <li><a th:href="@{/news/list}">뉴스</a></li>-->
                         <li><a th:href="@{/board/list}">커뮤니티</a></li>
@@ -335,11 +332,9 @@
         <nav class="mobile-nav">
             <ul class="mobile-menu">
                 <li><a th:href="@{/main}">Home</a></li>
+
                 <li>
-                    <a th:href="@{/product/category}">카테고리</a>
-                </li>
-                <li>
-                    <a th:href="@{/product/productDetail}">상품</a>
+                    <a th:href="@{/product/productCategory}">상품</a>
                 </li>
 <!--                <li><a th:href="@{/news/list}">뉴스</a></li>-->
                 <li><a th:href="@{/board/list}">커뮤니티</a></li>
@@ -381,8 +376,8 @@
         </a>
     </div>
     <div class="sticky-info">
-        <a th:href="@{/product/category}">
-            <i class="icon-bars"></i>카테고리
+        <a th:href="@{/product/productCategory}">
+            <i class="icon-bars"></i>상품
         </a>
     </div>
     <!-- 관심상품(로그인 시만) -->
