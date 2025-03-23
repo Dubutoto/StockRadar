@@ -7,7 +7,7 @@
     <main class="main">
         <!-- 게시글 작성: 로그인한 사용자 전용 -->
         <div class="board-write" sec:authorize="isAuthenticated()">
-            <h1>게시글 작성</h1>
+            <h1>게시글 수정</h1>
             <form th:action="@{/board/update}" method="post">
                 <input type="hidden" name="boardId" th:value="${board.boardId}" />
                 <div class="form-group mb-3">
