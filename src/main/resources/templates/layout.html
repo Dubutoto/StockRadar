@@ -77,7 +77,7 @@
                             <ul>
                                 <li><a th:href="@{/customerInquiry/customerInquiry}" class="customer-inquiry-link">고객문의</a></li>
                                 <li><a th:href="@{/common/aboutUs}">사이트 소개</a></li>
-                                <li><a th:href="@{/news/list}">뉴스</a></li>
+<!--                                <li><a th:href="@{/news/list}">뉴스</a></li>-->
 
                                 <!-- 로그인 안 돼있을 때만 표시 -->
                                 <li sec:authorize="!isAuthenticated()">
@@ -148,7 +148,7 @@
                              class="pb-1"/>
                         <h6>
                             <span>전화문의:</span>
-                            <a href="tel:01012345678" class="text-dark font1">010-1234-5678</a>
+                            <a href="tel:01085339569" class="text-dark font1">010-8533-9569</a>
                         </h6>
                     </div>
 
@@ -194,29 +194,8 @@
                 <nav class="main-nav w-100">
                     <ul class="menu">
                         <li class="active"><a th:href="@{/main}">Home</a></li>
-                        <li>
-                            <a href="category.html">카테고리</a>
-                            <div class="megamenu megamenu-fixed-width megamenu-3cols">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <a href="#" class="nolink">카테고리</a>
-                                        <ul class="submenu">
-                                            <li><a href="category.html">Left Sidebar</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <a href="#" class="nolink">카테고리</a>
-                                        <ul class="submenu">
-                                            <li><a href="category-list.html">List Types</a></li>
-                                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
-                                            <li><a href="category.html">3 Columns Products</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
                         <li> <a th:href="@{/product/productCategory}">상품</a></li>
-                        <li><a th:href="@{/news/list}">뉴스</a></li>
+<!--                        <li><a th:href="@{/news/list}">뉴스</a></li>-->
                         <li><a th:href="@{/board/list}">커뮤니티</a></li>
                         <li><a th:href="@{/customerInquiry/customerInquiry}">고객문의</a></li>
                     </ul>
@@ -248,11 +227,11 @@
                                 </li>
                                 <li>
                                     <span class="contact-info-label">전화문의:</span>
-                                    <a th:href="@{'tel:01012345678'}">(010) 1234-5678</a>
+                                    <a th:href="@{'tel:01012345678'}">(010) 8533-9569</a>
                                 </li>
                                 <li>
                                     <span class="contact-info-label">Email:</span>
-                                    <a th:href="'mailto:mail@google.com'">mail@google.com</a>
+                                    <a th:href="'mailto:mail@google.com'">santa1.0system@google.com</a>
                                 </li>
                                 <li>
                                     <span class="contact-info-label">Working Days/Hours:</span>
@@ -280,10 +259,8 @@
                         <div class="widget">
                             <h4 class="widget-title">인기 태그</h4>
                             <div class="tagcloud">
-                                <a href="#">Bag</a>
-                                <a href="#">Black</a>
-                                <a href="#">Blue</a>
-                                <a href="#">Clothes</a>
+                                <a href="#">CPU</a>
+                                <a href="#">GPU</a>
                             </div>
                         </div>
                     </div>
@@ -355,28 +332,11 @@
         <nav class="mobile-nav">
             <ul class="mobile-menu">
                 <li><a th:href="@{/main}">Home</a></li>
+
                 <li>
-                    <a th:href="@{/product/category}">카테고리</a>
-                    <ul>
-                        <li><a href="category-sidebar-left.html">Left Sidebar</a></li>
-                        <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
-                        <li><a href="#">List Types</a></li>
-                        <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
-                        <li><a href="category.html">3 Columns Products</a></li>
-                    </ul>
+                    <a th:href="@{/product/productCategory}">상품</a>
                 </li>
-                <li>
-                    <a th:href="@{/product/productDetail}">상품</a>
-                    <ul>
-                        <li>
-                            <a href="#" class="nolink">상품</a>
-                            <ul>
-                                <li><a th:href="@{/product/productDetail}">CPU</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a th:href="@{/news/list}">뉴스</a></li>
+<!--                <li><a th:href="@{/news/list}">뉴스</a></li>-->
                 <li><a th:href="@{/board/list}">커뮤니티</a></li>
             </ul>
 
@@ -416,8 +376,8 @@
         </a>
     </div>
     <div class="sticky-info">
-        <a th:href="@{/product/category}">
-            <i class="icon-bars"></i>카테고리
+        <a th:href="@{/product/productCategory}">
+            <i class="icon-bars"></i>상품
         </a>
     </div>
     <!-- 관심상품(로그인 시만) -->

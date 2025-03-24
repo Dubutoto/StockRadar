@@ -20,7 +20,7 @@
                                 <sup>₩</sup><em class="align-text-top">50,000</em>
                             </b>
                         </h5>
-                        <a href="category.html" class="btn btn-dark btn-lg">지금 확인하기</a>
+                        <a href="/product/productDetail" class="btn btn-dark btn-lg">지금 확인하기</a>
                     </div>
                     <!-- End .banner-layer -->
                 </div>
@@ -35,7 +35,7 @@
                             <h3 class="m-b-2">최대 20% 절약</h3>
                             <h3 class="mb-2 heading-border">부품 액세서리</h3>
                             <h2 class="text-transform-none m-b-4">특가 이벤트</h2>
-                            <a href="category.html" class="btn btn-block btn-dark">전체 상품 보기</a>
+                            <a href="/product/productDetail" class="btn btn-block btn-dark">전체 상품 보기</a>
                         </div>
                     </div>
                     <!-- End .banner-layer -->
@@ -97,45 +97,24 @@
                 <div class="banners-slider owl-carousel owl-theme" data-owl-options="{
 						'dots': false
 					}">
-                    <div class="banner banner1 banner-sm-vw d-flex align-items-center appear-animate" style="background-color: #ccc;" data-animation-name="fadeInLeftShorter" data-animation-delay="500">
+                    <div class="banner banner1 banner-sm-vw d-flex align-items-center appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="500">
                         <figure class="w-100">
-                            <img th:src="@{/assets/images/demoes/demo4/banners/banner-1.jpg}" alt="banner" width="380" height="175" />
+                            <img th:src="@{/assets/images/main/banner_top_1.jpg}"  alt="banner" width="380" height="175" />
                         </figure>
-                        <div class="banner-layer">
-                            <h3 class="m-b-2">최신 PC 부품</h3>
-                            <h4 class="m-b-3 text-primary"><sup class="text-dark"><del>10%</del></sup>15%<sup>OFF</sup></h4>
-                            <a href="category.html" class="btn btn-sm btn-dark">자세히 보기</a>
-                        </div>
                     </div>
                     <!-- End .banner -->
 
-                    <div class="banner banner2 banner-sm-vw text-uppercase d-flex align-items-center appear-animate" data-animation-name="fadeInUpShorter" data-animation-delay="200">
+                    <div class="banner banner3 banner-sm-vw d-flex align-items-center appear-animate" data-animation-name="fadeInUpShorter" data-animation-delay="200">
                         <figure class="w-100">
-                            <img th:src="@{/assets/images/demoes/demo4/banners/banner-2.jpg}" style="background-color: #ccc;" alt="banner" width="380" height="175" />
+                            <img th:src="@{/assets/images/main/banner_top_2.jpg}" alt="banner" width="380" height="175" />
                         </figure>
-                        <div class="banner-layer text-center">
-                            <div class="row align-items-lg-center">
-                                <div class="col-lg-7 text-lg-right">
-                                    <h3>특가 프로모션</h3>
-                                    <h4 class="pb-4 pb-lg-0 mb-0 text-body">최소 ₩29,000 부터</h4>
-                                </div>
-                                <div class="col-lg-5 text-lg-left px-0 px-xl-3">
-                                    <a href="category.html" class="btn btn-sm btn-dark">자세히 보기</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <!-- End .banner -->
 
-                    <div class="banner banner3 banner-sm-vw d-flex align-items-center appear-animate" style="background-color: #ccc;" data-animation-name="fadeInRightShorter" data-animation-delay="500">
+                    <div class="banner banner3 banner-sm-vw d-flex align-items-center appear-animate" data-animation-name="fadeInRightShorter" data-animation-delay="500">
                         <figure class="w-100">
-                            <img th:src="@{/assets/images/demoes/demo4/banners/banner-3.jpg}" alt="banner" width="380" height="175" />
+                            <img th:src="@{/assets/images/main/banner_top_3.jpg}" alt="banner" width="380" height="175" />
                         </figure>
-                        <div class="banner-layer text-right">
-                            <h3 class="m-b-2">액세서리</h3>
-                            <h4 class="m-b-2 text-secondary text-uppercase">최저가 보장</h4>
-                            <a href="category.html" class="btn btn-sm btn-dark">자세히 보기</a>
-                        </div>
                     </div>
                     <!-- End .banner -->
                 </div>
@@ -155,31 +134,101 @@
                     <!-- 반복문으로 출력 -->
                     <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
                         <figure>
-                            <a href="product.html">
-                                <img th:src="@{/assets/images/products/product-5.jpg}" width="280" height="280" alt="product">
-                                <img th:src="@{/assets/images/products/product-5-2.jpg}" width="280" height="280" alt="product">
+                            <a href="/product/gpu/rtx3060Ti">
+                                <img th:src="@{/assets/images/product/rtx3060ti.jpeg}"  width="280" height="280" alt="product">
                             </a>
                             <div class="label-group">
                                 <div class="product-label label-hot">HOT</div>
-                                <div class="product-label label-sale">-15%</div>
                             </div>
                         </figure>
                         <div class="product-details">
                             <div class="category-list">
-                                <a href="category.html" class="product-category">프로세서</a>
+                                <a href="/product/productDetail" class="product-category">CPU</a>
                             </div>
                             <h3 class="product-title">
-                                <a href="product.html">AMD Ryzen 9 5950X 프로세서</a>
+                                <a href="/product/gpu/rtx3060Ti">NVIDIA GeForce RTX 3060 Ti</a>
                             </h3>
-                            <div class="ratings-container">
-                                <div class="product-ratings">
-                                    <span class="ratings" style="width:80%"></span>
-                                    <span class="tooltiptext tooltip-top"></span>
-                                </div>
-                            </div>
                             <div class="price-box">
-                                <del class="old-price">₩799,000</del>
-                                <span class="product-price">₩699,000</span>
+                                <span class="old-price">$700.00</span>
+                                <span class="product-price">$630.00</span>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-heart"></i><span>관심상품 추가</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
+                        <figure>
+                            <a href="/product/cpu/ryzen8000">
+                                <img th:src="@{/assets/images/product/ryzen7000.jpeg}"  width="280" height="280" alt="product">
+                            </a>
+                            <div class="label-group">
+                                <div class="product-label label-hot">HOT</div>
+                            </div>
+                        </figure>
+                        <div class="product-details">
+                            <div class="category-list">
+                                <a href="/product/productDetail" class="product-category">CPU</a>
+                            </div>
+                            <h3 class="product-title">
+                                <a href="/product/cpu/ryzen8000">AMD RYZEN 8000</a>
+                            </h3>
+                            <div class="price-box">
+                                <span class="old-price">$450.00</span>
+                                <span class="product-price">$400.00</span>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-heart"></i><span>관심상품 추가</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
+                        <figure>
+                            <a href="/product/gpu/rtx3050">
+                                <img th:src="@{/assets/images/product/rtx3050.jpeg}" width="280" height="280" alt="product">
+                            </a>
+                            <div class="label-group">
+                                <div class="product-label label-hot">HOT</div>
+                            </div>
+                        </figure>
+                        <div class="product-details">
+                            <div class="category-list">
+                                <a href="/product/productDetail" class="product-category">GPU</a>
+                            </div>
+                            <h3 class="product-title">
+                                <a href="/product/gpu/rtx3050">NVIDIA GeForce RTX 3050</a>
+                            </h3>
+                            <div class="price-box">
+                                <span class="old-price">$800.00</span>
+                                <span class="product-price">$680.00</span>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-heart"></i><span>관심상품 추가</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
+                        <figure>
+                            <a href="/product/gpu/rtx3060Ti">
+                                <img th:src="@{/assets/images/product/rtx3060ti.jpeg}"  width="280" height="280" alt="product">
+                            </a>
+                            <div class="label-group">
+                                <div class="product-label label-hot">HOT</div>
+                            </div>
+                        </figure>
+                        <div class="product-details">
+                            <div class="category-list">
+                                <a href="/product/productDetail" class="product-category">GPU</a>
+                            </div>
+                            <h3 class="product-title">
+                                <a href="/product/gpu/rtx3060Ti">NVIDIA GeForce RTX 3060 Ti</a>
+                            </h3>
+                            <div class="price-box">
+                                <span class="old-price">$700.00</span>
+                                <span class="product-price">$630.00</span>
                             </div>
                             <div class="product-action">
                                 <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-heart"></i><span>관심상품 추가</span></a>
@@ -194,7 +243,7 @@
         <section class="new-products-section">
             <div class="container">
 
-                <div class="banner banner-big-sale appear-animate" data-animation-delay="200" data-animation-name="fadeInUpShorter" style="background: #2A95CB center/cover url('static/assets/images/demoes/demo4/banners/banner-4.jpg');">
+                <div class="banner banner-big-sale appear-animate" data-animation-delay="200" data-animation-name="fadeInUpShorter" style="background: #2A95CB center/cover">
                     <div class="banner-content row align-items-center mx-0">
                         <div class="col-md-9 col-sm-8">
                             <h2 class="text-white text-uppercase text-center text-sm-left ls-n-20 mb-md-0 px-4">
@@ -203,7 +252,7 @@
                             </h2>
                         </div>
                         <div class="col-md-3 col-sm-4 text-center text-sm-right">
-                            <a class="btn btn-light btn-white btn-lg" href="category.html">자세히 보기</a>
+                            <a class="btn btn-light btn-white btn-lg" href="/product/productDetail">자세히 보기</a>
                         </div>
                     </div>
                 </div>
@@ -212,10 +261,12 @@
                 </h2>
 
                 <div class="categories-slider owl-carousel owl-theme show-nav-hover nav-outer">
+
+                    <!-- 카테고리 반복문으로 뜨게 -->
                     <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
-                        <a href="category.html">
+                        <a href="/product/productDetail">
                             <figure>
-                                <img th:src="@{/assets/images/demoes/demo4/products/categories/category-1.jpg}" alt="category" width="280" height="240" />
+                                <img th:src="@{/assets/images/main/graphic.jpg}" alt="category" width="280" height="240" style="object-fit: contain;" />
                             </figure>
                             <div class="category-content">
                                 <h3>그래픽 카드</h3>
@@ -225,21 +276,45 @@
                     </div>
 
                     <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
-                        <a href="category.html">
+                        <a href="/product/productDetail">
                             <figure>
-                                <img th:src="@{/assets/images/demoes/demo4/products/categories/category-2.jpg}" alt="category" width="220" height="220" />
+                                <img th:src="@{/assets/images/main/CPU.jpg}" alt="category" width="400" height="240" style="object-fit: contain;" />
                             </figure>
                             <div class="category-content">
-                                <h3>프로세서</h3>
+                                <h3>CPU</h3>
                                 <span><mark class="count">3</mark> 제품</span>
                             </div>
                         </a>
                     </div>
 
                     <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
-                        <a href="category.html">
+                        <a href="/product/productDetail">
                             <figure>
-                                <img th:src="@{/assets/images/demoes/demo4/products/categories/category-3.jpg}" alt="category" width="220" height="220" />
+                                <img th:src="@{/assets/images/main/GPU.jpg}" alt="category" width="280" height="240" style="object-fit: contain;" />
+                            </figure>
+                            <div class="category-content">
+                                <h3>GPU</h3>
+                                <span><mark class="count">3</mark> 제품</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
+                        <a href="/product/productDetail">
+                            <figure>
+                                <img th:src="@{/assets/images/main/SSD.jpg}" alt="category" width="280" height="240" style="object-fit: contain;" />
+                            </figure>
+                            <div class="category-content">
+                                <h3>SSD</h3>
+                                <span><mark class="count">3</mark> 제품</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
+                        <a href="/product/productDetail">
+                            <figure>
+                                <img th:src="@{/assets/images/main/mainboard.jpg}" alt="category" width="280" height="240" style="object-fit: contain;" />
                             </figure>
                             <div class="category-content">
                                 <h3>메인보드</h3>
@@ -248,522 +323,11 @@
                         </a>
                     </div>
 
-                    <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
-                        <a href="category.html">
-                            <figure>
-                                <img th:src="@{/assets/images/demoes/demo4/products/categories/category-4.jpg}" alt="category" width="220" height="220" />
-                            </figure>
-                            <div class="category-content">
-                                <h3>저장장치</h3>
-                                <span><mark class="count">3</mark> 제품</span>
-                            </div>
-                        </a>
-                    </div>
 
-                    <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
-                        <a href="category.html">
-                            <figure>
-                                <img th:src="@{assets/images/demoes/demo4/products/categories/category-6.jpg}" alt="category" width="220" height="220" />
-                            </figure>
-                            <div class="category-content">
-                                <h3>쿨링 팬</h3>
-                                <span><mark class="count">3</mark> 제품</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="product-category appear-animate" data-animation-name="fadeInUpShorter">
-                        <a href="category.html">
-                            <figure>
-                                <img th:src="@{/assets/images/demoes/demo4/products/categories/category-5.jpg}" alt="category" width="220" height="220" />
-                            </figure>
-                            <div class="category-content">
-                                <h3>파워서플라이</h3>
-                                <span><mark class="count">3</mark> 제품</span>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="promo-section bg-dark" data-parallax="{'speed': 2, 'enableOnMobile': true}" data-image-src="static/assets/images/yourPlatform/cpu-gpu-banner.jpg">
-            <div class="promo-banner banner container text-uppercase">
-                <div class="banner-content row align-items-center text-center">
-                    <div class="col-md-4 ml-xl-auto text-md-right appear-animate" data-animation-name="fadeInRightShorter" data-animation-delay="600">
-                        <h2 class="mb-md-0 text-white">CPU &amp; GPU<br>최저가 검색</h2>
-                    </div>
-                    <div class="col-md-4 col-xl-3 pb-4 pb-md-0 appear-animate" data-animation-name="fadeIn" data-animation-delay="300">
-                        <a href="search.html" class="btn btn-dark btn-black ls-10">최저가 확인</a>
-                    </div>
-                    <div class="col-md-4 mr-xl-auto text-md-left appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="600">
-                        <h4 class="mb-1 mt-1 font1 coupon-sale-text p-0 d-block ls-n-10 text-transform-none">
-                            <b>최저가 보장</b>
-                        </h4>
-                        <h5 class="mb-1 coupon-sale-text text-white ls-10 p-0">
-                            <b class="text-white bg-secondary ls-n-10">비교 서비스</b>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="blog-section pb-0">
-            <div class="container">
-                <h2 class="section-title heading-border border-0 appear-animate" data-animation-name="fadeInUp">
-                    최신 뉴스</h2>
-
-                <div class="owl-carousel owl-theme appear-animate" data-animation-name="fadeIn" data-owl-options="{
-						'loop': false,
-						'margin': 20,
-						'autoHeight': true,
-						'autoplay': false,
-						'dots': false,
-						'items': 2,
-						'responsive': {
-							'0': {
-								'items': 1
-							},
-							'480': {
-								'items': 2
-							},
-							'576': {
-								'items': 3
-							},
-							'768': {
-								'items': 4
-							}
-						}
-					}">
-                    <article class="post">
-                        <div class="post-media">
-                            <a href="single.html">
-                                <img th:src="@{/assets/images/news/home/post-1.jpg}" alt="Post" width="225" height="280">
-                            </a>
-                            <div class="post-date">
-                                <span class="day">26</span>
-                                <span class="month">Feb</span>
-                            </div>
-                        </div>
-                        <!-- End .post-media -->
-
-                        <div class="post-body">
-                            <h2 class="post-title">
-                                <a href="single.html">신제품 출시: 최신 부품 라인업</a>
-                            </h2>
-                            <div class="post-content">
-                                <p>최신 기술이 집약된 부품들을 만나보세요. 전 세계의 가격 정보를 한눈에 비교할 수 있습니다.</p>
-                            </div>
-                            <a href="single.html" class="post-comment">0 댓글</a>
-                        </div>
-                        <!-- End .post-body -->
-                    </article>
-                    <!-- End .post -->
-
-                    <article class="post">
-                        <div class="post-media">
-                            <a href="single.html">
-                                <img th:src="@{/assets/images/news/home/post-2.jpg}" alt="Post" width="225" height="280">
-                            </a>
-                            <div class="post-date">
-                                <span class="day">26</span>
-                                <span class="month">Feb</span>
-                            </div>
-                        </div>
-                        <!-- End .post-media -->
-
-                        <div class="post-body">
-                            <h2 class="post-title">
-                                <a href="single.html">가격 비교 리포트 업데이트</a>
-                            </h2>
-                            <div class="post-content">
-                                <p>주요 부품들의 최신 가격 비교 데이터와 시장 동향을 확인하세요.</p>
-                            </div>
-                            <a href="single.html" class="post-comment">0 댓글</a>
-                        </div>
-                        <!-- End .post-body -->
-                    </article>
-                    <!-- End .post -->
-
-                    <article class="post">
-                        <div class="post-media">
-                            <a href="single.html">
-                                <img th:src="@{/assets/images/news/home/post-3.jpg}" alt="Post" width="225" height="280">
-                            </a>
-                            <div class="post-date">
-                                <span class="day">26</span>
-                                <span class="month">Feb</span>
-                            </div>
-                        </div>
-                        <!-- End .post-media -->
-
-                        <div class="post-body">
-                            <h2 class="post-title">
-                                <a href="single.html">최신 기술 트렌드</a>
-                            </h2>
-                            <div class="post-content">
-                                <p>혁신적인 컴퓨팅 기술과 부품 성능에 대한 심층 분석을 제공합니다.</p>
-                            </div>
-                            <a href="single.html" class="post-comment">0 댓글</a>
-                        </div>
-                        <!-- End .post-body -->
-                    </article>
-                    <!-- End .post -->
-
-                    <article class="post">
-                        <div class="post-media">
-                            <a href="single.html">
-                                <img th:src="@{/assets/images/news/home/post-4.jpg}" alt="Post" width="225" height="280">
-                            </a>
-                            <div class="post-date">
-                                <span class="day">26</span>
-                                <span class="month">Feb</span>
-                            </div>
-                        </div>
-                        <!-- End .post-media -->
-
-                        <div class="post-body">
-                            <h2 class="post-title">
-                                <a href="single.html">부품 구매 꿀팁</a>
-                            </h2>
-                            <div class="post-content">
-                                <p>최적의 부품 구매를 위한 팁과 전략을 공유합니다.</p>
-                            </div>
-                            <a href="single.html" class="post-comment">0 댓글</a>
-                        </div>
-                        <!-- End .post-body -->
-                    </article>
-                    <!-- End .post -->
-                </div>
-
-                <hr class="mt-0 m-b-5">
-
-                <div class="brands-slider owl-carousel owl-theme images-center appear-animate" data-animation-name="fadeIn" data-animation-duration="500" data-owl-options="{
-					'margin': 0}">
-                    <!-- 브랜드 -->
-                    <img th:src="@{/assets/images/brands/brand1.png}" width="130" height="56" alt="brand">
-                    <img th:src="@{/assets/images/brands/brand2.png}" width="130" height="56" alt="brand">
-                    <img th:src="@{/assets/images/brands/brand3.png}" width="130" height="56" alt="brand">
-                    <img th:src="@{/assets/images/brands/brand4.png}" width="130" height="56" alt="brand">
-                    <img th:src="@{/assets/images/brands/brand5.png}" width="130" height="56" alt="brand">
-                    <img th:src="@{/assets/images/brands/brand6.png}" width="130" height="56" alt="brand">
-                </div>
-                <!-- End .brands-slider -->
-
-                <hr class="mt-4 m-b-5">
-
-                <div class="product-widgets-container row pb-2">
-                    <div class="col-lg-3 col-sm-6 pb-5 pb-md-0 appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="200">
-                        <h4 class="section-sub-title">추천 부품</h4>
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-1.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-1-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">AMD Ryzen 9 5950X 프로세서</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <del class="old-price">₩799,000</del>
-                                    <span class="product-price">₩699,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-2.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-2-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">NVIDIA GeForce RTX 3080 그래픽 카드</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top">5.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩1,200,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-3.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-3-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Intel Core i9-11900K 프로세서</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩550,000</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-6 pb-5 pb-md-0 appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="500">
-                        <h4 class="section-sub-title">베스트셀러 부품</h4>
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-4.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-4-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">NVIDIA GeForce RTX 3080 그래픽 카드</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top">5.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩1,200,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-5.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-5-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Intel Core i9-11900K 프로세서</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩550,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-6.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-6-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Corsair RM850x 파워서플라이</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top">5.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩200,000</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-6 pb-5 pb-md-0 appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="800">
-                        <h4 class="section-sub-title">최신 부품</h4>
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-7.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-7-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">ASUS ROG Strix Z590-E 메인보드</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩350,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-8.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-8-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Samsung 970 EVO Plus SSD</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top">5.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩150,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-9.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-9-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Seasonic Focus 750 파워서플라이</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩180,000</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-6 pb-5 pb-md-0 appear-animate" data-animation-name="fadeInLeftShorter" data-animation-delay="1100">
-                        <h4 class="section-sub-title">최고 평점 부품</h4>
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-10.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-10-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">MSI Gaming GeForce RTX 3070 그래픽 카드</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩1,000,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-11.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-11-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Cooler Master Hyper 212 CPU 쿨러</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top">5.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩80,000</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-default left-details product-widget">
-                            <figure>
-                                <a href="product.html">
-                                    <img th:src="@{/assets/images/products/small/product-12.jpg}" width="84" height="84" alt="product">
-                                    <img th:src="@{/assets/images/products/small/product-12-2.jpg}" width="84" height="84" alt="product">
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <h3 class="product-title"> <a href="product.html">Logitech MX Master 3 무선 마우스</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                </div>
-
-                                <div class="price-box">
-                                    <span class="product-price">₩100,000</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End .product-widgets-container -->
-            </div>
-        </section>
     </main>
     <!-- End .main -->
 </div>
