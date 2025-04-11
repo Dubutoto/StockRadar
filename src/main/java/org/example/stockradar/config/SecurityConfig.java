@@ -43,6 +43,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                .headers(headers -> headers
+                        .cacheControl(cache -> cache.disable())  // 기본 캐시 제어 헤더 비활성화
+                        .frameOptions(frame -> frame.deny())     // 프레임 옵션 유지
+                )
 
                 // .authenticationManager(authenticationManager)
 
