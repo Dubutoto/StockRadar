@@ -163,7 +163,7 @@ public class Rtx4060Ticontroller {
 //        return null;
 //    }
 
-//시나리오 4 ttl 수정
+//시나리오 4
 @GetMapping("api/gpu/rtx4060Ti")
 public ResponseEntity<?> getRtx4060Ti() {
     log.info("Rtx4060Ti 요청 - V3 캐시 서비스 사용");

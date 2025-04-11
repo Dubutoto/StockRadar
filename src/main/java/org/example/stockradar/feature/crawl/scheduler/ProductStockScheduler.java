@@ -3,6 +3,7 @@ package org.example.stockradar.feature.crawl.scheduler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.stockradar.feature.auth.service.RedisSmtpService;
 import org.example.stockradar.feature.crawl.entity.Product;
 import org.example.stockradar.feature.crawl.repository.ProductRepository;
 import org.example.stockradar.feature.notification.entity.InterestProduct;
@@ -30,6 +31,8 @@ public class ProductStockScheduler {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final InterestProductRepository interestProductRepository;
     private final NotificationService notificationService;
+    private final RedisSmtpService redisSmtpService;
+    private final AtomicBoolean isChecking = new AtomicBoolean(false);
 
     // 정적 데이터와 재고 상태를 위한 별도의 캐시 키 프리픽스
     private static final String STATIC_DATA_CACHE_PREFIX = "product:static:";
@@ -111,8 +114,8 @@ public class ProductStockScheduler {
         }
     }
 
-    // 매 5분마다 실행 - 재고 상태 갱신
-    @Scheduled(cron = "0 */5 * * * *")
+    // 매 1분마다 실행 - 재고 상태 갱신
+    @Scheduled(cron = "0 */1 * * * *")
     public void cacheProductStockStatus() {
         // 이미 실행 중인지 확인
         if (!isRunning.compareAndSet(false, true)) {
@@ -220,6 +223,34 @@ public class ProductStockScheduler {
 
         return newAvailability;
     }
+    // 5분마다 Redis 연결 상태 체크
+    @Scheduled(cron = "0 */5 * * * *")
+    public void scheduledRedisHealthCheck() {
+        checkRedisConnection();
+    }
+
+    private void checkRedisConnection() {
+        if (!isChecking.compareAndSet(false, true)) {
+            log.warn("이미 Redis 연결 확인 작업이 실행 중입니다.");
+            return;
+        }
+
+        try {
+            log.info("Redis 연결 상태 확인 시작 - {}", LocalDateTime.now());
+            boolean isConnected = redisSmtpService.checkRedisConnection();
+
+            if (isConnected) {
+                log.info("Redis 연결 상태 정상 [{}]", LocalDateTime.now());
+            } else {
+                log.error("Redis 연결 실패 - 마지막 확인 시간: {}", LocalDateTime.now());
+            }
+        } catch (Exception e) {
+            log.error("Redis 연결 확인 중 오류 발생: {}", e.getMessage());
+        } finally {
+            isChecking.set(false);
+        }
+    }
+
 
 
 }

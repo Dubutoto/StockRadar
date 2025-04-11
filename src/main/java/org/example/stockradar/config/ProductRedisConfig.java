@@ -61,7 +61,7 @@ public class ProductRedisConfig {
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                 .prefixCacheNameWith("stockradar.")
-                .entryTtl(Duration.ofMinutes(6))  // 1분 TTL 설정
+                .entryTtl(Duration.ofMinutes(2))  // 1분 TTL 설정
                 .disableCachingNullValues();
 
         return RedisCacheManager.builder(connectionFactory)

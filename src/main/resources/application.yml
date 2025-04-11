@@ -1,5 +1,5 @@
 server:
-  port: 5000  # 배포 5000 개발 8099
+  port: 8099  # 배포 5000 개발 8099
   servlet:
     encoding:
       charset: UTF-8
@@ -17,7 +17,7 @@ spring:
     cache: false
 
   profiles:
-    active: prod
+    active: local
 
   sql:
     init:
@@ -43,7 +43,7 @@ spring:
 
   data:
     redis:
-      host: ec2-15-164-213-250.ap-northeast-2.compute.amazonaws.com
+      host: localhost
       port: 6379
 
 
